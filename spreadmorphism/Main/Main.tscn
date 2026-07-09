@@ -3,11 +3,25 @@
 [ext_resource type="Script" path="res://Main/Main.cs" id="1_ae1fs"]
 [ext_resource type="PackedScene" uid="uid://bir3c5hnqhqpn" path="res://Cell/Cell.tscn" id="2_ffdbw"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("lineEdit")]
 script = ExtResource("1_ae1fs")
 cellScene = ExtResource("2_ffdbw")
+lineEdit = NodePath("LineEdit")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="bg" type="ColorRect" parent="."]
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.117647, 0.117647, 0.117647, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_top = 1.0
+offset_right = 504.0
+offset_bottom = 70.0
+color = Color(0.701961, 1, 1, 1)
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 24.0
+offset_top = 13.0
+offset_right = 483.0
+offset_bottom = 58.0
+placeholder_text = "Edit"

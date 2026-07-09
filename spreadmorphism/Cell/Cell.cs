@@ -10,6 +10,7 @@ public partial class Cell : Node2D
     ColorRect colorRect;
 
     int value = 0;
+    public int Value => value;
 
     public override void _Ready()
     {
