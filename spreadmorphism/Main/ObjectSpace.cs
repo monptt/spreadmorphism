@@ -26,6 +26,7 @@ public partial class ObjectSpace : Node2D
     public List<ObjectBase> Objects => objects;
 
 
+
     public override void _Ready()
     {
         if (instance == null)
@@ -35,6 +36,25 @@ public partial class ObjectSpace : Node2D
         else
         {
             GD.PrintErr("ObjectSpace already exists");
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+
+    }
+
+    /// <summary>
+    /// すべてのセルの値を更新する
+    /// </summary>
+    public void UpdateAllCells()
+    {
+        foreach (ObjectBase obj in objects)
+        {
+            foreach (Cell cell in obj.GetCells())
+            {
+                cell.UpdateValue();
+            }
         }
     }
 

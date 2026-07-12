@@ -37,6 +37,15 @@ public partial class Cell : Node2D
         valueLabel.Text = value.ToString();
     }
 
+    /// <summary>
+    /// 値を更新する（他のセルが変更されたときとか）
+    /// </summary>
+    public void UpdateValue()
+    {
+        int value = ParseValue(valueStr);
+        this.SetValue(value);
+    }
+
     public GridPos GetGridPos()
     {
         int x = Mathf.FloorToInt(GlobalPosition.X / Grid.GRID_WIDTH);
@@ -72,6 +81,9 @@ public partial class Cell : Node2D
         this.valueStr = valueStr;
         int value = ParseValue(valueStr);
         this.SetValue(value);
+
+        // 他のセルの値も更新する
+        ObjectSpace.Instance.UpdateAllCells();
     }
 
     public void SetSelected(bool selected)
