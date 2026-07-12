@@ -19,7 +19,7 @@ void fragment() {
 	float gridHeight = 30.0;
 	float gridWidth = 100.0;
 
-	bool isGrid = mod(p.x, gridWidth) < lineWidth || mod(p.y, gridHeight) < lineWidth;
+	bool isGrid = mod(p.x, gridWidth) > gridWidth - lineWidth || mod(p.y, gridHeight) > gridHeight - lineWidth;
 
 	COLOR = isGrid ? gridColor : bgColor;
 }

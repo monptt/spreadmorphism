@@ -64,13 +64,13 @@ public partial class Main : Node2D
                 {
                     // クリック時
                     Vector2 objectSpacePos = GetObjectSpacePosition(eventMouseButton.Position);
-                    Cell cell = objectSpace.OnCick(objectSpacePos);
+                    NumberObject cell = objectSpace.OnCick(objectSpacePos);
                     if (cell != null)
                     {
-                        selectedCell?.SetSelected(false);
-                        cell.SetSelected(true);
-                        lineEdit.Text = $"{cell.Value}";
-                        selectedCell = cell;
+                        // selectedCell?.SetSelected(false);
+                        // cell.SetSelected(true);
+                        // lineEdit.Text = $"{cell.Value}";
+                        // selectedCell = cell;
                     }
 
                     isMouseOn = true;

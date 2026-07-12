@@ -1,8 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://bscfmppovnsvf"]
 
 [ext_resource type="Script" path="res://Main/ObjectSpace.cs" id="1_elh16"]
-[ext_resource type="PackedScene" uid="uid://bir3c5hnqhqpn" path="res://Cell/Cell.tscn" id="2_woplw"]
+[ext_resource type="PackedScene" uid="uid://ddr7o8p6o38f8" path="res://Object/NumberObject.tscn" id="2_41yg3"]
 
 [node name="ObjectSpace" type="Node2D"]
 script = ExtResource("1_elh16")
-cellScene = ExtResource("2_woplw")
+numberObjScene = ExtResource("2_41yg3")

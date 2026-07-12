@@ -8,29 +8,29 @@ using System.Collections.Generic;
 public partial class ObjectSpace : Node2D
 {
     [Export]
-    PackedScene cellScene;
+    PackedScene numberObjScene;
 
 
-    List<Cell> cells = new List<Cell>();
+    List<NumberObject> cells = new List<NumberObject>();
 
-    public Cell CreateCell(int x, int y)
+    public NumberObject CreateCell(int x, int y)
     {
-        Cell cell = cellScene.Instantiate<Cell>();
+        NumberObject cell = numberObjScene.Instantiate<NumberObject>();
         cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(cell);
         cells.Add(cell);
         return cell;
     }
 
-    public Cell OnCick(Vector2 position)
+    public NumberObject OnCick(Vector2 position)
     {
-        foreach (Cell cell in cells)
-        {
-            if (cell.IsClicked(position))
-            {
-                return cell;
-            }
-        }
+        // foreach (NumberObject cell in cells)
+        // {
+        //     if (cell.IsClicked(position))
+        //     {
+        //         return cell;
+        //     }
+        // }
         return null;
     }
 }

@@ -11,10 +11,8 @@ valueLabel = NodePath("ColorRect/Label")
 colorRect = NodePath("ColorRect")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 100.0
-offset_bottom = 30.0
+offset_right = 99.0
+offset_bottom = 29.0
 
 [node name="Label" type="Label" parent="ColorRect"]
 layout_mode = 1
