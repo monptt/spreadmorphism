@@ -1,8 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bscfmppovnsvf"]
+[gd_scene load_steps=5 format=3 uid="uid://bscfmppovnsvf"]
 
 [ext_resource type="Script" path="res://Main/ObjectSpace.cs" id="1_elh16"]
 [ext_resource type="PackedScene" uid="uid://ddr7o8p6o38f8" path="res://Object/NumberObject.tscn" id="2_41yg3"]
+[ext_resource type="PackedScene" uid="uid://d1fx5fxw54qbh" path="res://Object/Vec2Object.tscn" id="3_ebarj"]
+[ext_resource type="PackedScene" uid="uid://dn7v5qn3o8kwj" path="res://Object/Vec3Object.tscn" id="4_7xlw6"]
 
 [node name="ObjectSpace" type="Node2D"]
 script = ExtResource("1_elh16")
 numberObjScene = ExtResource("2_41yg3")
+vec2ObjScene = ExtResource("3_ebarj")
+vec3ObjScene = ExtResource("4_7xlw6")

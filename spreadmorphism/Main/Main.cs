@@ -49,7 +49,20 @@ public partial class Main : Node2D
         palette.AddObject += (type) =>
         {
             GD.Print("addObject: ", type);
-            objectSpace.CreateNumberObject(selectedCoord.X, selectedCoord.Y);
+            switch (type)
+            {
+                case ObjectType.Number:
+                    objectSpace.CreateNumberObject(selectedCoord.X, selectedCoord.Y);
+                    break;
+                case ObjectType.Vec2:
+                    objectSpace.CreateVec2Object(selectedCoord.X, selectedCoord.Y);
+                    break;
+                case ObjectType.Vec3:
+                    objectSpace.CreateVec3Object(selectedCoord.X, selectedCoord.Y);
+                    break;
+                default:
+                    break;
+            }
         };
     }
 

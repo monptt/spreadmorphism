@@ -6,6 +6,8 @@ public partial class NumberObject : ObjectBase
     [Export]
     Cell cell;
 
+    public override ObjectType Type => ObjectType.Number;
+
     public int Value => cell.Value;
 
     public override void _Ready()
