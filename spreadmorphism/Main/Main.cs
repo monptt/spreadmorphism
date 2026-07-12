@@ -4,16 +4,22 @@ using System.Collections.Generic;
 
 public partial class Main : Node2D
 {
-
-    [Export]
-    PackedScene cellScene;
-
     [Export]
     LineEdit lineEdit;
+
+    [Export]
+    Camera2D mainCamera;
+
+    [Export]
+    ObjectSpace objectSpace;
 
     List<Cell> cells = new List<Cell>();
 
     Cell selectedCell = null;
+
+    // Input関連
+    Vector2 lastMousePosition = Vector2.Zero;
+    bool isMouseOn = false;
 
     public override void _Ready()
     {
@@ -22,9 +28,7 @@ public partial class Main : Node2D
         {
             for (int j = 0; j < 10; j++)
             {
-                Cell cell = cellScene.Instantiate<Cell>();
-                cell.Position = new Vector2(100 + i * 120, 100 + j * 42);
-                AddChild(cell);
+                Cell cell = objectSpace.CreateCell(i, j);
                 cells.Add(cell);
             }
         }
@@ -48,23 +52,44 @@ public partial class Main : Node2D
             sum += cells[i].Value;
         }
         cells[0].SetValue(sum);
-        GD.Print(cells[0].Value);
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.ButtonIndex == MouseButton.Left && eventMouseButton.Pressed)
+        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.ButtonIndex == MouseButton.Left)
         {
-            // クリック時
-            foreach (Cell cell in cells)
+            if (eventMouseButton.Pressed)
             {
-                if (cell.IsClicked(eventMouseButton.Position))
+                // クリック時
+                foreach (Cell cell in cells)
                 {
-                    selectedCell?.SetSelected(false);
-                    cell.SetSelected(true);
-                    lineEdit.Text = $"{cell.Value}";
-                    selectedCell = cell;
+                    if (cell.IsClicked(eventMouseButton.Position))
+                    {
+                        selectedCell?.SetSelected(false);
+                        cell.SetSelected(true);
+                        lineEdit.Text = $"{cell.Value}";
+                        selectedCell = cell;
+                    }
                 }
+
+                isMouseOn = true;
+            }
+            else
+            {
+                isMouseOn = false;
+            }
+        }
+        else if (@event is InputEventMouseMotion eventMouseMotion)
+        {
+            Vector2 delta = eventMouseMotion.Position - lastMousePosition;
+            lastMousePosition = eventMouseMotion.Position;
+
+            if (isMouseOn)
+            {
+                // ドラッグ時
+                // カメラを移動させる
+                GD.Print(delta);
+                mainCamera.Position -= delta;
             }
         }
     }
