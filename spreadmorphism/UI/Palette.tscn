@@ -2,11 +2,18 @@
 
 [ext_resource type="Script" path="res://UI/Palette.cs" id="1_4bdx1"]
 
-[node name="Palette" type="Node2D" node_paths=PackedStringArray("numButton", "vec2Button", "vec3Button")]
+[node name="Palette" type="Node2D" node_paths=PackedStringArray("numButton", "vec2Button", "vec3Button", "colorRect")]
 script = ExtResource("1_4bdx1")
 numButton = NodePath("NumButton")
 vec2Button = NodePath("Vec2Button")
 vec3Button = NodePath("Vec3Button")
+colorRect = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_top = -34.0
+offset_right = 86.0
+offset_bottom = 138.0
+color = Color(1, 0.827451, 1, 0.815686)
 
 [node name="NumButton" type="Button" parent="."]
 offset_right = 8.0

@@ -79,6 +79,13 @@ public partial class Main : Node2D
                 if (eventMouseButton.Pressed)
                 {
                     // クリック時
+
+                    // パレットのクリックは除外
+                    if (palette.IsInPaletteArea(eventMouseButton.Position))
+                    {
+                        return;
+                    }
+
                     Vector2 objectSpacePos = GetObjectSpacePosition(eventMouseButton.Position);
                     Cell cell = objectSpace.OnCick(objectSpacePos);
                     if (cell != null)

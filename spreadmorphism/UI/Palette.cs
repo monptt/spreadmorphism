@@ -12,6 +12,9 @@ public partial class Palette : Node2D
     [Export]
     Button vec3Button;
 
+    [Export]
+    ColorRect colorRect;
+
     [Signal]
     public delegate void AddObjectEventHandler(ObjectType type);
 
@@ -31,5 +34,10 @@ public partial class Palette : Node2D
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Vec3);
         };
+    }
+
+    public bool IsInPaletteArea(Vector2 position)
+    {
+        return colorRect.GetGlobalRect().HasPoint(position);
     }
 }
