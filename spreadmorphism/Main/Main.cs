@@ -32,6 +32,7 @@ public partial class Main : Node2D
     // Input関連
     Vector2 lastMousePosition = Vector2.Zero;
     bool isMouseOn = false;
+    ObjectBase draggedObject = null;
 
     Vector2 windowSize = new Vector2(1920, 1080);
 
@@ -90,10 +91,18 @@ public partial class Main : Node2D
                     // 選択したセルを表示
                     GridPos coord = GetCoord(eventMouseButton.Position);
                     SelectCell(coord);
+
+                    // オブジェクトがあればドラッグ開始
+                    ObjectBase obj = objectSpace.GetObject(GetCoord(eventMouseButton.Position));
+                    if (obj != null)
+                    {
+                        draggedObject = obj;
+                    }
                 }
                 else
                 {
                     isMouseOn = false;
+                    draggedObject = null;
                 }
             }
             else if (eventMouseButton.ButtonIndex == MouseButton.Right)
@@ -126,9 +135,17 @@ public partial class Main : Node2D
             if (isMouseOn)
             {
                 // ドラッグ時
-                // カメラを移動させる
-                mainCamera.Position -= delta;
-                grid.SetCameraPosition(mainCamera.Position - windowSize / 2);
+                if (draggedObject != null)
+                {
+                    // ドラッグ中ならオブジェクトを移動させる
+                    draggedObject.Position = new Vector2(coord.X * Grid.GRID_WIDTH, coord.Y * Grid.GRID_HEIGHT);
+                }
+                else
+                {
+                    // カメラを移動させる
+                    mainCamera.Position -= delta;
+                    grid.SetCameraPosition(mainCamera.Position - windowSize / 2);
+                }
             }
         }
         else if (@event is InputEventKey eventKey)

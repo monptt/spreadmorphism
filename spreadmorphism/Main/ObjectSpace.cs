@@ -86,4 +86,22 @@ public partial class ObjectSpace : Node2D
         }
         return null;
     }
+
+    /// <summary>
+    /// 指定されたグリッド座標にあるオブジェクトを取得する
+    /// </summary>
+    /// <param name="pos">グリッド座標</param>
+    /// <returns>オブジェクト</returns>
+    public ObjectBase GetObject(GridPos pos)
+    {
+        //@todo: オブジェクトの左上以外の座標でも取得できるようにする
+        foreach (ObjectBase obj in objects)
+        {
+            if (obj.GetGridPos() == pos)
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
 }
