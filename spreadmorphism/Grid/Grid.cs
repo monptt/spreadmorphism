@@ -1,6 +1,31 @@
 using Godot;
 using System;
 
+/// <summary>
+/// グリッド座標
+/// </summary>
+public class GridPos
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public GridPos(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public static GridPos operator +(GridPos a, GridPos b)
+    {
+        return new GridPos(a.X + b.X, a.Y + b.Y);
+    }
+
+    public static GridPos operator -(GridPos a, GridPos b)
+    {
+        return new GridPos(a.X - b.X, a.Y - b.Y);
+    }
+}
+
 public partial class Grid : Node2D
 {
     [Export]

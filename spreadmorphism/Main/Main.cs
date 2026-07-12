@@ -27,7 +27,7 @@ public partial class Main : Node2D
     Palette palette;
 
     Cell selectedCell = null;
-    Vector2I selectedCoord = new Vector2I(0, 0);
+    GridPos selectedCoord = new GridPos(0, 0);
 
     // Input関連
     Vector2 lastMousePosition = Vector2.Zero;
@@ -98,7 +98,7 @@ public partial class Main : Node2D
                     }
 
                     // 選択したセルを表示
-                    Vector2I coord = GetCoord(eventMouseButton.Position);
+                    GridPos coord = GetCoord(eventMouseButton.Position);
                     SelectCell(coord);
                 }
                 else
@@ -130,7 +130,7 @@ public partial class Main : Node2D
             lastMousePosition = eventMouseMotion.Position;
 
             // セル座標を表示
-            Vector2I coord = GetCoord(eventMouseMotion.Position);
+            GridPos coord = GetCoord(eventMouseMotion.Position);
             coordView.SetCoord(coord.X, coord.Y);
 
             if (isMouseOn)
@@ -148,30 +148,30 @@ public partial class Main : Node2D
             {
                 if (eventKey.Keycode == Key.Left)
                 {
-                    SelectCell(selectedCoord - new Vector2I(1, 0));
+                    SelectCell(selectedCoord - new GridPos(1, 0));
                 }
                 else if (eventKey.Keycode == Key.Right)
                 {
-                    SelectCell(selectedCoord + new Vector2I(1, 0));
+                    SelectCell(selectedCoord + new GridPos(1, 0));
                 }
                 else if (eventKey.Keycode == Key.Up)
                 {
-                    SelectCell(selectedCoord - new Vector2I(0, 1));
+                    SelectCell(selectedCoord - new GridPos(0, 1));
                 }
                 else if (eventKey.Keycode == Key.Down)
                 {
-                    SelectCell(selectedCoord + new Vector2I(0, 1));
+                    SelectCell(selectedCoord + new GridPos(0, 1));
                 }
             }
         }
     }
 
-    public Vector2I GetCoord(Vector2 position)
+    public GridPos GetCoord(Vector2 position)
     {
         Vector2 objectSpacePosition = GetObjectSpacePosition(position);
         int x = Mathf.FloorToInt(objectSpacePosition.X / Grid.GRID_WIDTH);
         int y = Mathf.FloorToInt(objectSpacePosition.Y / Grid.GRID_HEIGHT);
-        return new Vector2I(x, y);
+        return new GridPos(x, y);
     }
 
     public Vector2 GetObjectSpacePosition(Vector2 position)
@@ -179,10 +179,10 @@ public partial class Main : Node2D
         return position + mainCamera.Position - windowSize / 2;
     }
 
-    void SelectCell(Vector2I coord)
+    void SelectCell(GridPos pos)
     {
-        this.selectedCoord = coord;
-        Vector2 selectedRectPos = new Vector2(coord.X, coord.Y);
+        this.selectedCoord = pos;
+        Vector2 selectedRectPos = new Vector2(pos.X, pos.Y);
         selectedRectPos.X *= Grid.GRID_WIDTH;
         selectedRectPos.Y *= Grid.GRID_HEIGHT;
         selectedRect.Position = selectedRectPos;
