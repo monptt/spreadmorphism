@@ -13,6 +13,9 @@ public partial class Main : Node2D
     [Export]
     ObjectSpace objectSpace;
 
+    [Export]
+    Grid grid;
+
     List<Cell> cells = new List<Cell>();
 
     Cell selectedCell = null;
@@ -88,8 +91,8 @@ public partial class Main : Node2D
             {
                 // ドラッグ時
                 // カメラを移動させる
-                GD.Print(delta);
                 mainCamera.Position -= delta;
+                grid.SetCameraPosition(mainCamera.Position);
             }
         }
     }

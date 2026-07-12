@@ -5,9 +5,11 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rkssc"]
 shader = ExtResource("1_5uflm")
+shader_parameter/cameraPosition = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o42jy"]
 shader = ExtResource("1_5uflm")
+shader_parameter/cameraPosition = null
 
 [node name="Grid" type="Node2D" node_paths=PackedStringArray("colorRect")]
 material = SubResource("ShaderMaterial_rkssc")

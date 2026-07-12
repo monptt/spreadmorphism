@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform vec2 cameraPosition;
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
@@ -9,7 +11,7 @@ void fragment() {
 	vec4 bgColor = vec4(vec3(0.4), 1.0);
 	vec4 gridColor = vec4(vec3(0.2), 1.0);
 
-	vec2 p = FRAGCOORD.xy;
+	vec2 p = FRAGCOORD.xy + cameraPosition;
 
 	float lineWidth = 1.0;
 	float gridHeight = 30.0;
