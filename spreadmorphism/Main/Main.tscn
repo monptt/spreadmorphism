@@ -8,10 +8,11 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_p12e0"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "grid", "lineEdit", "coordView")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "lineEdit", "coordView")]
 script = ExtResource("1_ae1fs")
 mainCamera = NodePath("SubViewport/MainCamera")
 objectSpace = NodePath("SubViewport/ObjectSpace")
+selectedRect = NodePath("SubViewport/SelectedRect")
 grid = NodePath("Grid")
 lineEdit = NodePath("UI/ColorRect2/LineEdit")
 coordView = NodePath("UI/CoordView")
@@ -24,6 +25,11 @@ size = Vector2i(1920, 1080)
 position = Vector2(960, 540)
 
 [node name="ObjectSpace" parent="SubViewport" instance=ExtResource("4_wu2i8")]
+
+[node name="SelectedRect" type="ColorRect" parent="SubViewport"]
+offset_right = 99.0
+offset_bottom = 29.0
+color = Color(0.941176, 0.74902, 0, 0.443137)
 
 [node name="Grid" parent="." instance=ExtResource("3_k32su")]
 

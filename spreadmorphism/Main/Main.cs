@@ -10,6 +10,8 @@ public partial class Main : Node2D
     [Export]
     ObjectSpace objectSpace;
 
+    [Export]
+    ColorRect selectedRect;
 
     [Export]
     Grid grid;
@@ -72,6 +74,13 @@ public partial class Main : Node2D
                         // lineEdit.Text = $"{cell.Value}";
                         // selectedCell = cell;
                     }
+
+                    // 選択したセルを表示
+                    Vector2 selectedRectPos = GetCoord(eventMouseButton.Position);
+                    selectedRectPos.X *= Grid.GRID_WIDTH;
+                    selectedRectPos.Y *= Grid.GRID_HEIGHT;
+                    selectedRect.Position = selectedRectPos;
+
 
                     isMouseOn = true;
                 }
