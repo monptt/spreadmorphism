@@ -4,19 +4,22 @@ using System;
 public partial class NumberObject : ObjectBase
 {
     [Export]
-    Label valueLabel;
+    Cell cell;
 
-    int value = 0;
-    public int Value => value;
+    public int Value => cell.Value;
 
     public override void _Ready()
     {
-        SetValue(value);
+        SetValue(0);
     }
 
     public void SetValue(int value)
     {
-        this.value = value;
-        valueLabel.Text = $"{value}";
+        cell.SetValue(value);
+    }
+
+    public Cell GetCell()
+    {
+        return cell;
     }
 }

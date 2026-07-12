@@ -22,15 +22,15 @@ public partial class ObjectSpace : Node2D
         return cell;
     }
 
-    public NumberObject OnCick(Vector2 position)
+    public Cell OnCick(Vector2 position)
     {
-        // foreach (NumberObject cell in cells)
-        // {
-        //     if (cell.IsClicked(position))
-        //     {
-        //         return cell;
-        //     }
-        // }
+        foreach (NumberObject obj in numberObjects)
+        {
+            if (obj.GetCell().IsClicked(position))
+            {
+                return obj.GetCell();
+            }
+        }
         return null;
     }
 }

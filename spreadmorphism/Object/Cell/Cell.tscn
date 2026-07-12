@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bir3c5hnqhqpn"]
 
-[ext_resource type="Script" path="res://Cell/Cell.cs" id="1_c65ki"]
+[ext_resource type="Script" path="res://Object/Cell/Cell.cs" id="1_c65ki"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mxul7"]
 font_color = Color(0, 0, 0, 1)

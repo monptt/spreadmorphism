@@ -37,15 +37,6 @@ public partial class Main : Node2D
 
     public override void _Ready()
     {
-        // セルを配置
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                objectSpace.CreateNumberObject(i, j);
-            }
-        }
-
         // エディット時の操作
         lineEdit.TextChanged += (value) =>
         {
@@ -76,13 +67,13 @@ public partial class Main : Node2D
                 {
                     // クリック時
                     Vector2 objectSpacePos = GetObjectSpacePosition(eventMouseButton.Position);
-                    NumberObject cell = objectSpace.OnCick(objectSpacePos);
+                    Cell cell = objectSpace.OnCick(objectSpacePos);
                     if (cell != null)
                     {
-                        // selectedCell?.SetSelected(false);
-                        // cell.SetSelected(true);
-                        // lineEdit.Text = $"{cell.Value}";
-                        // selectedCell = cell;
+                        selectedCell?.SetSelected(false);
+                        cell.SetSelected(true);
+                        lineEdit.Text = $"{cell.Value}";
+                        selectedCell = cell;
                     }
 
                     // 選択したセルを表示
