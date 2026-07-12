@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public enum ObjectType
 {
@@ -15,4 +16,5 @@ public abstract partial class ObjectBase : Node2D
     /// </summary>
     public abstract ObjectType Type { get; }
 
+    public abstract List<Cell> GetCells();
 }

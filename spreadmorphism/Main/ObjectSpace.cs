@@ -18,12 +18,19 @@ public partial class ObjectSpace : Node2D
 
     List<NumberObject> numberObjects = new List<NumberObject>();
 
+
+    /// <summary>
+    /// 生成されたオブジェクトのリスト
+    /// </summary>
+    List<ObjectBase> objects = new List<ObjectBase>();
+
     public NumberObject CreateNumberObject(int x, int y)
     {
         NumberObject cell = numberObjScene.Instantiate<NumberObject>();
         cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(cell);
         numberObjects.Add(cell);
+        objects.Add(cell);
         return cell;
     }
 
@@ -32,6 +39,7 @@ public partial class ObjectSpace : Node2D
         Vec2Object obj = vec2ObjScene.Instantiate<Vec2Object>();
         obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(obj);
+        objects.Add(obj);
         return obj;
     }
 
@@ -40,16 +48,25 @@ public partial class ObjectSpace : Node2D
         Vec3Object obj = vec3ObjScene.Instantiate<Vec3Object>();
         obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(obj);
+        objects.Add(obj);
         return obj;
     }
 
+    /// <summary>
+    /// クリックされたセルを取得する
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     public Cell OnCick(Vector2 position)
     {
-        foreach (NumberObject obj in numberObjects)
+        foreach (ObjectBase obj in objects)
         {
-            if (obj.GetCell().IsClicked(position))
+            foreach (Cell cell in obj.GetCells())
             {
-                return obj.GetCell();
+                if (cell.IsClicked(position))
+                {
+                    return cell;
+                }
             }
         }
         return null;
