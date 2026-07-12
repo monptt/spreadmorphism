@@ -17,6 +17,13 @@ public partial class Cell : Node2D
         valueLabel.Text = value.ToString();
     }
 
+    public GridPos GetGridPos()
+    {
+        int x = Mathf.FloorToInt(GlobalPosition.X / Grid.GRID_WIDTH);
+        int y = Mathf.FloorToInt(GlobalPosition.Y / Grid.GRID_HEIGHT);
+        return new GridPos(x, y);
+    }
+
     public void SetValue(int value)
     {
         this.value = value;

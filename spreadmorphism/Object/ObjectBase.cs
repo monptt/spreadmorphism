@@ -17,4 +17,11 @@ public abstract partial class ObjectBase : Node2D
     public abstract ObjectType Type { get; }
 
     public abstract List<Cell> GetCells();
+
+    public GridPos GetGridPos()
+    {
+        int x = (int)(Position.X / Grid.GRID_WIDTH);
+        int y = (int)(Position.Y / Grid.GRID_HEIGHT);
+        return new GridPos(x, y);
+    }
 }

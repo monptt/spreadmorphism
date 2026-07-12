@@ -87,16 +87,6 @@ public partial class Main : Node2D
                         return;
                     }
 
-                    Vector2 objectSpacePos = GetObjectSpacePosition(eventMouseButton.Position);
-                    Cell cell = objectSpace.OnCick(objectSpacePos);
-                    if (cell != null)
-                    {
-                        selectedCell?.SetSelected(false);
-                        cell.SetSelected(true);
-                        lineEdit.Text = $"{cell.Value}";
-                        selectedCell = cell;
-                    }
-
                     // 選択したセルを表示
                     GridPos coord = GetCoord(eventMouseButton.Position);
                     SelectCell(coord);
@@ -181,6 +171,18 @@ public partial class Main : Node2D
 
     void SelectCell(GridPos pos)
     {
+        GD.Print($"SelectCell: ({pos.X}, {pos.Y})");
+
+        // セルがあれば選択
+        Cell cell = objectSpace.GetCell(pos);
+        if (cell != null)
+        {
+            selectedCell?.SetSelected(false);
+            cell.SetSelected(true);
+            lineEdit.Text = $"{cell.Value}";
+            selectedCell = cell;
+        }
+
         this.selectedCoord = pos;
         Vector2 selectedRectPos = new Vector2(pos.X, pos.Y);
         selectedRectPos.X *= Grid.GRID_WIDTH;

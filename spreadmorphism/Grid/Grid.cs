@@ -24,6 +24,16 @@ public class GridPos
     {
         return new GridPos(a.X - b.X, a.Y - b.Y);
     }
+
+    public static bool operator ==(GridPos a, GridPos b)
+    {
+        return a.X == b.X && a.Y == b.Y;
+    }
+
+    public static bool operator !=(GridPos a, GridPos b)
+    {
+        return a.X != b.X || a.Y != b.Y;
+    }
 }
 
 public partial class Grid : Node2D

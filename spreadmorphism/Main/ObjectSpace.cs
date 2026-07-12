@@ -71,4 +71,19 @@ public partial class ObjectSpace : Node2D
         }
         return null;
     }
+
+    public Cell GetCell(GridPos pos)
+    {
+        foreach (ObjectBase obj in objects)
+        {
+            foreach (Cell cell in obj.GetCells())
+            {
+                if (cell.GetGridPos() == pos)
+                {
+                    return cell;
+                }
+            }
+        }
+        return null;
+    }
 }
