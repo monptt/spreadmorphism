@@ -38,9 +38,9 @@ texture = SubResource("ViewportTexture_p12e0")
 position = Vector2(1840, 1056)
 
 [node name="ColorRect2" type="ColorRect" parent="UI"]
-offset_top = 1.0
+offset_top = 1010.0
 offset_right = 504.0
-offset_bottom = 70.0
+offset_bottom = 1079.0
 color = Color(0.701961, 1, 1, 1)
 
 [node name="LineEdit" type="LineEdit" parent="UI/ColorRect2"]

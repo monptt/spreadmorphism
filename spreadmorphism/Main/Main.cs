@@ -29,6 +29,8 @@ public partial class Main : Node2D
     Vector2 lastMousePosition = Vector2.Zero;
     bool isMouseOn = false;
 
+    Vector2 windowSize = new Vector2(1920, 1080);
+
     public override void _Ready()
     {
         // セルを配置
@@ -121,7 +123,7 @@ public partial class Main : Node2D
                 // ドラッグ時
                 // カメラを移動させる
                 mainCamera.Position -= delta;
-                grid.SetCameraPosition(mainCamera.Position);
+                grid.SetCameraPosition(mainCamera.Position - windowSize / 2);
             }
         }
     }
