@@ -16,20 +16,33 @@ public partial class ObjectSpace : Node2D
     [Export]
     PackedScene vec3ObjScene;
 
-    List<NumberObject> numberObjects = new List<NumberObject>();
-
+    static ObjectSpace instance = null;
+    public static ObjectSpace Instance => instance;
 
     /// <summary>
     /// 生成されたオブジェクトのリスト
     /// </summary>
     List<ObjectBase> objects = new List<ObjectBase>();
+    public List<ObjectBase> Objects => objects;
+
+
+    public override void _Ready()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            GD.PrintErr("ObjectSpace already exists");
+        }
+    }
 
     public NumberObject CreateNumberObject(int x, int y)
     {
         NumberObject cell = numberObjScene.Instantiate<NumberObject>();
         cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(cell);
-        numberObjects.Add(cell);
         objects.Add(cell);
         return cell;
     }

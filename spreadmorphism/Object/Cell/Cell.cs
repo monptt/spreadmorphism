@@ -3,9 +3,9 @@ using System;
 
 public enum CellStatus
 {
-    Default,
-    Selected,
-    NotEditable,
+    Default,    // デフォルト
+    Selected,   // 選択されている
+    Dependent,  // 他のセルの値に依存している
 }
 
 public partial class Cell : Node2D
@@ -25,10 +25,12 @@ public partial class Cell : Node2D
     CellStatus status = CellStatus.Default;
     public CellStatus Status => status;
 
+    bool isSelected = false;
+
     /// <summary>
     /// 個別に編集可能か
     /// </summary>
-    public bool IsEditable => status != CellStatus.NotEditable;
+    public bool IsEditable => status != CellStatus.Dependent;
 
     public override void _Ready()
     {
@@ -45,6 +47,18 @@ public partial class Cell : Node2D
     public void SetStatus(CellStatus status)
     {
         this.status = status;
+        if (status == CellStatus.Dependent)
+        {
+            colorRect.Color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+        }
+        else if (status == CellStatus.Selected)
+        {
+            colorRect.Color = new Color(1, 0.9f, 0.8f, 1.0f);
+        }
+        else
+        {
+            colorRect.Color = new Color(1, 1, 1, 1.0f);
+        }
     }
 
     public void SetValue(int value)
@@ -56,30 +70,75 @@ public partial class Cell : Node2D
     public void SetValueStr(string valueStr)
     {
         this.valueStr = valueStr;
-        this.SetValue(int.Parse(valueStr));
+        int value = ParseValue(valueStr);
+        this.SetValue(value);
     }
 
     public void SetSelected(bool selected)
     {
-        if (status == CellStatus.NotEditable)
+        if (status == CellStatus.Dependent)
         {
             return;
         }
 
         if (selected)
         {
-            colorRect.Color = new Color(1, 0.9f, 0.8f, 1.0f);
-            status = CellStatus.Selected;
+            SetStatus(CellStatus.Selected);
+            isSelected = true;
         }
         else
         {
-            colorRect.Color = new Color(1, 1, 1, 1.0f);
-            status = CellStatus.Default;
+            SetStatus(CellStatus.Default);
+            isSelected = false;
         }
     }
 
     public bool IsClicked(Vector2 position)
     {
         return colorRect.GetGlobalRect().HasPoint(position);
+    }
+
+    int ParseValue(string valueStr)
+    {
+        if (valueStr.Length == 0)
+        {
+            return 0;
+        }
+
+        if (valueStr[0] == '=')
+        {
+            SetStatus(CellStatus.Dependent);
+
+            //@todo: 数式を解析する
+            // とりあえず全セルのSUMとする
+            int sum = 0;
+            foreach (ObjectBase obj in ObjectSpace.Instance.Objects)
+            {
+                foreach (Cell cell in obj.GetCells())
+                {
+                    if (cell == this)
+                    {
+                        continue;
+                    }
+                    sum += cell.Value;
+                }
+            }
+            return sum;
+        }
+        else
+        {
+            SetStatus(isSelected ? CellStatus.Selected : CellStatus.Default);
+        }
+
+        // 整数として解析する
+        int value = 0;
+        if (int.TryParse(valueStr, out value))
+        {
+            return value;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
