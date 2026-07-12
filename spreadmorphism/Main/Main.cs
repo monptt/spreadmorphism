@@ -21,8 +21,6 @@ public partial class Main : Node2D
     [Export]
     CoordView coordView;
 
-    List<Cell> cells = new List<Cell>();
-
     Cell selectedCell = null;
 
     // Input関連
@@ -38,8 +36,7 @@ public partial class Main : Node2D
         {
             for (int j = 0; j < 10; j++)
             {
-                Cell cell = objectSpace.CreateCell(i, j);
-                cells.Add(cell);
+                objectSpace.CreateCell(i, j);
             }
         }
 
@@ -55,13 +52,6 @@ public partial class Main : Node2D
 
     public override void _Process(double delta)
     {
-        // 雑に合計値を出すだけ
-        int sum = 0;
-        for (int i = 1; i < cells.Count; i++)
-        {
-            sum += cells[i].Value;
-        }
-        cells[0].SetValue(sum);
     }
 
     public override void _Input(InputEvent @event)
@@ -73,15 +63,14 @@ public partial class Main : Node2D
                 if (eventMouseButton.Pressed)
                 {
                     // クリック時
-                    foreach (Cell cell in cells)
+                    Vector2 objectSpacePos = GetObjectSpacePosition(eventMouseButton.Position);
+                    Cell cell = objectSpace.OnCick(objectSpacePos);
+                    if (cell != null)
                     {
-                        if (cell.IsClicked(eventMouseButton.Position))
-                        {
-                            selectedCell?.SetSelected(false);
-                            cell.SetSelected(true);
-                            lineEdit.Text = $"{cell.Value}";
-                            selectedCell = cell;
-                        }
+                        selectedCell?.SetSelected(false);
+                        cell.SetSelected(true);
+                        lineEdit.Text = $"{cell.Value}";
+                        selectedCell = cell;
                     }
 
                     isMouseOn = true;
@@ -130,6 +119,14 @@ public partial class Main : Node2D
 
     public Vector2I GetCoord(Vector2 position)
     {
-        return new Vector2I((int)(position.X / Grid.GRID_WIDTH), (int)(position.Y / Grid.GRID_HEIGHT));
+        Vector2 objectSpacePosition = GetObjectSpacePosition(position);
+        int x = Mathf.FloorToInt(objectSpacePosition.X / Grid.GRID_WIDTH);
+        int y = Mathf.FloorToInt(objectSpacePosition.Y / Grid.GRID_HEIGHT);
+        return new Vector2I(x, y);
+    }
+
+    public Vector2 GetObjectSpacePosition(Vector2 position)
+    {
+        return position + mainCamera.Position - windowSize / 2;
     }
 }
