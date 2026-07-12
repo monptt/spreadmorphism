@@ -5,16 +5,21 @@ using System.Collections.Generic;
 public partial class Main : Node2D
 {
     [Export]
-    LineEdit lineEdit;
-
-    [Export]
     Camera2D mainCamera;
 
     [Export]
     ObjectSpace objectSpace;
 
+
     [Export]
     Grid grid;
+
+    // UI系
+    [Export]
+    LineEdit lineEdit;
+
+    [Export]
+    CoordView coordView;
 
     List<Cell> cells = new List<Cell>();
 
@@ -107,6 +112,10 @@ public partial class Main : Node2D
             Vector2 delta = eventMouseMotion.Position - lastMousePosition;
             lastMousePosition = eventMouseMotion.Position;
 
+            // セル座標を表示
+            Vector2I coord = GetCoord(eventMouseMotion.Position);
+            coordView.SetCoord(coord.X, coord.Y);
+
             if (isMouseOn)
             {
                 // ドラッグ時
@@ -115,5 +124,10 @@ public partial class Main : Node2D
                 grid.SetCameraPosition(mainCamera.Position);
             }
         }
+    }
+
+    public Vector2I GetCoord(Vector2 position)
+    {
+        return new Vector2I((int)(position.X / Grid.GRID_WIDTH), (int)(position.Y / Grid.GRID_HEIGHT));
     }
 }

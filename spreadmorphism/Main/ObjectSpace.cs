@@ -12,7 +12,7 @@ public partial class ObjectSpace : Node2D
     public Cell CreateCell(int x, int y)
     {
         Cell cell = cellScene.Instantiate<Cell>();
-        cell.Position = new Vector2(x * 120, y * 42);
+        cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(cell);
         return cell;
     }
