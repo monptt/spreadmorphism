@@ -12,18 +12,18 @@ script = ExtResource("1_ae1fs")
 lineEdit = NodePath("UI/ColorRect2/LineEdit")
 mainCamera = NodePath("SubViewport/MainCamera")
 objectSpace = NodePath("SubViewport/ObjectSpace")
-grid = NodePath("SubViewport/MainCamera/Grid")
+grid = NodePath("Grid")
 
 [node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
 size = Vector2i(1920, 1080)
 
 [node name="MainCamera" type="Camera2D" parent="SubViewport"]
 position = Vector2(960, 540)
 
-[node name="Grid" parent="SubViewport/MainCamera" instance=ExtResource("3_k32su")]
-position = Vector2(-960, -540)
-
 [node name="ObjectSpace" parent="SubViewport" instance=ExtResource("4_wu2i8")]
+
+[node name="Grid" parent="." instance=ExtResource("3_k32su")]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1920.0

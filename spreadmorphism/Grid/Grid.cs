@@ -11,4 +11,10 @@ public partial class Grid : Node2D
         ShaderMaterial shaderMaterial = colorRect.Material as ShaderMaterial;
         shaderMaterial.SetShaderParameter("cameraPosition", position);
     }
+
+    public void SetCameraZoom(float zoom)
+    {
+        ShaderMaterial shaderMaterial = colorRect.Material as ShaderMaterial;
+        shaderMaterial.SetShaderParameter("cameraZoom", zoom);
+    }
 }

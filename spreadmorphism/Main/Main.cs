@@ -59,27 +59,47 @@ public partial class Main : Node2D
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseButton eventMouseButton && eventMouseButton.ButtonIndex == MouseButton.Left)
+        if (@event is InputEventMouseButton eventMouseButton)
         {
-            if (eventMouseButton.Pressed)
+            if (eventMouseButton.ButtonIndex == MouseButton.Left)
             {
-                // クリック時
-                foreach (Cell cell in cells)
+                if (eventMouseButton.Pressed)
                 {
-                    if (cell.IsClicked(eventMouseButton.Position))
+                    // クリック時
+                    foreach (Cell cell in cells)
                     {
-                        selectedCell?.SetSelected(false);
-                        cell.SetSelected(true);
-                        lineEdit.Text = $"{cell.Value}";
-                        selectedCell = cell;
+                        if (cell.IsClicked(eventMouseButton.Position))
+                        {
+                            selectedCell?.SetSelected(false);
+                            cell.SetSelected(true);
+                            lineEdit.Text = $"{cell.Value}";
+                            selectedCell = cell;
+                        }
                     }
-                }
 
-                isMouseOn = true;
+                    isMouseOn = true;
+                }
+                else
+                {
+                    isMouseOn = false;
+                }
             }
-            else
+            else if (eventMouseButton.ButtonIndex == MouseButton.Right)
             {
-                isMouseOn = false;
+                if (eventMouseButton.Pressed)
+                {
+                    // 右クリック時
+                }
+            }
+            else if (eventMouseButton.ButtonIndex == MouseButton.WheelUp)
+            {
+                mainCamera.Zoom += new Vector2(0.1f, 0.1f);
+                grid.SetCameraZoom(mainCamera.Zoom.X);
+            }
+            else if (eventMouseButton.ButtonIndex == MouseButton.WheelDown)
+            {
+                mainCamera.Zoom -= new Vector2(0.1f, 0.1f);
+                grid.SetCameraZoom(mainCamera.Zoom.X);
             }
         }
         else if (@event is InputEventMouseMotion eventMouseMotion)

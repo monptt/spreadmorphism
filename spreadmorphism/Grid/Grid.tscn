@@ -1,18 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://codbfo30gfmlv"]
+[gd_scene load_steps=4 format=3 uid="uid://codbfo30gfmlv"]
 
 [ext_resource type="Shader" path="res://Grid/Grid.gdshader" id="1_5uflm"]
 [ext_resource type="Script" path="res://Grid/Grid.cs" id="1_7dl7m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rkssc"]
-shader = ExtResource("1_5uflm")
-shader_parameter/cameraPosition = null
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o42jy"]
 shader = ExtResource("1_5uflm")
 shader_parameter/cameraPosition = null
+shader_parameter/cameraZoom = 1.0
 
 [node name="Grid" type="Node2D" node_paths=PackedStringArray("colorRect")]
-material = SubResource("ShaderMaterial_rkssc")
 script = ExtResource("1_7dl7m")
 colorRect = NodePath("ColorRect")
 
