@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://codbfo30gfmlv"]
+
+[ext_resource type="Shader" path="res://Grid/Grid.gdshader" id="1_5uflm"]
+[ext_resource type="Script" path="res://Grid/Grid.cs" id="1_7dl7m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rkssc"]
+shader = ExtResource("1_5uflm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o42jy"]
+shader = ExtResource("1_5uflm")
+
+[node name="Grid" type="Node2D" node_paths=PackedStringArray("colorRect")]
+material = SubResource("ShaderMaterial_rkssc")
+script = ExtResource("1_7dl7m")
+colorRect = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_o42jy")
+offset_right = 1920.0
+offset_bottom = 1080.0
