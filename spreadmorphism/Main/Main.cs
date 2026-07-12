@@ -23,7 +23,11 @@ public partial class Main : Node2D
     [Export]
     CoordView coordView;
 
+    [Export]
+    Palette palette;
+
     Cell selectedCell = null;
+    Vector2I selectedCoord = new Vector2I(0, 0);
 
     // Input関連
     Vector2 lastMousePosition = Vector2.Zero;
@@ -38,7 +42,7 @@ public partial class Main : Node2D
         {
             for (int j = 0; j < 10; j++)
             {
-                objectSpace.CreateCell(i, j);
+                objectSpace.CreateNumberObject(i, j);
             }
         }
 
@@ -49,6 +53,12 @@ public partial class Main : Node2D
             {
                 selectedCell.SetValue(int.Parse(value));
             }
+        };
+
+        palette.AddObject += (type) =>
+        {
+            GD.Print("addObject: ", type);
+            objectSpace.CreateNumberObject(selectedCoord.X, selectedCoord.Y);
         };
     }
 
@@ -76,7 +86,8 @@ public partial class Main : Node2D
                     }
 
                     // 選択したセルを表示
-                    Vector2 selectedRectPos = GetCoord(eventMouseButton.Position);
+                    this.selectedCoord = GetCoord(eventMouseButton.Position);
+                    Vector2 selectedRectPos = new Vector2(this.selectedCoord.X, this.selectedCoord.Y);
                     selectedRectPos.X *= Grid.GRID_WIDTH;
                     selectedRectPos.Y *= Grid.GRID_HEIGHT;
                     selectedRect.Position = selectedRectPos;

@@ -8,14 +8,15 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_es5e4"]
 font_size = 9
 
-[node name="NumberObject" type="Node2D"]
+[node name="NumberObject" type="Node2D" node_paths=PackedStringArray("valueLabel")]
 script = ExtResource("1_8khwb")
+valueLabel = NodePath("bg/ValueLabel")
 
 [node name="bg" type="ColorRect" parent="."]
 offset_right = 99.0
 offset_bottom = 29.0
 
-[node name="Label" type="Label" parent="bg"]
+[node name="ValueLabel" type="Label" parent="bg"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

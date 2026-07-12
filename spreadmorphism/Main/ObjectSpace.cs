@@ -11,14 +11,14 @@ public partial class ObjectSpace : Node2D
     PackedScene numberObjScene;
 
 
-    List<NumberObject> cells = new List<NumberObject>();
+    List<NumberObject> numberObjects = new List<NumberObject>();
 
-    public NumberObject CreateCell(int x, int y)
+    public NumberObject CreateNumberObject(int x, int y)
     {
         NumberObject cell = numberObjScene.Instantiate<NumberObject>();
         cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(cell);
-        cells.Add(cell);
+        numberObjects.Add(cell);
         return cell;
     }
 
