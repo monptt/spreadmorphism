@@ -9,6 +9,9 @@ public partial class NumberObject : ObjectBase
 
     public override ObjectType Type => ObjectType.Number;
 
+    string valueStr = "";
+    public string ValueStr => valueStr;
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell };
@@ -21,7 +24,7 @@ public partial class NumberObject : ObjectBase
         SetValue(0);
     }
 
-    public void SetValue(int value)
+    void SetValue(int value)
     {
         cell.SetValue(value);
     }

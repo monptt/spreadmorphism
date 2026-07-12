@@ -43,7 +43,7 @@ public partial class Main : Node2D
         {
             if (selectedCell != null)
             {
-                selectedCell.SetValue(int.Parse(value));
+                selectedCell.SetValueStr(value);
             }
         };
 
@@ -196,7 +196,7 @@ public partial class Main : Node2D
         {
             selectedCell?.SetSelected(false);
             cell.SetSelected(true);
-            lineEdit.Text = $"{cell.Value}";
+            lineEdit.Text = cell.ValueStr;
             selectedCell = cell;
         }
 
