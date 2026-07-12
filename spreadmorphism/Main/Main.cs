@@ -79,6 +79,7 @@ public partial class Main : Node2D
                 if (eventMouseButton.Pressed)
                 {
                     // クリック時
+                    isMouseOn = true;
 
                     // パレットのクリックは除外
                     if (palette.IsInPaletteArea(eventMouseButton.Position))
@@ -97,14 +98,8 @@ public partial class Main : Node2D
                     }
 
                     // 選択したセルを表示
-                    this.selectedCoord = GetCoord(eventMouseButton.Position);
-                    Vector2 selectedRectPos = new Vector2(this.selectedCoord.X, this.selectedCoord.Y);
-                    selectedRectPos.X *= Grid.GRID_WIDTH;
-                    selectedRectPos.Y *= Grid.GRID_HEIGHT;
-                    selectedRect.Position = selectedRectPos;
-
-
-                    isMouseOn = true;
+                    Vector2I coord = GetCoord(eventMouseButton.Position);
+                    SelectCell(coord);
                 }
                 else
                 {
@@ -146,6 +141,29 @@ public partial class Main : Node2D
                 grid.SetCameraPosition(mainCamera.Position - windowSize / 2);
             }
         }
+        else if (@event is InputEventKey eventKey)
+        {
+            // キー入力
+            if (eventKey.Pressed)
+            {
+                if (eventKey.Keycode == Key.Left)
+                {
+                    SelectCell(selectedCoord - new Vector2I(1, 0));
+                }
+                else if (eventKey.Keycode == Key.Right)
+                {
+                    SelectCell(selectedCoord + new Vector2I(1, 0));
+                }
+                else if (eventKey.Keycode == Key.Up)
+                {
+                    SelectCell(selectedCoord - new Vector2I(0, 1));
+                }
+                else if (eventKey.Keycode == Key.Down)
+                {
+                    SelectCell(selectedCoord + new Vector2I(0, 1));
+                }
+            }
+        }
     }
 
     public Vector2I GetCoord(Vector2 position)
@@ -159,5 +177,14 @@ public partial class Main : Node2D
     public Vector2 GetObjectSpacePosition(Vector2 position)
     {
         return position + mainCamera.Position - windowSize / 2;
+    }
+
+    void SelectCell(Vector2I coord)
+    {
+        this.selectedCoord = coord;
+        Vector2 selectedRectPos = new Vector2(coord.X, coord.Y);
+        selectedRectPos.X *= Grid.GRID_WIDTH;
+        selectedRectPos.Y *= Grid.GRID_HEIGHT;
+        selectedRect.Position = selectedRectPos;
     }
 }
