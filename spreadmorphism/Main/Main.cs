@@ -26,8 +26,18 @@ public partial class Main : Node2D
     [Export]
     Palette palette;
 
+    /// <summary>
+    /// 選択されたオブジェクト（オブジェクトが選択された場合）
+    /// </summary>
+    ObjectBase selectedObject = null;
+    /// <summary>
+    /// 選択されたセル（セルが選択された場合）
+    /// </summary>
     Cell selectedCell = null;
-    GridPos selectedCoord = new GridPos(0, 0);
+    /// <summary>
+    /// 選択されたグリッド座標
+    /// </summary>
+    GridPos selectedGridPos = new GridPos(0, 0);
 
     // Input関連
     Vector2 lastMousePosition = Vector2.Zero;
@@ -45,6 +55,10 @@ public partial class Main : Node2D
             {
                 selectedCell.SetValueStr(value);
             }
+            else if (selectedObject != null)
+            {
+                selectedObject.SetValueStr(value);
+            }
         };
 
         palette.AddObject += (type) =>
@@ -53,13 +67,13 @@ public partial class Main : Node2D
             switch (type)
             {
                 case ObjectType.Number:
-                    objectSpace.CreateNumberObject(selectedCoord.X, selectedCoord.Y);
+                    objectSpace.CreateNumberObject(selectedGridPos.X, selectedGridPos.Y);
                     break;
                 case ObjectType.Vec2:
-                    objectSpace.CreateVec2Object(selectedCoord.X, selectedCoord.Y);
+                    objectSpace.CreateVec2Object(selectedGridPos.X, selectedGridPos.Y);
                     break;
                 case ObjectType.Vec3:
-                    objectSpace.CreateVec3Object(selectedCoord.X, selectedCoord.Y);
+                    objectSpace.CreateVec3Object(selectedGridPos.X, selectedGridPos.Y);
                     break;
                 default:
                     break;
@@ -89,11 +103,11 @@ public partial class Main : Node2D
                     }
 
                     // 選択したセルを表示
-                    GridPos coord = GetCoord(eventMouseButton.Position);
-                    SelectCell(coord);
+                    GridPos gridPos = CalcGridPos(eventMouseButton.Position);
+                    SelectGrid(gridPos);
 
                     // オブジェクトがあればドラッグ開始
-                    ObjectBase obj = objectSpace.GetObject(GetCoord(eventMouseButton.Position));
+                    ObjectBase obj = objectSpace.GetObject(CalcGridPos(eventMouseButton.Position));
                     if (obj != null)
                     {
                         draggedObject = obj;
@@ -110,6 +124,12 @@ public partial class Main : Node2D
                 if (eventMouseButton.Pressed)
                 {
                     // 右クリック時
+                    GridPos gridPos = CalcGridPos(eventMouseButton.Position);
+                    ObjectBase obj = objectSpace.GetObject(gridPos);
+                    if (obj != null)
+                    {
+                        obj.SetIsOneObject(!obj.IsOneObject);
+                    }
                 }
             }
             else if (eventMouseButton.ButtonIndex == MouseButton.WheelUp)
@@ -129,7 +149,7 @@ public partial class Main : Node2D
             lastMousePosition = eventMouseMotion.Position;
 
             // セル座標を表示
-            GridPos coord = GetCoord(eventMouseMotion.Position);
+            GridPos coord = CalcGridPos(eventMouseMotion.Position);
             coordView.SetCoord(coord.X, coord.Y);
 
             if (isMouseOn)
@@ -155,25 +175,25 @@ public partial class Main : Node2D
             {
                 if (eventKey.Keycode == Key.Left)
                 {
-                    SelectCell(selectedCoord - new GridPos(1, 0));
+                    SelectGrid(selectedGridPos - new GridPos(1, 0));
                 }
                 else if (eventKey.Keycode == Key.Right)
                 {
-                    SelectCell(selectedCoord + new GridPos(1, 0));
+                    SelectGrid(selectedGridPos + new GridPos(1, 0));
                 }
                 else if (eventKey.Keycode == Key.Up)
                 {
-                    SelectCell(selectedCoord - new GridPos(0, 1));
+                    SelectGrid(selectedGridPos - new GridPos(0, 1));
                 }
                 else if (eventKey.Keycode == Key.Down)
                 {
-                    SelectCell(selectedCoord + new GridPos(0, 1));
+                    SelectGrid(selectedGridPos + new GridPos(0, 1));
                 }
             }
         }
     }
 
-    public GridPos GetCoord(Vector2 position)
+    public GridPos CalcGridPos(Vector2 position)
     {
         Vector2 objectSpacePosition = GetObjectSpacePosition(position);
         int x = Mathf.FloorToInt(objectSpacePosition.X / Grid.GRID_WIDTH);
@@ -186,24 +206,39 @@ public partial class Main : Node2D
         return position + mainCamera.Position - windowSize / 2;
     }
 
-    void SelectCell(GridPos pos)
+    void SelectGrid(GridPos pos)
     {
-        GD.Print($"SelectCell: ({pos.X}, {pos.Y})");
+        GD.Print($"SelectGrid: ({pos.X}, {pos.Y})");
+
+        // グリッド選択状態を更新
+        this.selectedGridPos = pos;
+        Vector2 selectedRectPos = new Vector2(pos.X, pos.Y);
+        selectedRectPos.X *= Grid.GRID_WIDTH;
+        selectedRectPos.Y *= Grid.GRID_HEIGHT;
+        selectedRect.Position = selectedRectPos;
+
+        // オブジェクトが全体選択になってたらオブジェクトを選択
+        ObjectBase obj = objectSpace.GetObject(pos);
+        if (obj != null && obj.IsOneObject)
+        {
+            GD.Print("SelectObject");
+            lineEdit.Text = obj.ValueStr;
+            selectedObject = obj;
+            selectedCell = null;
+            return;
+        }
 
         // セルがあれば選択
         Cell cell = objectSpace.GetCell(pos);
         if (cell != null)
         {
+            GD.Print("SelectCell");
             selectedCell?.SetSelected(false);
             cell.SetSelected(true);
             lineEdit.Text = cell.ValueStr;
             selectedCell = cell;
+            selectedObject = null;
+            return;
         }
-
-        this.selectedCoord = pos;
-        Vector2 selectedRectPos = new Vector2(pos.X, pos.Y);
-        selectedRectPos.X *= Grid.GRID_WIDTH;
-        selectedRectPos.Y *= Grid.GRID_HEIGHT;
-        selectedRect.Position = selectedRectPos;
     }
 }

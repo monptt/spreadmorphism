@@ -16,4 +16,9 @@ public partial class Vec2Object : ObjectBase
     {
         return new List<Cell> { cell_x, cell_y };
     }
+
+    protected override void ParseValueStr(string valueStr)
+    {
+        //@todo: 実装
+    }
 }

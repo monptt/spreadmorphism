@@ -9,8 +9,10 @@ public partial class NumberObject : ObjectBase
 
     public override ObjectType Type => ObjectType.Number;
 
-    string valueStr = "";
-    public string ValueStr => valueStr;
+    protected override void ParseValueStr(string valueStr)
+    {
+        SetValue(int.Parse(valueStr));
+    }
 
     public override List<Cell> GetCells()
     {

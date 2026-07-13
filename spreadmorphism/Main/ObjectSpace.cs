@@ -127,10 +127,9 @@ public partial class ObjectSpace : Node2D
     /// <returns>オブジェクト</returns>
     public ObjectBase GetObject(GridPos pos)
     {
-        //@todo: オブジェクトの左上以外の座標でも取得できるようにする
         foreach (ObjectBase obj in objects)
         {
-            if (obj.GetGridPos() == pos)
+            if (obj.IsContainPos(pos))
             {
                 return obj;
             }

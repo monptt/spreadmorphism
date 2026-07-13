@@ -19,4 +19,9 @@ public partial class Vec3Object : ObjectBase
     {
         return new List<Cell> { cell_x, cell_y, cell_z };
     }
+
+    protected override void ParseValueStr(string valueStr)
+    {
+        //@todo: 実装
+    }
 }
