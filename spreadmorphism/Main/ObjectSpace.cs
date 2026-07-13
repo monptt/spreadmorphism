@@ -47,14 +47,11 @@ public partial class ObjectSpace : Node2D
     /// <summary>
     /// すべてのセルの値を更新する
     /// </summary>
-    public void UpdateAllCells()
+    public void UpdateAllObjects()
     {
         foreach (ObjectBase obj in objects)
         {
-            foreach (Cell cell in obj.GetCells())
-            {
-                cell.UpdateValue();
-            }
+            obj.ForceUpdate();
         }
     }
 

@@ -83,7 +83,7 @@ public partial class Cell : Node2D
         this.SetValue(value);
 
         // 他のセルの値も更新する
-        ObjectSpace.Instance.UpdateAllCells();
+        ObjectSpace.Instance.UpdateAllObjects();
     }
 
     public void SetSelected(bool selected)

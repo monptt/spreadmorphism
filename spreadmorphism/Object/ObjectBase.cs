@@ -33,6 +33,22 @@ public abstract partial class ObjectBase : Node2D
 
     protected abstract void ParseValueStr(string valueStr);
 
+    public void ForceUpdate()
+    {
+        if (IsOneObject)
+        {
+            this.ParseValueStr(valueStr);
+        }
+        else
+        {
+            foreach (Cell cell in GetCells())
+            {
+                cell.UpdateValue();
+            }
+        }
+
+    }
+
     public void SetIsOneObject(bool isOneObject)
     {
         this.isOneObject = isOneObject;
