@@ -16,7 +16,7 @@ public class Formula
         this.formulaStr = formulaStr;
 
         // 解析
-        Tokenize(formulaStr);
+        List<FormulaToken> tokens = Tokenize(formulaStr);
     }
 
     /// <summary>
@@ -59,16 +59,16 @@ public class Formula
             }
         }
 
-
-
-        // 出力
-        string output = "";
-        foreach (FormulaToken token in tokens)
-        {
-            output += $"\"{token.TokenStr}\", ";
-        }
-        GD.Print(output);
-
         return tokens;
+    }
+
+    /// <summary>
+    /// 数式を評価する
+    /// </summary>
+    /// <param name="tokens">トークンリスト</param>
+    /// <returns>値</returns>
+    ValueBase Evaluate(List<FormulaToken> tokens)
+    {
+        return null;
     }
 }
