@@ -67,7 +67,7 @@ public class Formula
     /// </summary>
     /// <param name="tokens">トークンリスト</param>
     /// <returns>値</returns>
-    ValueBase Evaluate(List<FormulaToken> tokens)
+    ElementBase Evaluate(List<FormulaToken> tokens)
     {
         return null;
     }
