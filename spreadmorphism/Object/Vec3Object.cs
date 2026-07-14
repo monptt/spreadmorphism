@@ -20,7 +20,7 @@ public partial class Vec3Object : ObjectBase
         return new List<Cell> { cell_x, cell_y, cell_z };
     }
 
-    protected override void ParseValueStr(string valueStr)
+    protected override void EvaluateFormula(Formula formula)
     {
         //@todo: 実装
     }

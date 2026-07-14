@@ -25,19 +25,18 @@ public abstract partial class ObjectBase : Node2D
     bool isOneObject = false;
 
     /// <summary>
-    /// 値の文字列
+    /// 数式
     /// </summary>
-    string valueStr = "";
+    Formula formula = new Formula("");
+    public Formula Formula => formula;
 
-    public string ValueStr => valueStr;
-
-    protected abstract void ParseValueStr(string valueStr);
+    protected abstract void EvaluateFormula(Formula formula);
 
     public void ForceUpdate()
     {
         if (IsOneObject)
         {
-            this.ParseValueStr(valueStr);
+            this.EvaluateFormula(formula);
         }
         else
         {
@@ -70,8 +69,8 @@ public abstract partial class ObjectBase : Node2D
 
     public void SetValueStr(string valueStr)
     {
-        this.valueStr = valueStr;
-        ParseValueStr(valueStr);
+        this.formula = new Formula(valueStr);
+        EvaluateFormula(formula);
     }
 
     public GridPos GetGridPos()

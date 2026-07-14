@@ -23,20 +23,22 @@ public partial class Vec2Object : ObjectBase
         cell_y.SetValue(y);
     }
 
-    protected override void ParseValueStr(string valueStr)
+    protected override void EvaluateFormula(Formula formula)
     {
-        if (valueStr == "")
+
+        string formulaStr = formula.FormulaStr;
+        if (formulaStr == "")
         {
             return;
         }
 
         // [x,y] みたいな形式を読みたい（仮）
-        if (valueStr[0] == '[' && valueStr[valueStr.Length - 1] == ']')
+        if (formulaStr[0] == '[' && formulaStr[formulaStr.Length - 1] == ']')
         {
-            valueStr = valueStr.Substring(1, valueStr.Length - 2);
+            formulaStr = formulaStr.Substring(1, formulaStr.Length - 2);
         }
 
-        string[] values = valueStr.Split(',');
+        string[] values = formulaStr.Split(',');
         if (values.Length == 2)
         {
             GridPos targetPos = new GridPos(int.Parse(values[0]), int.Parse(values[1]));

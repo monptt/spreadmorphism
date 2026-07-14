@@ -9,9 +9,9 @@ public partial class NumberObject : ObjectBase
 
     public override ObjectType Type => ObjectType.Number;
 
-    protected override void ParseValueStr(string valueStr)
+    protected override void EvaluateFormula(Formula formula)
     {
-        SetValue(int.Parse(valueStr));
+        SetValue(int.Parse(formula.FormulaStr));
     }
 
     public override List<Cell> GetCells()

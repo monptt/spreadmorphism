@@ -222,7 +222,7 @@ public partial class Main : Node2D
         if (obj != null && obj.IsOneObject)
         {
             GD.Print("SelectObject");
-            lineEdit.Text = obj.ValueStr;
+            lineEdit.Text = obj.Formula.FormulaStr;
             selectedObject = obj;
             selectedCell = null;
             return;
