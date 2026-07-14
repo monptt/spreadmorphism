@@ -67,9 +67,9 @@ public abstract partial class ObjectBase : Node2D
         }
     }
 
-    public void SetValueStr(string valueStr)
+    public void SetFormula(string formulaStr)
     {
-        this.formula = new Formula(valueStr);
+        this.formula = new Formula(formulaStr);
         EvaluateFormula(formula);
     }
 

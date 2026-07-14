@@ -19,8 +19,8 @@ public partial class Cell : Node2D
     int value = 0;
     public int Value => value;
 
-    string valueStr = "";
-    public string ValueStr => valueStr;
+    Formula formula = new Formula("");
+    public Formula Formula => formula;
 
     CellStatus status = CellStatus.Default;
     public CellStatus Status => status;
@@ -42,7 +42,7 @@ public partial class Cell : Node2D
     /// </summary>
     public void UpdateValue()
     {
-        int value = ParseValue(valueStr);
+        int value = ParseValue(formula.FormulaStr);
         this.SetValue(value);
     }
 
@@ -76,10 +76,10 @@ public partial class Cell : Node2D
         valueLabel.Text = $"{value}";
     }
 
-    public void SetValueStr(string valueStr)
+    public void SetFormula(string formulaStr)
     {
-        this.valueStr = valueStr;
-        int value = ParseValue(valueStr);
+        this.formula = new Formula(formulaStr);
+        int value = ParseValue(formula.FormulaStr);
         this.SetValue(value);
 
         // 他のセルの値も更新する

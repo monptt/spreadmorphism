@@ -53,11 +53,11 @@ public partial class Main : Node2D
         {
             if (selectedCell != null)
             {
-                selectedCell.SetValueStr(value);
+                selectedCell.SetFormula(value);
             }
             else if (selectedObject != null)
             {
-                selectedObject.SetValueStr(value);
+                selectedObject.SetFormula(value);
             }
         };
 
@@ -235,7 +235,7 @@ public partial class Main : Node2D
             GD.Print("SelectCell");
             selectedCell?.SetSelected(false);
             cell.SetSelected(true);
-            lineEdit.Text = cell.ValueStr;
+            lineEdit.Text = cell.Formula.FormulaStr;
             selectedCell = cell;
             selectedObject = null;
             return;
