@@ -14,10 +14,9 @@ public partial class NumberObject : ObjectBase
     protected override void EvaluateFormula(Formula formula)
     {
         ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
-        GD.Print(formula.FormulaStr);
+
         if (element is NumberElement numberElement)
         {
-            GD.Print($"numberElement: {numberElement.Value}");
             SetElement(numberElement);
         }
     }

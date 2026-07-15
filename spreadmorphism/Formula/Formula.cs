@@ -115,53 +115,68 @@ public class Formula
         {
             if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
             {
-                // ","で分割して、左側と右側とを足す
-                //@todo: 複数引数にも対応する
-                List<FormulaToken> leftTokens = new List<FormulaToken>();
-                List<FormulaToken> rightTokens = new List<FormulaToken>();
-                bool isLeft = true;
-                int depth = 0;
-                for (int i = 2; i < tokens.Count - 1; i++)
+                List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
+                GD.Print(argTokens.Count);
+                int sum = 0;
+                foreach (List<FormulaToken> argToken in argTokens)
                 {
-                    if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                    ElementBase element = Evaluate(argToken);
+                    if (element == null)
                     {
-                        depth++;
-                    }
-                    if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
-                    {
-                        depth--;
-                    }
-
-                    if (tokens[i].TokenStr == "," && depth == 0)
-                    {
-                        isLeft = !isLeft;
                         continue;
                     }
-                    if (isLeft)
+                    if (element is NumberElement numberElement)
                     {
-                        leftTokens.Add(tokens[i]);
-                    }
-                    else
-                    {
-                        rightTokens.Add(tokens[i]);
+                        sum += numberElement.Value;
                     }
                 }
-
-                ElementBase leftElement = Evaluate(leftTokens);
-                ElementBase rightElement = Evaluate(rightTokens);
-                if (leftElement == null || rightElement == null)
-                {
-                    return null;
-                }
-
-                // 数値が得られた場合
-                if (leftElement is NumberElement leftNumberElement && rightElement is NumberElement rightNumberElement)
-                {
-                    return new NumberElement(leftNumberElement.Value + rightNumberElement.Value);
-                }
+                return new NumberElement(sum);
             }
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// (xxx, yyy, zzz) 形式を ","で分割する
+    /// </summary>
+    /// <param name="tokens"></param>
+    /// <returns></returns>
+    List<List<FormulaToken>> SplitArgsByComma(List<FormulaToken> tokens)
+    {
+        List<List<FormulaToken>> result = new List<List<FormulaToken>>();
+        List<FormulaToken> current = new List<FormulaToken>();
+
+        int depth = 0;
+        for (int i = 0; i < tokens.Count; i++)
+        {
+            if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+            {
+                depth++;
+            }
+            if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+            {
+                depth--;
+            }
+
+            if (depth == 0 && tokens[i].TokenStr == ",")
+            {
+                if (current.Count > 0)
+                {
+                    result.Add(current);
+                    current = new List<FormulaToken>();
+                }
+            }
+            else
+            {
+                current.Add(tokens[i]);
+            }
+        }
+
+        if (current.Count > 0)
+        {
+            result.Add(current);
+        }
+        return result;
     }
 }
