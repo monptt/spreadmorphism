@@ -9,9 +9,13 @@ public partial class NumberObject : ObjectBase
 
     public override ObjectType Type => ObjectType.Number;
 
+    NumberElement element = null;
+
     protected override void EvaluateFormula(Formula formula)
     {
-        SetValue(int.Parse(formula.FormulaStr));
+        int value = int.Parse(formula.FormulaStr);
+        NumberElement element = new NumberElement(value);
+        SetElement(element);
     }
 
     public override List<Cell> GetCells()
@@ -23,12 +27,13 @@ public partial class NumberObject : ObjectBase
 
     public override void _Ready()
     {
-        SetValue(0);
+        SetElement(new NumberElement(0));
     }
 
-    void SetValue(int value)
+    void SetElement(NumberElement element)
     {
-        cell.SetValue(value);
+        this.element = element;
+        cell.SetValue(element.Value);
     }
 
     public Cell GetCell()

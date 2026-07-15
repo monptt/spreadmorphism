@@ -12,15 +12,18 @@ public partial class Vec2Object : ObjectBase
 
     public override ObjectType Type => ObjectType.Vec2;
 
+    Vec2Element element = null;
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell_x, cell_y };
     }
 
-    void SetValue(int x, int y)
+    void SetElement(Vec2Element element)
     {
-        cell_x.SetValue(x);
-        cell_y.SetValue(y);
+        this.element = element;
+        cell_x.SetValue(element.X.Value);
+        cell_y.SetValue(element.Y.Value);
     }
 
     protected override void EvaluateFormula(Formula formula)
@@ -46,7 +49,7 @@ public partial class Vec2Object : ObjectBase
             ObjectBase obj = ObjectSpace.Instance.GetObject(targetPos);
             if (obj is Vec2Object targetObj)
             {
-                this.SetValue(targetObj.cell_x.Value, targetObj.cell_y.Value);
+                this.SetElement(targetObj.element);
             }
         }
     }
