@@ -17,6 +17,11 @@ public partial class Vec3Object : ObjectBase
 
     Vec3Element element = null;
 
+    public override ElementBase GetElement()
+    {
+        return element;
+    }
+
     public override void _Ready()
     {
         SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));

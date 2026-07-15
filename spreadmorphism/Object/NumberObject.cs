@@ -13,9 +13,18 @@ public partial class NumberObject : ObjectBase
 
     protected override void EvaluateFormula(Formula formula)
     {
-        int value = int.Parse(formula.FormulaStr);
-        NumberElement element = new NumberElement(value);
-        SetElement(element);
+        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        GD.Print(formula.FormulaStr);
+        if (element is NumberElement numberElement)
+        {
+            GD.Print($"numberElement: {numberElement.Value}");
+            SetElement(numberElement);
+        }
+    }
+
+    public override ElementBase GetElement()
+    {
+        return element;
     }
 
     public override List<Cell> GetCells()
@@ -27,6 +36,7 @@ public partial class NumberObject : ObjectBase
 
     public override void _Ready()
     {
+        this.SetIsOneObject(true);
         SetElement(new NumberElement(0));
     }
 

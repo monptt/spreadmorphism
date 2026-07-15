@@ -42,7 +42,7 @@ public partial class Cell : Node2D
     /// </summary>
     public void UpdateValue()
     {
-        int value = ParseValue(formula.FormulaStr);
+        int value = ParseFormula(formula.FormulaStr);
         this.SetValue(value);
     }
 
@@ -79,11 +79,8 @@ public partial class Cell : Node2D
     public void SetFormula(string formulaStr)
     {
         this.formula = new Formula(formulaStr);
-        int value = ParseValue(formula.FormulaStr);
+        int value = ParseFormula(formula.FormulaStr);
         this.SetValue(value);
-
-        // 他のセルの値も更新する
-        ObjectSpace.Instance.UpdateAllObjects();
     }
 
     public void SetSelected(bool selected)
@@ -110,47 +107,15 @@ public partial class Cell : Node2D
         return colorRect.GetGlobalRect().HasPoint(position);
     }
 
-    int ParseValue(string valueStr)
+    int ParseFormula(string formulaStr)
     {
-        if (valueStr.Length == 0)
+        ElementBase element = formula.Evaluate(formula.Tokenize(formulaStr));
+        GD.Print(formula.FormulaStr);
+        if (element is NumberElement numberElement)
         {
-            return 0;
+            GD.Print($"numberElement: {numberElement.Value}");
+            return numberElement.Value;
         }
-
-        if (valueStr[0] == '=')
-        {
-            SetStatus(CellStatus.Dependent);
-
-            //@todo: 数式を解析する
-            // とりあえず全セルのSUMとする
-            int sum = 0;
-            foreach (ObjectBase obj in ObjectSpace.Instance.Objects)
-            {
-                foreach (Cell cell in obj.GetCells())
-                {
-                    if (cell == this)
-                    {
-                        continue;
-                    }
-                    sum += cell.Value;
-                }
-            }
-            return sum;
-        }
-        else
-        {
-            SetStatus(isSelected ? CellStatus.Selected : CellStatus.Default);
-        }
-
-        // 整数として解析する
-        int value = 0;
-        if (int.TryParse(valueStr, out value))
-        {
-            return value;
-        }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 }

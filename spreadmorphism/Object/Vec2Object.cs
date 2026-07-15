@@ -19,6 +19,11 @@ public partial class Vec2Object : ObjectBase
         return new List<Cell> { cell_x, cell_y };
     }
 
+    public override ElementBase GetElement()
+    {
+        return element;
+    }
+
     void SetElement(Vec2Element element)
     {
         this.element = element;

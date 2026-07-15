@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 数式クラス
@@ -24,7 +25,7 @@ public class Formula
     /// </summary>
     /// <param name="formulaStr">数式文字列</param>
     /// <returns>トークンリスト</returns>
-    List<FormulaToken> Tokenize(string formulaStr)
+    public List<FormulaToken> Tokenize(string formulaStr)
     {
         List<FormulaToken> tokens = new List<FormulaToken>();
 
@@ -67,8 +68,48 @@ public class Formula
     /// </summary>
     /// <param name="tokens">トークンリスト</param>
     /// <returns>値</returns>
-    ElementBase Evaluate(List<FormulaToken> tokens)
+    public ElementBase Evaluate(List<FormulaToken> tokens)
     {
+        if (tokens.Count == 0)
+        {
+            return null;
+        }
+
+        if (tokens[0].TokenStr == "=")
+        {
+            return Evaluate(tokens.Skip(1).ToList());
+        }
+
+        if (tokens.Count == 1)
+        {
+            // 数値のみの想定
+            bool parseResult = int.TryParse(tokens[0].TokenStr, out int value);
+            if (!parseResult)
+            {
+                return null;
+            }
+            return new NumberElement(value);
+        }
+
+        if (tokens[0].TokenStr == "[" && tokens.Count == 5 && tokens[2].TokenStr == "," && tokens[4].TokenStr == "]")
+        {
+            // [x, y] 形式を想定
+            int x = 0;
+            int y = 0;
+            bool parseResult = int.TryParse(tokens[1].TokenStr, out x) && int.TryParse(tokens[3].TokenStr, out y);
+            if (!parseResult)
+            {
+                return null;
+            }
+            GridPos pos = new GridPos(x, y);
+            ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
+            if (obj == null)
+            {
+                return null;
+            }
+            return obj.GetElement();
+        }
+
         return null;
     }
 }

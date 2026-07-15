@@ -32,6 +32,8 @@ public abstract partial class ObjectBase : Node2D
 
     protected abstract void EvaluateFormula(Formula formula);
 
+    public abstract ElementBase GetElement();
+
     public void ForceUpdate()
     {
         if (IsOneObject)

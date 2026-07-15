@@ -41,7 +41,9 @@ public partial class ObjectSpace : Node2D
 
     public override void _Process(double delta)
     {
-
+        // すべてのオブジェクト(セル)の値を更新する
+        //@todo: 必要なときだけにする
+        UpdateAllObjects();
     }
 
     /// <summary>
