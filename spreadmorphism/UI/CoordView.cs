@@ -8,6 +8,6 @@ public partial class CoordView : Node2D
 
     public void SetCoord(int x, int y)
     {
-        label.Text = $"({x}, {y})";
+        label.Text = $"[{x}, {y}]";
     }
 }
