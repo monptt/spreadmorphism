@@ -110,6 +110,58 @@ public class Formula
             return obj.GetElement();
         }
 
+        // 関数系
+        if (tokens[0].TokenStr == "SUM" && tokens.Count > 2)
+        {
+            if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+            {
+                // ","で分割して、左側と右側とを足す
+                //@todo: 複数引数にも対応する
+                List<FormulaToken> leftTokens = new List<FormulaToken>();
+                List<FormulaToken> rightTokens = new List<FormulaToken>();
+                bool isLeft = true;
+                int depth = 0;
+                for (int i = 2; i < tokens.Count - 1; i++)
+                {
+                    if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                    {
+                        depth++;
+                    }
+                    if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                    {
+                        depth--;
+                    }
+
+                    if (tokens[i].TokenStr == "," && depth == 0)
+                    {
+                        isLeft = !isLeft;
+                        continue;
+                    }
+                    if (isLeft)
+                    {
+                        leftTokens.Add(tokens[i]);
+                    }
+                    else
+                    {
+                        rightTokens.Add(tokens[i]);
+                    }
+                }
+
+                ElementBase leftElement = Evaluate(leftTokens);
+                ElementBase rightElement = Evaluate(rightTokens);
+                if (leftElement == null || rightElement == null)
+                {
+                    return null;
+                }
+
+                // 数値が得られた場合
+                if (leftElement is NumberElement leftNumberElement && rightElement is NumberElement rightNumberElement)
+                {
+                    return new NumberElement(leftNumberElement.Value + rightNumberElement.Value);
+                }
+            }
+        }
+
         return null;
     }
 }
