@@ -116,7 +116,7 @@ public class Formula
             if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
             {
                 List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
-                GD.Print(argTokens.Count);
+
                 int sum = 0;
                 foreach (List<FormulaToken> argToken in argTokens)
                 {
