@@ -16,6 +16,9 @@ public partial class ObjectSpace : Node2D
     [Export]
     PackedScene vec3ObjScene;
 
+    [Export]
+    PackedScene stringObjScene;
+
     static ObjectSpace instance = null;
     public static ObjectSpace Instance => instance;
 
@@ -78,6 +81,15 @@ public partial class ObjectSpace : Node2D
     public Vec3Object CreateVec3Object(int x, int y)
     {
         Vec3Object obj = vec3ObjScene.Instantiate<Vec3Object>();
+        obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
+        AddChild(obj);
+        objects.Add(obj);
+        return obj;
+    }
+
+    public StringObject CreateStringObject(int x, int y)
+    {
+        StringObject obj = stringObjScene.Instantiate<StringObject>();
         obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
         AddChild(obj);
         objects.Add(obj);

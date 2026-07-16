@@ -3,6 +3,7 @@ using System;
 
 public partial class Palette : Node2D
 {
+    // Object生成ボタン
     [Export]
     Button numButton;
 
@@ -12,6 +13,11 @@ public partial class Palette : Node2D
     [Export]
     Button vec3Button;
 
+    [Export]
+    Button stringButton;
+
+
+    // その他
     [Export]
     ColorRect colorRect;
 
@@ -33,6 +39,11 @@ public partial class Palette : Node2D
         vec3Button.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Vec3);
+        };
+
+        stringButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.String);
         };
     }
 

@@ -75,6 +75,9 @@ public partial class Main : Node2D
                 case ObjectType.Vec3:
                     objectSpace.CreateVec3Object(selectedGridPos.X, selectedGridPos.Y);
                     break;
+                case ObjectType.String:
+                    objectSpace.CreateStringObject(selectedGridPos.X, selectedGridPos.Y);
+                    break;
                 default:
                     break;
             }

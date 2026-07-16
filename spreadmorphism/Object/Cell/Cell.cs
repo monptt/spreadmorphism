@@ -104,6 +104,11 @@ public partial class Cell : Node2D
         valueLabel.Text = $"{value.Value}";
     }
 
+    public void SetValue(StringElement value)
+    {
+        valueLabel.Text = $"{value.Value}";
+    }
+
     public void SetFormula(string formulaStr)
     {
         this.formula = new Formula(formulaStr);

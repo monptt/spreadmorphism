@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 public enum ObjectType
 {
-    Number = 0,
-    Vec2 = 1,
-    Vec3 = 2,
+    Number,
+    Vec2,
+    Vec3,
+    String,
 }
 
 public abstract partial class ObjectBase : Node2D
