@@ -42,6 +42,8 @@ public partial class NumberObject : ObjectBase
     {
         this.SetIsOneObject(true);
         SetElement(new NumberElement(0));
+        cell.SetFormula("0");
+        this.SetFormula("0");
     }
 
     void SetElement(NumberElement element)

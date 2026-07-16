@@ -122,6 +122,7 @@ public class Formula
                 {
                     ElementBase argElement = Evaluate(argToken);
                     argElements.Add(argElement);
+                    GD.Print(argElement.GetType());
                 }
                 return Sum(argElements);
             }
