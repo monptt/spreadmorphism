@@ -43,6 +43,11 @@ public abstract partial class ObjectBase : Node2D
         {
             bool result = EvaluateFormula(formula);
             SetIsError(!result);
+
+            foreach (Cell cell in GetCells())
+            {
+                cell.SetIsError(false);
+            }
         }
         else
         {
@@ -61,6 +66,8 @@ public abstract partial class ObjectBase : Node2D
             foreach (Cell cell in GetCells())
             {
                 cell.SetStatus(CellStatus.Dependent);
+
+                cell.SetIsError(false);
             }
         }
         else
@@ -69,6 +76,8 @@ public abstract partial class ObjectBase : Node2D
             {
                 cell.SetStatus(CellStatus.Default);
             }
+
+            this.SetIsError(false);
         }
     }
 

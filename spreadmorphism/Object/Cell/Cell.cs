@@ -69,15 +69,24 @@ public partial class Cell : Node2D
         NumberElement value = ParseFormula(formula.FormulaStr);
         if (value == null)
         {
-            isError = true;
+            SetIsError(true);
             this.SetValue(0);
             return;
         }
         else
         {
-            isError = false;
+            SetIsError(false);
             this.SetValue(value);
         }
+    }
+
+    /// <summary>
+    /// エラー状態にする
+    /// </summary>
+    /// <param name="isError"></param>
+    public void SetIsError(bool isError)
+    {
+        this.isError = isError;
     }
 
     public GridPos GetGridPos()
