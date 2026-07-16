@@ -60,40 +60,33 @@ public partial class ObjectSpace : Node2D
         }
     }
 
-    public NumberObject CreateNumberObject(int x, int y)
+    public void CreateObject(ObjectType type, GridPos pos)
     {
-        NumberObject cell = numberObjScene.Instantiate<NumberObject>();
-        cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
-        AddChild(cell);
-        objects.Add(cell);
-        return cell;
-    }
+        ObjectBase obj = null;
+        switch (type)
+        {
+            case ObjectType.Number:
+                obj = numberObjScene.Instantiate<NumberObject>();
+                break;
+            case ObjectType.Vec2:
+                obj = vec2ObjScene.Instantiate<Vec2Object>();
+                break;
+            case ObjectType.Vec3:
+                obj = vec3ObjScene.Instantiate<Vec3Object>();
+                break;
+            case ObjectType.String:
+                obj = stringObjScene.Instantiate<StringObject>();
+                break;
+            default:
+                break;
+        }
 
-    public Vec2Object CreateVec2Object(int x, int y)
-    {
-        Vec2Object obj = vec2ObjScene.Instantiate<Vec2Object>();
-        obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
-        AddChild(obj);
-        objects.Add(obj);
-        return obj;
-    }
-
-    public Vec3Object CreateVec3Object(int x, int y)
-    {
-        Vec3Object obj = vec3ObjScene.Instantiate<Vec3Object>();
-        obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
-        AddChild(obj);
-        objects.Add(obj);
-        return obj;
-    }
-
-    public StringObject CreateStringObject(int x, int y)
-    {
-        StringObject obj = stringObjScene.Instantiate<StringObject>();
-        obj.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
-        AddChild(obj);
-        objects.Add(obj);
-        return obj;
+        if (obj != null)
+        {
+            obj.Position = new Vector2(pos.X * Grid.GRID_WIDTH, pos.Y * Grid.GRID_HEIGHT);
+            AddChild(obj);
+            objects.Add(obj);
+        }
     }
 
     /// <summary>

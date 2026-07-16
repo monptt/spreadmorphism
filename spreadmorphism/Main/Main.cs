@@ -64,23 +64,8 @@ public partial class Main : Node2D
         palette.AddObject += (type) =>
         {
             GD.Print("addObject: ", type);
-            switch (type)
-            {
-                case ObjectType.Number:
-                    objectSpace.CreateNumberObject(selectedGridPos.X, selectedGridPos.Y);
-                    break;
-                case ObjectType.Vec2:
-                    objectSpace.CreateVec2Object(selectedGridPos.X, selectedGridPos.Y);
-                    break;
-                case ObjectType.Vec3:
-                    objectSpace.CreateVec3Object(selectedGridPos.X, selectedGridPos.Y);
-                    break;
-                case ObjectType.String:
-                    objectSpace.CreateStringObject(selectedGridPos.X, selectedGridPos.Y);
-                    break;
-                default:
-                    break;
-            }
+            objectSpace.CreateObject(type, selectedGridPos);
+            SelectGrid(selectedGridPos);
         };
     }
 
