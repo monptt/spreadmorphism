@@ -117,20 +117,8 @@ public class Formula
             {
                 List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
 
-                int sum = 0;
-                foreach (List<FormulaToken> argToken in argTokens)
-                {
-                    ElementBase element = Evaluate(argToken);
-                    if (element == null)
-                    {
-                        continue;
-                    }
-                    if (element is NumberElement numberElement)
-                    {
-                        sum += numberElement.Value;
-                    }
-                }
-                return new NumberElement(sum);
+                List<ElementBase> argElements = new List<ElementBase>();
+                return Sum(argElements);
             }
         }
 
@@ -178,5 +166,27 @@ public class Formula
             result.Add(current);
         }
         return result;
+    }
+
+    /// <summary>
+    /// 引数の合計を計算する
+    /// </summary>
+    /// <param name="args">引数リスト</param>
+    /// <returns>合計値</returns>
+    NumberElement Sum(List<ElementBase> args)
+    {
+        int sum = 0;
+        foreach (ElementBase arg in args)
+        {
+            if (arg is NumberElement numberElement)
+            {
+                sum += numberElement.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        return new NumberElement(sum);
     }
 }
