@@ -11,13 +11,18 @@ public partial class NumberObject : ObjectBase
 
     NumberElement element = null;
 
-    protected override void EvaluateFormula(Formula formula)
+    protected override bool EvaluateFormula(Formula formula)
     {
         ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
 
         if (element is NumberElement numberElement)
         {
             SetElement(numberElement);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

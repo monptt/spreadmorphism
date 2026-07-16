@@ -40,8 +40,9 @@ public partial class Vec3Object : ObjectBase
         cell_z.SetValue(element.Z.Value);
     }
 
-    protected override void EvaluateFormula(Formula formula)
+    protected override bool EvaluateFormula(Formula formula)
     {
         //@todo: 実装
+        return true;
     }
 }

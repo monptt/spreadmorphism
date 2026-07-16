@@ -31,13 +31,13 @@ public partial class Vec2Object : ObjectBase
         cell_y.SetValue(element.Y.Value);
     }
 
-    protected override void EvaluateFormula(Formula formula)
+    protected override bool EvaluateFormula(Formula formula)
     {
 
         string formulaStr = formula.FormulaStr;
         if (formulaStr == "")
         {
-            return;
+            return false;
         }
 
         // [x,y] みたいな形式を読みたい（仮）
@@ -56,6 +56,9 @@ public partial class Vec2Object : ObjectBase
             {
                 this.SetElement(targetObj.element);
             }
+            return true;
         }
+
+        return false;
     }
 }

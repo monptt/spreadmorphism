@@ -30,7 +30,9 @@ public abstract partial class ObjectBase : Node2D
     Formula formula = new Formula("");
     public Formula Formula => formula;
 
-    protected abstract void EvaluateFormula(Formula formula);
+    bool isError = false;
+
+    protected abstract bool EvaluateFormula(Formula formula);
 
     public abstract ElementBase GetElement();
 
@@ -38,7 +40,8 @@ public abstract partial class ObjectBase : Node2D
     {
         if (IsOneObject)
         {
-            this.EvaluateFormula(formula);
+            bool result = EvaluateFormula(formula);
+            SetIsError(!result);
         }
         else
         {
@@ -47,7 +50,6 @@ public abstract partial class ObjectBase : Node2D
                 cell.UpdateValue();
             }
         }
-
     }
 
     public void SetIsOneObject(bool isOneObject)
@@ -69,10 +71,24 @@ public abstract partial class ObjectBase : Node2D
         }
     }
 
+    public void SetIsError(bool isError)
+    {
+        this.isError = isError;
+        if (isError)
+        {
+            this.Modulate = new Color(1, 0, 0, 0.8f);
+        }
+        else
+        {
+            this.Modulate = new Color(1, 1, 1, 1.0f);
+        }
+    }
+
     public void SetFormula(string formulaStr)
     {
         this.formula = new Formula(formulaStr);
-        EvaluateFormula(formula);
+        bool result = EvaluateFormula(formula);
+        SetIsError(!result);
     }
 
     public GridPos GetGridPos()
