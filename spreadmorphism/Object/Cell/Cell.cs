@@ -27,6 +27,8 @@ public partial class Cell : Node2D
 
     bool isSelected = false;
 
+    bool isError = false;
+
     /// <summary>
     /// 個別に編集可能か
     /// </summary>
@@ -37,25 +39,9 @@ public partial class Cell : Node2D
         valueLabel.Text = value.ToString();
     }
 
-    /// <summary>
-    /// 値を更新する（他のセルが変更されたときとか）
-    /// </summary>
-    public void UpdateValue()
+    public override void _Process(double delta)
     {
-        int value = ParseFormula(formula.FormulaStr);
-        this.SetValue(value);
-    }
-
-    public GridPos GetGridPos()
-    {
-        int x = Mathf.FloorToInt(GlobalPosition.X / Grid.GRID_WIDTH);
-        int y = Mathf.FloorToInt(GlobalPosition.Y / Grid.GRID_HEIGHT);
-        return new GridPos(x, y);
-    }
-
-    public void SetStatus(CellStatus status)
-    {
-        this.status = status;
+        // 状態によって色を変える
         if (status == CellStatus.Dependent)
         {
             colorRect.Color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
@@ -68,6 +54,42 @@ public partial class Cell : Node2D
         {
             colorRect.Color = new Color(1, 1, 1, 1.0f);
         }
+
+        if (isError)
+        {
+            colorRect.Color = new Color(1, 0, 0, 0.8f);
+        }
+    }
+
+    /// <summary>
+    /// 値を更新する（他のセルが変更されたときとか）
+    /// </summary>
+    public void UpdateValue()
+    {
+        NumberElement value = ParseFormula(formula.FormulaStr);
+        if (value == null)
+        {
+            isError = true;
+            this.SetValue(0);
+            return;
+        }
+        else
+        {
+            isError = false;
+            this.SetValue(value);
+        }
+    }
+
+    public GridPos GetGridPos()
+    {
+        int x = Mathf.FloorToInt(GlobalPosition.X / Grid.GRID_WIDTH);
+        int y = Mathf.FloorToInt(GlobalPosition.Y / Grid.GRID_HEIGHT);
+        return new GridPos(x, y);
+    }
+
+    public void SetStatus(CellStatus status)
+    {
+        this.status = status;
     }
 
     public void SetValue(int value)
@@ -76,11 +98,24 @@ public partial class Cell : Node2D
         valueLabel.Text = $"{value}";
     }
 
+    public void SetValue(NumberElement value)
+    {
+        this.value = value.Value;
+        valueLabel.Text = $"{value.Value}";
+    }
+
     public void SetFormula(string formulaStr)
     {
         this.formula = new Formula(formulaStr);
-        int value = ParseFormula(formula.FormulaStr);
-        this.SetValue(value);
+        NumberElement value = ParseFormula(formula.FormulaStr);
+        if (value != null)
+        {
+            this.SetValue(value.Value);
+        }
+        else
+        {
+            this.SetValue(0);
+        }
     }
 
     public void SetSelected(bool selected)
@@ -107,15 +142,13 @@ public partial class Cell : Node2D
         return colorRect.GetGlobalRect().HasPoint(position);
     }
 
-    int ParseFormula(string formulaStr)
+    NumberElement ParseFormula(string formulaStr)
     {
         ElementBase element = formula.Evaluate(formula.Tokenize(formulaStr));
-        GD.Print(formula.FormulaStr);
         if (element is NumberElement numberElement)
         {
-            GD.Print($"numberElement: {numberElement.Value}");
-            return numberElement.Value;
+            return numberElement;
         }
-        return 0;
+        return null;
     }
 }
