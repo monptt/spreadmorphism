@@ -11,6 +11,12 @@ public partial class StringObject : ObjectBase
 
     StringElement element = null;
 
+    public override void _Ready()
+    {
+        SetIsOneObject(true);
+        SetElement(new StringElement(""));
+    }
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell };
