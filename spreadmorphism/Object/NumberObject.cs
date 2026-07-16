@@ -9,13 +9,13 @@ public partial class NumberObject : ObjectBase
 
     public override ObjectType Type => ObjectType.Number;
 
-    NumberElement element = null;
+    NumberElement element = new NumberElement(0);
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        ElementBase result = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
 
-        if (element is NumberElement numberElement)
+        if (result is NumberElement numberElement)
         {
             SetElement(numberElement);
             return true;

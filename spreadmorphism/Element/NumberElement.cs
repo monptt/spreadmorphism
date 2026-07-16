@@ -10,4 +10,15 @@ public class NumberElement : ElementBase
     {
         this.value = value;
     }
+
+    /// <summary>
+    /// 和
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static NumberElement Sum(NumberElement a, NumberElement b)
+    {
+        return new NumberElement(a.Value + b.Value);
+    }
 }

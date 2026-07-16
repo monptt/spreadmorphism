@@ -14,4 +14,15 @@ public class Vec3Element : ElementBase
         this.y = y;
         this.z = z;
     }
+
+    /// <summary>
+    /// 和
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static Vec3Element Sum(Vec3Element a, Vec3Element b)
+    {
+        return new Vec3Element(NumberElement.Sum(a.X, b.X), NumberElement.Sum(a.Y, b.Y), NumberElement.Sum(a.Z, b.Z));
+    }
 }

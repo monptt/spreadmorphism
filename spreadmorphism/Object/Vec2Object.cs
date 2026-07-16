@@ -33,32 +33,15 @@ public partial class Vec2Object : ObjectBase
 
     protected override bool EvaluateFormula(Formula formula)
     {
-
-        string formulaStr = formula.FormulaStr;
-        if (formulaStr == "")
+        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        if (element is Vec2Element vec2Element)
+        {
+            SetElement(vec2Element);
+            return true;
+        }
+        else
         {
             return false;
         }
-
-        // [x,y] みたいな形式を読みたい（仮）
-        if (formulaStr[0] == '[' && formulaStr[formulaStr.Length - 1] == ']')
-        {
-            formulaStr = formulaStr.Substring(1, formulaStr.Length - 2);
-        }
-
-        string[] values = formulaStr.Split(',');
-        if (values.Length == 2)
-        {
-            GridPos targetPos = new GridPos(int.Parse(values[0]), int.Parse(values[1]));
-
-            ObjectBase obj = ObjectSpace.Instance.GetObject(targetPos);
-            if (obj is Vec2Object targetObj)
-            {
-                this.SetElement(targetObj.element);
-            }
-            return true;
-        }
-
-        return false;
     }
 }

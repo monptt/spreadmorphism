@@ -42,7 +42,15 @@ public partial class Vec3Object : ObjectBase
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        //@todo: 実装
-        return true;
+        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        if (element is Vec3Element vec3Element)
+        {
+            SetElement(vec3Element);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
