@@ -101,12 +101,14 @@ public class Formula
             {
                 return null;
             }
+
             GridPos pos = new GridPos(x, y);
             ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
             if (obj == null)
             {
                 return null;
             }
+
             return obj.GetElement();
         }
 

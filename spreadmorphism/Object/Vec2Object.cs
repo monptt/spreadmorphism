@@ -12,7 +12,7 @@ public partial class Vec2Object : ObjectBase
 
     public override ObjectType Type => ObjectType.Vec2;
 
-    Vec2Element element = null;
+    Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
 
     public override List<Cell> GetCells()
     {
@@ -21,7 +21,9 @@ public partial class Vec2Object : ObjectBase
 
     public override ElementBase GetElement()
     {
-        return element;
+        NumberElement x = new NumberElement(cell_x.Value);
+        NumberElement y = new NumberElement(cell_y.Value);
+        return new Vec2Element(x, y);
     }
 
     void SetElement(Vec2Element element)
@@ -33,8 +35,8 @@ public partial class Vec2Object : ObjectBase
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
-        if (element is Vec2Element vec2Element)
+        ElementBase result = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        if (result is Vec2Element vec2Element)
         {
             SetElement(vec2Element);
             return true;

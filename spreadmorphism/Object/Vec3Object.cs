@@ -15,11 +15,14 @@ public partial class Vec3Object : ObjectBase
 
     public override ObjectType Type => ObjectType.Vec3;
 
-    Vec3Element element = null;
+    Vec3Element element = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
 
     public override ElementBase GetElement()
     {
-        return element;
+        NumberElement x = new NumberElement(cell_x.Value);
+        NumberElement y = new NumberElement(cell_y.Value);
+        NumberElement z = new NumberElement(cell_z.Value);
+        return new Vec3Element(x, y, z);
     }
 
     public override void _Ready()
