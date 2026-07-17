@@ -14,6 +14,12 @@ public partial class Vec2Object : ObjectBase
 
     Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
 
+    protected override void Init()
+    {
+        cell_x.SetFormula("0");
+        cell_y.SetFormula("0");
+    }
+
     public override void UpdateObject()
     {
         if (IsOneObject)

@@ -17,6 +17,11 @@ public partial class StringObject : ObjectBase
         SetElement(new StringElement(""));
     }
 
+    protected override void Init()
+    {
+        cell.SetFormula("");
+    }
+
     public override void UpdateObject()
     {
         if (IsOneObject)

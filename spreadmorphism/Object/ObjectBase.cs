@@ -33,6 +33,8 @@ public abstract partial class ObjectBase : Node2D
 
     bool isError = false;
 
+    protected abstract void Init();
+
     protected abstract bool EvaluateFormula(Formula formula);
 
     public abstract ElementBase GetElement();
@@ -45,6 +47,11 @@ public abstract partial class ObjectBase : Node2D
     public void ForceUpdate()
     {
         UpdateObject();
+    }
+
+    public override void _Ready()
+    {
+        Init();
     }
 
     public void SetIsOneObject(bool isOneObject)

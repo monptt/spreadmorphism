@@ -11,6 +11,11 @@ public partial class NumberObject : ObjectBase
 
     NumberElement element = new NumberElement(0);
 
+    protected override void Init()
+    {
+        cell.SetFormula("0");
+    }
+
     public override void UpdateObject()
     {
         if (IsOneObject)

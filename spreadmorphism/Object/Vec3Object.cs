@@ -52,6 +52,13 @@ public partial class Vec3Object : ObjectBase
         SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
     }
 
+    protected override void Init()
+    {
+        cell_x.SetFormula("0");
+        cell_y.SetFormula("0");
+        cell_z.SetFormula("0");
+    }
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell_x, cell_y, cell_z };
