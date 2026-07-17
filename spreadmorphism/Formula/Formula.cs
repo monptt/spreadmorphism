@@ -11,6 +11,11 @@ public class Formula
     string formulaStr = "";
     public string FormulaStr => formulaStr;
 
+    /// <summary>
+    /// 関数名として認識されるトークンリスト
+    /// </summary>
+    List<string> funcNames = new List<string> { "SUM" };
+
 
     public Formula(string formulaStr)
     {
@@ -118,21 +123,33 @@ public class Formula
         }
 
         // 関数系
-        if (tokens[0].TokenStr == "SUM" && tokens.Count > 2)
+        if (funcNames.Contains(tokens[0].TokenStr))
         {
-            if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+            // 一旦引数をリスト化
+            List<ElementBase> argElements = new List<ElementBase>();
+            if (tokens.Count > 2)
             {
-                List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
-
-                List<ElementBase> argElements = new List<ElementBase>();
-                foreach (List<FormulaToken> argToken in argTokens)
+                if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
                 {
-                    ElementBase argElement = Evaluate(argToken);
-                    argElements.Add(argElement);
+                    List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
+
+                    foreach (List<FormulaToken> argToken in argTokens)
+                    {
+                        ElementBase argElement = Evaluate(argToken);
+                        argElements.Add(argElement);
+                    }
                 }
-                return Sum(argElements);
             }
+
+            string funcName = tokens[0].TokenStr;
+            if (funcName == "SUM")
+            {
+                return FuncSum.Sum(argElements);
+            }
+
+            return null;
         }
+
 
         return null;
     }
@@ -178,61 +195,5 @@ public class Formula
             result.Add(current);
         }
         return result;
-    }
-
-    /// <summary>
-    /// 引数の合計を計算する
-    /// </summary>
-    /// <param name="args">引数リスト</param>
-    /// <returns>合計値</returns>
-    ElementBase Sum(List<ElementBase> args)
-    {
-        if (args.Count == 0)
-        {
-            return null;
-        }
-
-        if (args.Count == 1)
-        {
-            return args[0];
-        }
-
-        if (args[0] is NumberElement)
-        {
-            NumberElement sum = new NumberElement(0);
-            foreach (ElementBase arg in args)
-            {
-                if (arg is NumberElement numberElement)
-                {
-                    sum = NumberElement.Sum(sum, numberElement);
-                }
-            }
-            return sum;
-        }
-        else if (args[0] is Vec2Element)
-        {
-            Vec2Element sum = new Vec2Element(new NumberElement(0), new NumberElement(0));
-            foreach (ElementBase arg in args)
-            {
-                if (arg is Vec2Element vec2Element)
-                {
-                    sum = Vec2Element.Sum(sum, vec2Element);
-                }
-            }
-            return sum;
-        }
-        else if (args[0] is Vec3Element)
-        {
-            Vec3Element sum = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
-            foreach (ElementBase arg in args)
-            {
-                if (arg is Vec3Element vec3Element)
-                {
-                    sum = Vec3Element.Sum(sum, vec3Element);
-                }
-            }
-            return sum;
-        }
-        return null;
     }
 }
