@@ -11,6 +11,27 @@ public partial class NumberObject : ObjectBase
 
     NumberElement element = new NumberElement(0);
 
+    public override void UpdateObject()
+    {
+        if (IsOneObject)
+        {
+            bool result = EvaluateFormula(this.Formula);
+            this.SetIsError(!result);
+
+            foreach (Cell cell in GetCells())
+            {
+                cell.SetIsError(false);
+            }
+        }
+        else
+        {
+            foreach (Cell cell in GetCells())
+            {
+                cell.UpdateValue();
+            }
+        }
+    }
+
     protected override bool EvaluateFormula(Formula formula)
     {
         ElementBase result = formula.Evaluate(formula.Tokenize(formula.FormulaStr));

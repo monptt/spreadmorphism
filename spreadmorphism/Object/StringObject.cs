@@ -17,6 +17,22 @@ public partial class StringObject : ObjectBase
         SetElement(new StringElement(""));
     }
 
+    public override void UpdateObject()
+    {
+        if (IsOneObject)
+        {
+            bool result = EvaluateFormula(this.Formula);
+            this.SetIsError(!result);
+        }
+        else
+        {
+            foreach (Cell cell in GetCells())
+            {
+                cell.UpdateValue();
+            }
+        }
+    }
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell };

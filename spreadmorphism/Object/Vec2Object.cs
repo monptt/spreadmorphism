@@ -14,6 +14,22 @@ public partial class Vec2Object : ObjectBase
 
     Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
 
+    public override void UpdateObject()
+    {
+        if (IsOneObject)
+        {
+            bool result = EvaluateFormula(this.Formula);
+            this.SetIsError(!result);
+        }
+        else
+        {
+            foreach (Cell cell in GetCells())
+            {
+                cell.UpdateValue();
+            }
+        }
+    }
+
     public override List<Cell> GetCells()
     {
         return new List<Cell> { cell_x, cell_y };

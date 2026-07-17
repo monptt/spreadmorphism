@@ -37,25 +37,14 @@ public abstract partial class ObjectBase : Node2D
 
     public abstract ElementBase GetElement();
 
+    /// <summary>
+    /// オブジェクト更新処理
+    /// </summary>
+    public abstract void UpdateObject();
+
     public void ForceUpdate()
     {
-        if (IsOneObject)
-        {
-            bool result = EvaluateFormula(formula);
-            SetIsError(!result);
-
-            foreach (Cell cell in GetCells())
-            {
-                cell.SetIsError(false);
-            }
-        }
-        else
-        {
-            foreach (Cell cell in GetCells())
-            {
-                cell.UpdateValue();
-            }
-        }
+        UpdateObject();
     }
 
     public void SetIsOneObject(bool isOneObject)

@@ -17,6 +17,21 @@ public partial class Vec3Object : ObjectBase
 
     Vec3Element element = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
 
+    public override void UpdateObject()
+    {
+        if (IsOneObject)
+        {
+            bool result = EvaluateFormula(this.Formula);
+            this.SetIsError(!result);
+        }
+        else
+        {
+            foreach (Cell cell in GetCells())
+            {
+                cell.UpdateValue();
+            }
+        }
+    }
     public override ElementBase GetElement()
     {
         NumberElement x = new NumberElement(cell_x.Value);
