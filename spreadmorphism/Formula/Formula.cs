@@ -63,12 +63,17 @@ public class Formula
         return tokens;
     }
 
+    public ElementBase Evaluate()
+    {
+        return Evaluate(Tokenize(formulaStr));
+    }
+
     /// <summary>
     /// 数式を評価する
     /// </summary>
     /// <param name="tokens">トークンリスト</param>
     /// <returns>値</returns>
-    public ElementBase Evaluate(List<FormulaToken> tokens)
+    ElementBase Evaluate(List<FormulaToken> tokens)
     {
         if (tokens.Count == 0)
         {
@@ -124,7 +129,6 @@ public class Formula
                 {
                     ElementBase argElement = Evaluate(argToken);
                     argElements.Add(argElement);
-                    GD.Print(argElement.GetType());
                 }
                 return Sum(argElements);
             }

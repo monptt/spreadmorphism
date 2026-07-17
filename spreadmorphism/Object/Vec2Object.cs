@@ -23,9 +23,15 @@ public partial class Vec2Object : ObjectBase
         }
         else
         {
-            foreach (Cell cell in GetCells())
+            ElementBase x = cell_x.Formula.Evaluate();
+            ElementBase y = cell_y.Formula.Evaluate();
+            if (x is NumberElement numX && y is NumberElement numY)
             {
-                cell.UpdateValue();
+                SetElement(new Vec2Element(numX, numY));
+            }
+            else
+            {
+                SetElement(new Vec2Element(new NumberElement(0), new NumberElement(0)));
             }
         }
     }
@@ -51,7 +57,7 @@ public partial class Vec2Object : ObjectBase
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        ElementBase result = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        ElementBase result = formula.Evaluate();
         if (result is Vec2Element vec2Element)
         {
             SetElement(vec2Element);

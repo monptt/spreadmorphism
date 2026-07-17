@@ -15,26 +15,35 @@ public partial class NumberObject : ObjectBase
     {
         if (IsOneObject)
         {
-            bool result = EvaluateFormula(this.Formula);
-            this.SetIsError(!result);
+            ElementBase element = this.Formula.Evaluate();
 
-            foreach (Cell cell in GetCells())
+            if (element is NumberElement numberElement)
             {
-                cell.SetIsError(false);
+                SetElement(numberElement);
+            }
+            else
+            {
+                SetElement(new NumberElement(0));
             }
         }
         else
         {
-            foreach (Cell cell in GetCells())
+            ElementBase element = cell.Formula.Evaluate();
+
+            if (element is NumberElement numberElement)
             {
-                cell.UpdateValue();
+                SetElement(numberElement);
+            }
+            else
+            {
+                SetElement(new NumberElement(0));
             }
         }
     }
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        ElementBase result = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        ElementBase result = formula.Evaluate();
 
         if (result is NumberElement numberElement)
         {

@@ -8,6 +8,9 @@ public enum CellStatus
     Dependent,  // 他のセルの値に依存している
 }
 
+/// <summary>
+/// セル（数式入力と結果表示）
+/// </summary>
 public partial class Cell : Node2D
 {
     [Export]
@@ -62,25 +65,6 @@ public partial class Cell : Node2D
     }
 
     /// <summary>
-    /// 値を更新する（他のセルが変更されたときとか）
-    /// </summary>
-    public void UpdateValue()
-    {
-        NumberElement value = ParseFormula(formula.FormulaStr);
-        if (value == null)
-        {
-            SetIsError(true);
-            this.SetValue(0);
-            return;
-        }
-        else
-        {
-            SetIsError(false);
-            this.SetValue(value);
-        }
-    }
-
-    /// <summary>
     /// エラー状態にする
     /// </summary>
     /// <param name="isError"></param>
@@ -121,15 +105,6 @@ public partial class Cell : Node2D
     public void SetFormula(string formulaStr)
     {
         this.formula = new Formula(formulaStr);
-        NumberElement value = ParseFormula(formula.FormulaStr);
-        if (value != null)
-        {
-            this.SetValue(value.Value);
-        }
-        else
-        {
-            this.SetValue(0);
-        }
     }
 
     public void SetSelected(bool selected)
@@ -154,15 +129,5 @@ public partial class Cell : Node2D
     public bool IsClicked(Vector2 position)
     {
         return colorRect.GetGlobalRect().HasPoint(position);
-    }
-
-    NumberElement ParseFormula(string formulaStr)
-    {
-        ElementBase element = formula.Evaluate(formula.Tokenize(formulaStr));
-        if (element is NumberElement numberElement)
-        {
-            return numberElement;
-        }
-        return null;
     }
 }

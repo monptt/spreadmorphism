@@ -26,9 +26,16 @@ public partial class Vec3Object : ObjectBase
         }
         else
         {
-            foreach (Cell cell in GetCells())
+            ElementBase x = cell_x.Formula.Evaluate();
+            ElementBase y = cell_y.Formula.Evaluate();
+            ElementBase z = cell_z.Formula.Evaluate();
+            if (x is NumberElement numX && y is NumberElement numY && z is NumberElement numZ)
             {
-                cell.UpdateValue();
+                SetElement(new Vec3Element(numX, numY, numZ));
+            }
+            else
+            {
+                SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
             }
         }
     }
@@ -60,7 +67,7 @@ public partial class Vec3Object : ObjectBase
 
     protected override bool EvaluateFormula(Formula formula)
     {
-        ElementBase element = formula.Evaluate(formula.Tokenize(formula.FormulaStr));
+        ElementBase element = formula.Evaluate();
         if (element is Vec3Element vec3Element)
         {
             SetElement(vec3Element);

@@ -26,9 +26,14 @@ public partial class StringObject : ObjectBase
         }
         else
         {
-            foreach (Cell cell in GetCells())
+            ElementBase element = cell.Formula.Evaluate();
+            if (element is StringElement stringElement)
             {
-                cell.UpdateValue();
+                SetElement(stringElement);
+            }
+            else
+            {
+                SetElement(new StringElement(""));
             }
         }
     }
