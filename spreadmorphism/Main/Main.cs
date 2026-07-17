@@ -18,7 +18,7 @@ public partial class Main : Node2D
 
     // UI系
     [Export]
-    LineEdit lineEdit;
+    FormulaEdit formulaEdit;
 
     [Export]
     CoordView coordView;
@@ -49,7 +49,7 @@ public partial class Main : Node2D
     public override void _Ready()
     {
         // エディット時の操作
-        lineEdit.TextChanged += (value) =>
+        formulaEdit.TextChanged += (value) =>
         {
             if (selectedCell != null)
             {
@@ -86,6 +86,12 @@ public partial class Main : Node2D
 
                     // パレットのクリックは除外
                     if (palette.IsInPaletteArea(eventMouseButton.Position))
+                    {
+                        return;
+                    }
+
+                    // フォーミュラエディットのクリックは除外
+                    if (formulaEdit.IsInArea(eventMouseButton.Position))
                     {
                         return;
                     }
@@ -210,7 +216,7 @@ public partial class Main : Node2D
         if (obj != null && obj.IsOneObject)
         {
             GD.Print("SelectObject");
-            lineEdit.Text = obj.Formula.FormulaStr;
+            formulaEdit.SetText(obj.Formula.FormulaStr);
             selectedObject = obj;
             selectedCell = null;
             return;
@@ -223,7 +229,7 @@ public partial class Main : Node2D
             GD.Print("SelectCell");
             selectedCell?.SetSelected(false);
             cell.SetSelected(true);
-            lineEdit.Text = cell.Formula.FormulaStr;
+            formulaEdit.SetText(cell.Formula.FormulaStr);
             selectedCell = cell;
             selectedObject = null;
             return;

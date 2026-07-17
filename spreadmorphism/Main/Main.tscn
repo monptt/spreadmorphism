@@ -1,21 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddsbrre0iiurs"]
+[gd_scene load_steps=8 format=3 uid="uid://ddsbrre0iiurs"]
 
 [ext_resource type="Script" path="res://Main/Main.cs" id="1_ae1fs"]
 [ext_resource type="PackedScene" uid="uid://codbfo30gfmlv" path="res://Grid/Grid.tscn" id="3_k32su"]
 [ext_resource type="PackedScene" uid="uid://dyey5vx5l4m74" path="res://UI/CoordView.tscn" id="4_ir353"]
 [ext_resource type="PackedScene" uid="uid://dbqi0sr5f45j3" path="res://UI/Palette.tscn" id="4_n4mus"]
 [ext_resource type="PackedScene" uid="uid://bscfmppovnsvf" path="res://Main/ObjectSpace.tscn" id="4_wu2i8"]
+[ext_resource type="PackedScene" uid="uid://dypdj7p5eirwc" path="res://UI/FormulaEdit.tscn" id="6_hji28"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_p12e0"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "lineEdit", "coordView", "palette")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "formulaEdit", "coordView", "palette")]
 script = ExtResource("1_ae1fs")
 mainCamera = NodePath("SubViewport/MainCamera")
 objectSpace = NodePath("SubViewport/ObjectSpace")
 selectedRect = NodePath("SubViewport/SelectedRect")
 grid = NodePath("Grid")
-lineEdit = NodePath("UI/ColorRect2/LineEdit")
+formulaEdit = NodePath("UI/FormulaEdit")
 coordView = NodePath("UI/CoordView")
 palette = NodePath("UI/Palette")
 
@@ -48,16 +49,5 @@ position = Vector2(7, 438)
 [node name="CoordView" parent="UI" instance=ExtResource("4_ir353")]
 position = Vector2(1840, 1056)
 
-[node name="ColorRect2" type="ColorRect" parent="UI"]
-offset_top = 1010.0
-offset_right = 504.0
-offset_bottom = 1079.0
-color = Color(0.701961, 1, 1, 1)
-
-[node name="LineEdit" type="LineEdit" parent="UI/ColorRect2"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 12.0
-offset_right = 483.0
-offset_bottom = 57.0
-placeholder_text = "Edit"
+[node name="FormulaEdit" parent="UI" instance=ExtResource("6_hji28")]
+position = Vector2(1, 1010)

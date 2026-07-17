@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dypdj7p5eirwc"]
+
+[ext_resource type="Script" path="res://UI/FormulaEdit.cs" id="1_dxmha"]
+
+[node name="FormulaEdit" type="Node2D" node_paths=PackedStringArray("lineEdit", "colorRect")]
+script = ExtResource("1_dxmha")
+lineEdit = NodePath("ColorRect2/LineEdit")
+colorRect = NodePath("ColorRect2")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_right = 504.0
+offset_bottom = 69.0
+color = Color(0.701961, 1, 1, 1)
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect2"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 483.0
+offset_bottom = 57.0
+placeholder_text = "Edit"
