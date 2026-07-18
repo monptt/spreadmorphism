@@ -123,7 +123,7 @@ public class Formula
         }
 
         // 関数系
-        if (funcNames.Contains(tokens[0].TokenStr))
+        if (funcNames.Contains(tokens[0].TokenStr.ToUpper()))
         {
             // 一旦引数をリスト化
             List<ElementBase> argElements = new List<ElementBase>();
@@ -141,12 +141,11 @@ public class Formula
                 }
             }
 
-            string funcName = tokens[0].TokenStr;
+            string funcName = tokens[0].TokenStr.ToUpper();
             if (funcName == "SUM")
             {
                 return FuncSum.Sum(argElements);
             }
-
             return null;
         }
 
