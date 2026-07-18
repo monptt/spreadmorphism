@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class CellMatrixObjectView : ObjectViewBase
 {
@@ -12,22 +13,26 @@ public partial class CellMatrixObjectView : ObjectViewBase
     [Export]
     PackedScene cellScene;
 
-    public override void _Ready()
-    {
-    }
-
-    public void Init(int x, int y, string name)
+    public void Init(int xNum, int yNum, GridPos pos, string name)
     {
         // 一旦クリア
         foreach (var child in cellNode.GetChildren())
         {
+            cellNode.RemoveChild(child);
             child.QueueFree();
         }
 
-        // セルノードを作成
-        cellNode = cellScene.Instantiate<Node2D>();
-        AddChild(cellNode);
-        cellNode.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
+        // セルを作成
+        for (int y = 0; y < yNum; y++)
+        {
+            for (int x = 0; x < xNum; x++)
+            {
+                Cell cell = cellScene.Instantiate<Cell>();
+                cell.Position = new Vector2(x * Grid.GRID_WIDTH, y * Grid.GRID_HEIGHT);
+                cellNode.AddChild(cell);
+                this.cells.Add(cell);
+            }
+        }
 
         // 名前を設定
         SetName(name);

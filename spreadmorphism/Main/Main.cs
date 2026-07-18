@@ -154,7 +154,7 @@ public partial class Main : Node2D
                 if (draggedObject != null)
                 {
                     // ドラッグ中ならオブジェクトを移動させる
-                    draggedObject.Position = new Vector2(coord.X * Grid.GRID_WIDTH, coord.Y * Grid.GRID_HEIGHT);
+                    draggedObject.ObjectView.Position = new Vector2(coord.X * Grid.GRID_WIDTH, coord.Y * Grid.GRID_HEIGHT);
                 }
                 else
                 {

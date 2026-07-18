@@ -4,15 +4,6 @@ using System.Collections.Generic;
 
 public partial class Vec3Object : ObjectBase
 {
-    [Export]
-    Cell cell_x;
-
-    [Export]
-    Cell cell_y;
-
-    [Export]
-    Cell cell_z;
-
     public override ObjectType Type => ObjectType.Vec3;
 
     Vec3Element element = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
@@ -26,9 +17,9 @@ public partial class Vec3Object : ObjectBase
         }
         else
         {
-            ElementBase x = cell_x.Formula.Evaluate();
-            ElementBase y = cell_y.Formula.Evaluate();
-            ElementBase z = cell_z.Formula.Evaluate();
+            ElementBase x = ObjectView.GetCells()[0].Formula.Evaluate();
+            ElementBase y = ObjectView.GetCells()[1].Formula.Evaluate();
+            ElementBase z = ObjectView.GetCells()[2].Formula.Evaluate();
             if (x is NumberElement numX && y is NumberElement numY && z is NumberElement numZ)
             {
                 SetElement(new Vec3Element(numX, numY, numZ));
@@ -41,35 +32,27 @@ public partial class Vec3Object : ObjectBase
     }
     public override ElementBase GetElement()
     {
-        NumberElement x = new NumberElement(cell_x.Value);
-        NumberElement y = new NumberElement(cell_y.Value);
-        NumberElement z = new NumberElement(cell_z.Value);
+        NumberElement x = new NumberElement(ObjectView.GetCells()[0].Value);
+        NumberElement y = new NumberElement(ObjectView.GetCells()[1].Value);
+        NumberElement z = new NumberElement(ObjectView.GetCells()[2].Value);
         return new Vec3Element(x, y, z);
-    }
-
-    public override void _Ready()
-    {
-        SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
     }
 
     protected override void Init()
     {
-        cell_x.SetFormula("0");
-        cell_y.SetFormula("0");
-        cell_z.SetFormula("0");
-    }
 
-    public override List<Cell> GetCells()
-    {
-        return new List<Cell> { cell_x, cell_y, cell_z };
+        SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
+        ObjectView.GetCells()[0].SetFormula("0");
+        ObjectView.GetCells()[1].SetFormula("0");
+        ObjectView.GetCells()[2].SetFormula("0");
     }
 
     void SetElement(Vec3Element element)
     {
         this.element = element;
-        cell_x.SetValue(element.X.Value);
-        cell_y.SetValue(element.Y.Value);
-        cell_z.SetValue(element.Z.Value);
+        ObjectView.GetCells()[0].SetValue(element.X.Value);
+        ObjectView.GetCells()[1].SetValue(element.Y.Value);
+        ObjectView.GetCells()[2].SetValue(element.Z.Value);
     }
 
     protected override bool EvaluateFormula(Formula formula)

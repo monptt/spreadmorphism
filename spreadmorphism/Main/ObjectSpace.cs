@@ -8,16 +8,7 @@ using System.Collections.Generic;
 public partial class ObjectSpace : Node2D
 {
     [Export]
-    PackedScene numberObjScene;
-
-    [Export]
-    PackedScene vec2ObjScene;
-
-    [Export]
-    PackedScene vec3ObjScene;
-
-    [Export]
-    PackedScene stringObjScene;
+    PackedScene cellMatrixObjScene;
 
     static ObjectSpace instance = null;
     public static ObjectSpace Instance => instance;
@@ -63,19 +54,29 @@ public partial class ObjectSpace : Node2D
     public void CreateObject(ObjectType type, GridPos pos)
     {
         ObjectBase obj = null;
+        Vector2I matrixSize = new Vector2I(1, 1);
+        string name = "";
         switch (type)
         {
             case ObjectType.Number:
-                obj = numberObjScene.Instantiate<NumberObject>();
+                obj = new NumberObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Num";
                 break;
             case ObjectType.Vec2:
-                obj = vec2ObjScene.Instantiate<Vec2Object>();
+                obj = new Vec2Object();
+                matrixSize = new Vector2I(1, 2);
+                name = "Vec2";
                 break;
             case ObjectType.Vec3:
-                obj = vec3ObjScene.Instantiate<Vec3Object>();
+                obj = new Vec3Object();
+                matrixSize = new Vector2I(1, 3);
+                name = "Vec3";
                 break;
             case ObjectType.String:
-                obj = stringObjScene.Instantiate<StringObject>();
+                obj = new StringObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "String";
                 break;
             default:
                 break;
@@ -83,9 +84,15 @@ public partial class ObjectSpace : Node2D
 
         if (obj != null)
         {
-            obj.Position = new Vector2(pos.X * Grid.GRID_WIDTH, pos.Y * Grid.GRID_HEIGHT);
-            AddChild(obj);
             objects.Add(obj);
+
+            // オブジェクトビューを作成
+            CellMatrixObjectView objView = cellMatrixObjScene.Instantiate<CellMatrixObjectView>();
+            objView.Init(matrixSize.X, matrixSize.Y, pos, name);
+            AddChild(objView);
+
+            // オブジェクトに紐づけ
+            obj.SetObjectView(objView);
         }
     }
 
@@ -98,7 +105,7 @@ public partial class ObjectSpace : Node2D
     {
         foreach (ObjectBase obj in objects)
         {
-            foreach (Cell cell in obj.GetCells())
+            foreach (Cell cell in obj.ObjectView.GetCells())
             {
                 if (cell.IsClicked(position))
                 {
@@ -113,7 +120,7 @@ public partial class ObjectSpace : Node2D
     {
         foreach (ObjectBase obj in objects)
         {
-            foreach (Cell cell in obj.GetCells())
+            foreach (Cell cell in obj.ObjectView.GetCells())
             {
                 if (cell.GetGridPos() == pos)
                 {

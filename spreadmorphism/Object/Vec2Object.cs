@@ -4,20 +4,14 @@ using System.Collections.Generic;
 
 public partial class Vec2Object : ObjectBase
 {
-    [Export]
-    Cell cell_x;
-
-    [Export]
-    Cell cell_y;
-
     public override ObjectType Type => ObjectType.Vec2;
 
     Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
 
     protected override void Init()
     {
-        cell_x.SetFormula("0");
-        cell_y.SetFormula("0");
+        ObjectView.GetCells()[0].SetFormula("0");
+        ObjectView.GetCells()[1].SetFormula("0");
     }
 
     public override void UpdateObject()
@@ -29,8 +23,8 @@ public partial class Vec2Object : ObjectBase
         }
         else
         {
-            ElementBase x = cell_x.Formula.Evaluate();
-            ElementBase y = cell_y.Formula.Evaluate();
+            ElementBase x = ObjectView.GetCells()[0].Formula.Evaluate();
+            ElementBase y = ObjectView.GetCells()[1].Formula.Evaluate();
             if (x is NumberElement numX && y is NumberElement numY)
             {
                 SetElement(new Vec2Element(numX, numY));
@@ -42,23 +36,18 @@ public partial class Vec2Object : ObjectBase
         }
     }
 
-    public override List<Cell> GetCells()
-    {
-        return new List<Cell> { cell_x, cell_y };
-    }
-
     public override ElementBase GetElement()
     {
-        NumberElement x = new NumberElement(cell_x.Value);
-        NumberElement y = new NumberElement(cell_y.Value);
+        NumberElement x = new NumberElement(ObjectView.GetCells()[0].Value);
+        NumberElement y = new NumberElement(ObjectView.GetCells()[1].Value);
         return new Vec2Element(x, y);
     }
 
     void SetElement(Vec2Element element)
     {
         this.element = element;
-        cell_x.SetValue(element.X.Value);
-        cell_y.SetValue(element.Y.Value);
+        ObjectView.GetCells()[0].SetValue(element.X.Value);
+        ObjectView.GetCells()[1].SetValue(element.Y.Value);
     }
 
     protected override bool EvaluateFormula(Formula formula)

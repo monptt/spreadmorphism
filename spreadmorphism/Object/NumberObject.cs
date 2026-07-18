@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public partial class NumberObject : ObjectBase
 {
-    [Export]
-    Cell cell;
-
     public override ObjectType Type => ObjectType.Number;
 
     NumberElement element = new NumberElement(0);
 
     protected override void Init()
     {
-        cell.SetFormula("0");
+        this.SetIsOneObject(true);
+        SetElement(new NumberElement(0));
+        ObjectView.GetCells()[0].SetFormula("0");
+        this.SetFormula("0");
     }
 
     public override void UpdateObject()
@@ -33,7 +33,7 @@ public partial class NumberObject : ObjectBase
         }
         else
         {
-            ElementBase element = cell.Formula.Evaluate();
+            ElementBase element = ObjectView.GetCells()[0].Formula.Evaluate();
 
             if (element is NumberElement numberElement)
             {
@@ -66,29 +66,16 @@ public partial class NumberObject : ObjectBase
         return element;
     }
 
-    public override List<Cell> GetCells()
-    {
-        return new List<Cell> { cell };
-    }
-
-    public int Value => cell.Value;
-
-    public override void _Ready()
-    {
-        this.SetIsOneObject(true);
-        SetElement(new NumberElement(0));
-        cell.SetFormula("0");
-        this.SetFormula("0");
-    }
+    public int Value => ObjectView.GetCells()[0].Value;
 
     void SetElement(NumberElement element)
     {
         this.element = element;
-        cell.SetValue(element.Value);
+        ObjectView.GetCells()[0].SetValue(element.Value);
     }
 
     public Cell GetCell()
     {
-        return cell;
+        return ObjectView.GetCells()[0];
     }
 }

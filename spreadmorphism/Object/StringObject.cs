@@ -4,22 +4,15 @@ using System.Collections.Generic;
 
 public partial class StringObject : ObjectBase
 {
-    [Export]
-    Cell cell;
-
     public override ObjectType Type => ObjectType.String;
 
     StringElement element = null;
 
-    public override void _Ready()
+    protected override void Init()
     {
         SetIsOneObject(true);
         SetElement(new StringElement(""));
-    }
-
-    protected override void Init()
-    {
-        cell.SetFormula("");
+        ObjectView.GetCells()[0].SetFormula("");
     }
 
     public override void UpdateObject()
@@ -31,7 +24,7 @@ public partial class StringObject : ObjectBase
         }
         else
         {
-            ElementBase element = cell.Formula.Evaluate();
+            ElementBase element = ObjectView.GetCells()[0].Formula.Evaluate();
             if (element is StringElement stringElement)
             {
                 SetElement(stringElement);
@@ -41,11 +34,6 @@ public partial class StringObject : ObjectBase
                 SetElement(new StringElement(""));
             }
         }
-    }
-
-    public override List<Cell> GetCells()
-    {
-        return new List<Cell> { cell };
     }
 
     public override ElementBase GetElement()
@@ -63,6 +51,6 @@ public partial class StringObject : ObjectBase
     void SetElement(StringElement element)
     {
         this.element = element;
-        cell.SetValue(element);
+        ObjectView.GetCells()[0].SetValue(element);
     }
 }

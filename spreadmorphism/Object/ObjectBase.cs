@@ -10,14 +10,14 @@ public enum ObjectType
     String,
 }
 
-public abstract partial class ObjectBase : Node2D
+public abstract partial class ObjectBase
 {
     /// <summary>
     /// オブジェクトの種類（型）
     /// </summary>
     public abstract ObjectType Type { get; }
 
-    public abstract List<Cell> GetCells();
+
 
     /// <summary>
     /// 全体を1つのオブジェクトとして扱うかどうか
@@ -39,6 +39,22 @@ public abstract partial class ObjectBase : Node2D
 
     public abstract ElementBase GetElement();
 
+    public ObjectViewBase ObjectView => objectView;
+    ObjectViewBase objectView = null;
+
+
+    public void SetObjectView(ObjectViewBase objectView)
+    {
+        this.objectView = objectView;
+        Init();
+    }
+
+    public ObjectBase()
+    {
+
+    }
+
+
     /// <summary>
     /// オブジェクト更新処理
     /// </summary>
@@ -49,17 +65,12 @@ public abstract partial class ObjectBase : Node2D
         UpdateObject();
     }
 
-    public override void _Ready()
-    {
-        Init();
-    }
-
     public void SetIsOneObject(bool isOneObject)
     {
         this.isOneObject = isOneObject;
         if (isOneObject)
         {
-            foreach (Cell cell in GetCells())
+            foreach (Cell cell in ObjectView.GetCells())
             {
                 cell.SetStatus(CellStatus.Dependent);
 
@@ -68,7 +79,7 @@ public abstract partial class ObjectBase : Node2D
         }
         else
         {
-            foreach (Cell cell in GetCells())
+            foreach (Cell cell in ObjectView.GetCells())
             {
                 cell.SetStatus(CellStatus.Default);
             }
@@ -82,11 +93,11 @@ public abstract partial class ObjectBase : Node2D
         this.isError = isError;
         if (isError)
         {
-            this.Modulate = new Color(1, 0, 0, 0.8f);
+            this.ObjectView.Modulate = new Color(1, 0, 0, 0.8f);
         }
         else
         {
-            this.Modulate = new Color(1, 1, 1, 1.0f);
+            this.ObjectView.Modulate = new Color(1, 1, 1, 1.0f);
         }
     }
 
@@ -99,8 +110,8 @@ public abstract partial class ObjectBase : Node2D
 
     public GridPos GetGridPos()
     {
-        int x = (int)(Position.X / Grid.GRID_WIDTH);
-        int y = (int)(Position.Y / Grid.GRID_HEIGHT);
+        int x = (int)(ObjectView.Position.X / Grid.GRID_WIDTH);
+        int y = (int)(ObjectView.Position.Y / Grid.GRID_HEIGHT);
         return new GridPos(x, y);
     }
 
@@ -111,7 +122,7 @@ public abstract partial class ObjectBase : Node2D
     /// <returns></returns>
     public bool IsContainPos(GridPos gridPos)
     {
-        foreach (Cell cell in GetCells())
+        foreach (Cell cell in ObjectView.GetCells())
         {
             if (cell.GetGridPos() == gridPos)
             {
