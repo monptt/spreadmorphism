@@ -33,7 +33,7 @@ public abstract partial class ObjectBase
 
     bool isError = false;
 
-    protected abstract void Init();
+    protected abstract void InitView();
 
     protected abstract bool EvaluateFormula(Formula formula);
 
@@ -43,10 +43,10 @@ public abstract partial class ObjectBase
     ObjectViewBase objectView = null;
 
 
-    public void SetObjectView(ObjectViewBase objectView)
+    public void SetUpObjectView(ObjectViewBase objectView)
     {
         this.objectView = objectView;
-        Init();
+        InitView();
     }
 
     public ObjectBase()

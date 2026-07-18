@@ -8,7 +8,7 @@ public partial class StringObject : ObjectBase
 
     StringElement element = null;
 
-    protected override void Init()
+    protected override void InitView()
     {
         SetIsOneObject(true);
         SetElement(new StringElement(""));

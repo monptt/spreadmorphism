@@ -92,7 +92,7 @@ public partial class ObjectSpace : Node2D
             AddChild(objView);
 
             // オブジェクトに紐づけ
-            obj.SetObjectView(objView);
+            obj.SetUpObjectView(objView);
         }
     }
 

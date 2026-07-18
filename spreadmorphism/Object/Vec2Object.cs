@@ -8,7 +8,7 @@ public partial class Vec2Object : ObjectBase
 
     Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
 
-    protected override void Init()
+    protected override void InitView()
     {
         ObjectView.GetCells()[0].SetFormula("0");
         ObjectView.GetCells()[1].SetFormula("0");

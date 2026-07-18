@@ -8,7 +8,7 @@ public partial class NumberObject : ObjectBase
 
     NumberElement element = new NumberElement(0);
 
-    protected override void Init()
+    protected override void InitView()
     {
         this.SetIsOneObject(true);
         SetElement(new NumberElement(0));

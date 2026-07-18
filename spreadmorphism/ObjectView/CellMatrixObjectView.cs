@@ -34,6 +34,9 @@ public partial class CellMatrixObjectView : ObjectViewBase
             }
         }
 
+        // 位置を設定
+        this.Position = new Vector2(pos.X * Grid.GRID_WIDTH, pos.Y * Grid.GRID_HEIGHT);
+
         // 名前を設定
         SetName(name);
     }

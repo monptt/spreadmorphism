@@ -38,7 +38,7 @@ public partial class Vec3Object : ObjectBase
         return new Vec3Element(x, y, z);
     }
 
-    protected override void Init()
+    protected override void InitView()
     {
 
         SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
