@@ -198,7 +198,7 @@ public partial class Main : Node2D
 
     public Vector2 GetObjectSpacePosition(Vector2 position)
     {
-        return position + mainCamera.Position - windowSize / 2;
+        return (position - windowSize / 2) / mainCamera.Zoom + mainCamera.Position;
     }
 
     void SelectGrid(GridPos pos)
