@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://bir3c5hnqhqpn"]
 
-[ext_resource type="Script" path="res://Object/Cell/Cell.cs" id="1_c65ki"]
+[ext_resource type="Script" path="res://ObjectView/Cell/Cell.cs" id="1_yph33"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mxul7"]
 font_color = Color(0, 0, 0, 1)
 
 [node name="Cell" type="Node2D" node_paths=PackedStringArray("valueLabel", "colorRect")]
-script = ExtResource("1_c65ki")
+script = ExtResource("1_yph33")
 valueLabel = NodePath("ColorRect/Label")
 colorRect = NodePath("ColorRect")
 

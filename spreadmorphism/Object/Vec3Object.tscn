@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dn7v5qn3o8kwj"]
 
 [ext_resource type="Script" path="res://Object/Vec3Object.cs" id="1_6fiy6"]
-[ext_resource type="PackedScene" uid="uid://bir3c5hnqhqpn" path="res://Object/Cell/Cell.tscn" id="2_aywel"]
+[ext_resource type="PackedScene" uid="uid://bir3c5hnqhqpn" path="res://ObjectView/Cell/Cell.tscn" id="2_aywel"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vtl0b"]
 font_size = 9
