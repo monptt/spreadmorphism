@@ -44,10 +44,18 @@ public partial class Grid : Node2D
     public const float GRID_WIDTH = 100.0f;
     public const float GRID_HEIGHT = 30.0f;
 
+    Vector2 windowSize = new Vector2(1920, 1080);
+
+    public override void _Ready()
+    {
+        ShaderMaterial shaderMaterial = colorRect.Material as ShaderMaterial;
+        shaderMaterial.SetShaderParameter("windowSize", windowSize);
+    }
+
     public void SetCameraPosition(Vector2 position)
     {
         ShaderMaterial shaderMaterial = colorRect.Material as ShaderMaterial;
-        shaderMaterial.SetShaderParameter("cameraPosition", position);
+        shaderMaterial.SetShaderParameter("cameraPosition", position); // カメラの描画範囲の左上にくるように位置を調整
     }
 
     public void SetCameraZoom(float zoom)

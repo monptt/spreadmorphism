@@ -48,6 +48,10 @@ public partial class Main : Node2D
 
     public override void _Ready()
     {
+        // カメラ初期化
+        SetCameraPosition(mainCamera.Position);
+        SetCameraZoom(mainCamera.Zoom.X);
+
         // エディット時の操作
         formulaEdit.TextChanged += (value) =>
         {
@@ -128,13 +132,11 @@ public partial class Main : Node2D
             }
             else if (eventMouseButton.ButtonIndex == MouseButton.WheelUp)
             {
-                mainCamera.Zoom += new Vector2(0.1f, 0.1f);
-                grid.SetCameraZoom(mainCamera.Zoom.X);
+                SetCameraZoom(mainCamera.Zoom.X + 0.1f);
             }
             else if (eventMouseButton.ButtonIndex == MouseButton.WheelDown)
             {
-                mainCamera.Zoom -= new Vector2(0.1f, 0.1f);
-                grid.SetCameraZoom(mainCamera.Zoom.X);
+                SetCameraZoom(mainCamera.Zoom.X - 0.1f);
             }
         }
         else if (@event is InputEventMouseMotion eventMouseMotion)
@@ -157,8 +159,7 @@ public partial class Main : Node2D
                 else
                 {
                     // カメラを移動させる
-                    mainCamera.Position -= delta;
-                    grid.SetCameraPosition(mainCamera.Position - windowSize / 2);
+                    SetCameraPosition(mainCamera.Position - delta);
                 }
             }
         }
@@ -234,5 +235,17 @@ public partial class Main : Node2D
             selectedObject = null;
             return;
         }
+    }
+
+    void SetCameraPosition(Vector2 position)
+    {
+        mainCamera.Position = position;
+        grid.SetCameraPosition(position);
+    }
+
+    void SetCameraZoom(float zoom)
+    {
+        mainCamera.Zoom = new Vector2(zoom, zoom);
+        grid.SetCameraZoom(zoom);
     }
 }
