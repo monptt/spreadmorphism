@@ -1,12 +1,12 @@
 /// <summary>
 /// 数
 /// </summary>
-public class NumberElement : ElementBase
+public class IntegerElement : ElementBase
 {
     int value;
     public int Value => value;
 
-    public NumberElement(int value)
+    public IntegerElement(int value)
     {
         this.value = value;
     }
@@ -17,9 +17,9 @@ public class NumberElement : ElementBase
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static NumberElement Sum(NumberElement a, NumberElement b)
+    public static IntegerElement Sum(IntegerElement a, IntegerElement b)
     {
-        return new NumberElement(a.Value + b.Value);
+        return new IntegerElement(a.Value + b.Value);
     }
 
     /// <summary>
@@ -28,8 +28,8 @@ public class NumberElement : ElementBase
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static NumberElement Multiply(NumberElement a, NumberElement b)
+    public static IntegerElement Multiply(IntegerElement a, IntegerElement b)
     {
-        return new NumberElement(a.Value * b.Value);
+        return new IntegerElement(a.Value * b.Value);
     }
 }

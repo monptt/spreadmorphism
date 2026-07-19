@@ -6,7 +6,7 @@ public partial class Vec3Object : ObjectBase
 {
     public override ObjectType Type => ObjectType.Vec3;
 
-    Vec3Element element = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
+    Vec3Element element = new Vec3Element(new IntegerElement(0), new IntegerElement(0), new IntegerElement(0));
 
     public override void UpdateObject()
     {
@@ -20,28 +20,28 @@ public partial class Vec3Object : ObjectBase
             ElementBase x = ObjectView.GetCells()[0].Formula.Evaluate();
             ElementBase y = ObjectView.GetCells()[1].Formula.Evaluate();
             ElementBase z = ObjectView.GetCells()[2].Formula.Evaluate();
-            if (x is NumberElement numX && y is NumberElement numY && z is NumberElement numZ)
+            if (x is IntegerElement numX && y is IntegerElement numY && z is IntegerElement numZ)
             {
                 SetElement(new Vec3Element(numX, numY, numZ));
             }
             else
             {
-                SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
+                SetElement(new Vec3Element(new IntegerElement(0), new IntegerElement(0), new IntegerElement(0)));
             }
         }
     }
     public override ElementBase GetElement()
     {
-        NumberElement x = new NumberElement(ObjectView.GetCells()[0].Value);
-        NumberElement y = new NumberElement(ObjectView.GetCells()[1].Value);
-        NumberElement z = new NumberElement(ObjectView.GetCells()[2].Value);
+        IntegerElement x = new IntegerElement(ObjectView.GetCells()[0].Value);
+        IntegerElement y = new IntegerElement(ObjectView.GetCells()[1].Value);
+        IntegerElement z = new IntegerElement(ObjectView.GetCells()[2].Value);
         return new Vec3Element(x, y, z);
     }
 
     protected override void InitView()
     {
 
-        SetElement(new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0)));
+        SetElement(new Vec3Element(new IntegerElement(0), new IntegerElement(0), new IntegerElement(0)));
         ObjectView.GetCells()[0].SetFormula("0");
         ObjectView.GetCells()[1].SetFormula("0");
         ObjectView.GetCells()[2].SetFormula("0");

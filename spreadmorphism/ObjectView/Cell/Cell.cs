@@ -91,7 +91,7 @@ public partial class Cell : Node2D
         valueLabel.Text = $"{value}";
     }
 
-    public void SetValue(NumberElement value)
+    public void SetValue(IntegerElement value)
     {
         this.value = value.Value;
         valueLabel.Text = $"{value.Value}";

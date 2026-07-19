@@ -2,17 +2,20 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class NumberObject : ObjectBase
+public partial class IntegerObject : ObjectBase
 {
     public override ObjectType Type => ObjectType.Number;
 
-    NumberElement element = new NumberElement(0);
+    IntegerElement element = new IntegerElement(0);
+
+    Cell Cell => ObjectView.GetCells()[0];
+
 
     protected override void InitView()
     {
         this.SetIsOneObject(true);
-        SetElement(new NumberElement(0));
-        ObjectView.GetCells()[0].SetFormula("0");
+        SetElement(new IntegerElement(0));
+        Cell.SetFormula("0");
         this.SetFormula("0");
     }
 
@@ -22,26 +25,26 @@ public partial class NumberObject : ObjectBase
         {
             ElementBase element = this.Formula.Evaluate();
 
-            if (element is NumberElement numberElement)
+            if (element is IntegerElement numberElement)
             {
                 SetElement(numberElement);
             }
             else
             {
-                SetElement(new NumberElement(0));
+                SetElement(new IntegerElement(0));
             }
         }
         else
         {
-            ElementBase element = ObjectView.GetCells()[0].Formula.Evaluate();
+            ElementBase element = Cell.Formula.Evaluate();
 
-            if (element is NumberElement numberElement)
+            if (element is IntegerElement numberElement)
             {
                 SetElement(numberElement);
             }
             else
             {
-                SetElement(new NumberElement(0));
+                SetElement(new IntegerElement(0));
             }
         }
     }
@@ -50,7 +53,7 @@ public partial class NumberObject : ObjectBase
     {
         ElementBase result = formula.Evaluate();
 
-        if (result is NumberElement numberElement)
+        if (result is IntegerElement numberElement)
         {
             SetElement(numberElement);
             return true;
@@ -66,16 +69,9 @@ public partial class NumberObject : ObjectBase
         return element;
     }
 
-    public int Value => ObjectView.GetCells()[0].Value;
-
-    void SetElement(NumberElement element)
+    void SetElement(IntegerElement element)
     {
         this.element = element;
-        ObjectView.GetCells()[0].SetValue(element.Value);
-    }
-
-    public Cell GetCell()
-    {
-        return ObjectView.GetCells()[0];
+        Cell.SetValue(element.Value);
     }
 }

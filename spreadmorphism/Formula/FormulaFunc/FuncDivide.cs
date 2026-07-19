@@ -10,9 +10,9 @@ public class FuncDivide : FormulaFuncBase
 {
     public static ElementBase Divide(ElementBase dividend, ElementBase divisor)
     {
-        if (dividend is NumberElement a && divisor is NumberElement b)
+        if (dividend is IntegerElement a && divisor is IntegerElement b)
         {
-            return new NumberElement(a.Value / b.Value);
+            return new IntegerElement(a.Value / b.Value);
         }
         return null;
     }

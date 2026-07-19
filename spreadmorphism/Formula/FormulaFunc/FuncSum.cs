@@ -19,21 +19,21 @@ public class FuncSum : FormulaFuncBase
             return args[0];
         }
 
-        if (args[0] is NumberElement)
+        if (args[0] is IntegerElement)
         {
-            NumberElement sum = new NumberElement(0);
+            IntegerElement sum = new IntegerElement(0);
             foreach (ElementBase arg in args)
             {
-                if (arg is NumberElement numberElement)
+                if (arg is IntegerElement numberElement)
                 {
-                    sum = NumberElement.Sum(sum, numberElement);
+                    sum = IntegerElement.Sum(sum, numberElement);
                 }
             }
             return sum;
         }
         else if (args[0] is Vec2Element)
         {
-            Vec2Element sum = new Vec2Element(new NumberElement(0), new NumberElement(0));
+            Vec2Element sum = new Vec2Element(new IntegerElement(0), new IntegerElement(0));
             foreach (ElementBase arg in args)
             {
                 if (arg is Vec2Element vec2Element)
@@ -45,7 +45,7 @@ public class FuncSum : FormulaFuncBase
         }
         else if (args[0] is Vec3Element)
         {
-            Vec3Element sum = new Vec3Element(new NumberElement(0), new NumberElement(0), new NumberElement(0));
+            Vec3Element sum = new Vec3Element(new IntegerElement(0), new IntegerElement(0), new IntegerElement(0));
             foreach (ElementBase arg in args)
             {
                 if (arg is Vec3Element vec3Element)

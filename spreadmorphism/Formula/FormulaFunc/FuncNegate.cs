@@ -9,9 +9,9 @@ public class FuncNegate : FormulaFuncBase
 {
     public static ElementBase Negate(ElementBase element)
     {
-        if (element is NumberElement numberElement)
+        if (element is IntegerElement numberElement)
         {
-            return new NumberElement(-numberElement.Value);
+            return new IntegerElement(-numberElement.Value);
         }
 
         return null;

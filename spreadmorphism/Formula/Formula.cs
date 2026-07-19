@@ -102,7 +102,7 @@ public class Formula
             {
                 return null;
             }
-            return new NumberElement(value);
+            return new IntegerElement(value);
         }
 
         // () で囲まれてるだけのものは中身を評価
@@ -141,7 +141,7 @@ public class Formula
             ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
             ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
 
-            if (xElement is NumberElement x && yElement is NumberElement y)
+            if (xElement is IntegerElement x && yElement is IntegerElement y)
             {
                 GridPos pos = new GridPos(x.Value, y.Value);
                 ObjectBase obj = ObjectSpace.Instance.GetObject(pos);

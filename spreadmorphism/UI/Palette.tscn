@@ -4,7 +4,7 @@
 
 [node name="Palette" type="Node2D" node_paths=PackedStringArray("numButton", "vec2Button", "vec3Button", "stringButton", "colorRect")]
 script = ExtResource("1_4bdx1")
-numButton = NodePath("VBoxContainer/NumButton")
+numButton = NodePath("VBoxContainer/IntButton")
 vec2Button = NodePath("VBoxContainer/Vec2Button")
 vec3Button = NodePath("VBoxContainer/Vec3Button")
 stringButton = NodePath("VBoxContainer/StringButton")
@@ -21,9 +21,9 @@ offset_left = 9.49
 offset_right = 55.49
 offset_bottom = 101.0
 
-[node name="NumButton" type="Button" parent="VBoxContainer"]
+[node name="IntButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Num"
+text = "Int"
 
 [node name="Vec2Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2

@@ -1,14 +1,14 @@
 public class Vec3Element : ElementBase
 {
-    NumberElement x;
-    NumberElement y;
-    NumberElement z;
+    IntegerElement x;
+    IntegerElement y;
+    IntegerElement z;
 
-    public NumberElement X => x;
-    public NumberElement Y => y;
-    public NumberElement Z => z;
+    public IntegerElement X => x;
+    public IntegerElement Y => y;
+    public IntegerElement Z => z;
 
-    public Vec3Element(NumberElement x, NumberElement y, NumberElement z)
+    public Vec3Element(IntegerElement x, IntegerElement y, IntegerElement z)
     {
         this.x = x;
         this.y = y;
@@ -23,6 +23,6 @@ public class Vec3Element : ElementBase
     /// <returns></returns>
     public static Vec3Element Sum(Vec3Element a, Vec3Element b)
     {
-        return new Vec3Element(NumberElement.Sum(a.X, b.X), NumberElement.Sum(a.Y, b.Y), NumberElement.Sum(a.Z, b.Z));
+        return new Vec3Element(IntegerElement.Sum(a.X, b.X), IntegerElement.Sum(a.Y, b.Y), IntegerElement.Sum(a.Z, b.Z));
     }
 }

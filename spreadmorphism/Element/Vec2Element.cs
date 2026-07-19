@@ -1,12 +1,12 @@
 public class Vec2Element : ElementBase
 {
-    NumberElement x;
-    NumberElement y;
+    IntegerElement x;
+    IntegerElement y;
 
-    public NumberElement X => x;
-    public NumberElement Y => y;
+    public IntegerElement X => x;
+    public IntegerElement Y => y;
 
-    public Vec2Element(NumberElement x, NumberElement y)
+    public Vec2Element(IntegerElement x, IntegerElement y)
     {
         this.x = x;
         this.y = y;
@@ -20,6 +20,6 @@ public class Vec2Element : ElementBase
     /// <returns></returns>
     public static Vec2Element Sum(Vec2Element a, Vec2Element b)
     {
-        return new Vec2Element(NumberElement.Sum(a.X, b.X), NumberElement.Sum(a.Y, b.Y));
+        return new Vec2Element(IntegerElement.Sum(a.X, b.X), IntegerElement.Sum(a.Y, b.Y));
     }
 }

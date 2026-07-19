@@ -6,7 +6,7 @@ public partial class Vec2Object : ObjectBase
 {
     public override ObjectType Type => ObjectType.Vec2;
 
-    Vec2Element element = new Vec2Element(new NumberElement(0), new NumberElement(0));
+    Vec2Element element = new Vec2Element(new IntegerElement(0), new IntegerElement(0));
 
     protected override void InitView()
     {
@@ -25,21 +25,21 @@ public partial class Vec2Object : ObjectBase
         {
             ElementBase x = ObjectView.GetCells()[0].Formula.Evaluate();
             ElementBase y = ObjectView.GetCells()[1].Formula.Evaluate();
-            if (x is NumberElement numX && y is NumberElement numY)
+            if (x is IntegerElement numX && y is IntegerElement numY)
             {
                 SetElement(new Vec2Element(numX, numY));
             }
             else
             {
-                SetElement(new Vec2Element(new NumberElement(0), new NumberElement(0)));
+                SetElement(new Vec2Element(new IntegerElement(0), new IntegerElement(0)));
             }
         }
     }
 
     public override ElementBase GetElement()
     {
-        NumberElement x = new NumberElement(ObjectView.GetCells()[0].Value);
-        NumberElement y = new NumberElement(ObjectView.GetCells()[1].Value);
+        IntegerElement x = new IntegerElement(ObjectView.GetCells()[0].Value);
+        IntegerElement y = new IntegerElement(ObjectView.GetCells()[1].Value);
         return new Vec2Element(x, y);
     }
 

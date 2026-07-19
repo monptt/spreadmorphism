@@ -59,9 +59,9 @@ public partial class ObjectSpace : Node2D
         switch (type)
         {
             case ObjectType.Number:
-                obj = new NumberObject();
+                obj = new IntegerObject();
                 matrixSize = new Vector2I(1, 1);
-                name = "Num";
+                name = "Int";
                 break;
             case ObjectType.Vec2:
                 obj = new Vec2Object();

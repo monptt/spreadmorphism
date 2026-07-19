@@ -19,14 +19,14 @@ public class FuncMultiply : FormulaFuncBase
             return args[0];
         }
 
-        if (args[0] is NumberElement)
+        if (args[0] is IntegerElement)
         {
-            NumberElement product = new NumberElement(1);
+            IntegerElement product = new IntegerElement(1);
             foreach (ElementBase arg in args)
             {
-                if (arg is NumberElement numberElement)
+                if (arg is IntegerElement numberElement)
                 {
-                    product = NumberElement.Multiply(product, numberElement);
+                    product = IntegerElement.Multiply(product, numberElement);
                 }
             }
             return product;
