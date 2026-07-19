@@ -93,7 +93,50 @@ public partial class Cell : Node2D
 
     public void SetElement(ComplexElement value)
     {
-        valueLabel.Text = $"{value.Re.Value} + {value.Im.Value}i";
+        if (value.Im.Value == 0)
+        {
+            // 実数
+            valueLabel.Text = $"{value.Re.Value}";
+        }
+        else if (value.Re.Value == 0)
+        {
+            // 純虚数
+            if (value.Im.Value == 1)
+            {
+                valueLabel.Text = "i";
+            }
+            else if (value.Im.Value == -1)
+            {
+                valueLabel.Text = "-i";
+            }
+            else
+            {
+                valueLabel.Text = $"{value.Im.Value}i";
+            }
+        }
+        else
+        {
+            // 複素数
+            if (value.Im.Value == 1)
+            {
+                valueLabel.Text = $"{value.Re.Value} + i";
+            }
+            else if (value.Im.Value == -1)
+            {
+                valueLabel.Text = $"{value.Re.Value} - i";
+            }
+            else
+            {
+                if (value.Im.Value > 0)
+                {
+                    valueLabel.Text = $"{value.Re.Value} + {value.Im.Value}i";
+                }
+                else
+                {
+                    valueLabel.Text = $"{value.Re.Value} - {-value.Im.Value}i";
+                }
+            }
+        }
     }
 
     public void SetElement(StringElement value)
