@@ -111,6 +111,48 @@ public class Formula
             return Evaluate(tokens.Skip(1).Take(tokens.Count - 2).ToList());
         }
 
+        // [x, y] 形式は該当の座標にあるオブジェクトを取得
+        if (tokens[0].TokenStr == "[" && tokens[tokens.Count - 1].TokenStr == "]")
+        {
+            int separatorIndex = -1;    // "," の位置
+            for (int i = 1; i < tokens.Count - 1; i++)
+            {
+                int depth = 0;
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth++;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth--;
+                }
+                if (depth == 0 && tokens[i].TokenStr == ",")
+                {
+                    separatorIndex = i;
+                    break;
+                }
+            }
+            if (separatorIndex == -1)
+            {
+                return null;
+            }
+
+            // [x, y] 形式を想定
+            ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
+            ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
+
+            if (xElement is NumberElement x && yElement is NumberElement y)
+            {
+                GridPos pos = new GridPos(x.Value, y.Value);
+                ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
+                if (obj != null)
+                {
+                    return obj.GetElement();
+                }
+            }
+            return null;
+        }
+
         /*** ここから演算子の優先順に（外側になるものから）評価していく ***/
         // "+", "-"
         {
@@ -190,100 +232,79 @@ public class Formula
                     }
                 }
             }
+        }
 
-            if (tokens[0].TokenStr == "[" && tokens.Count == 5 && tokens[2].TokenStr == "," && tokens[4].TokenStr == "]")
+        // 関数系
+        if (funcNames.Contains(tokens[0].TokenStr.ToUpper()))
+        {
+            // 一旦引数をリスト化
+            List<ElementBase> argElements = new List<ElementBase>();
+            if (tokens.Count > 2)
             {
-                // [x, y] 形式を想定
-                int x = 0;
-                int y = 0;
-                bool parseResult = int.TryParse(tokens[1].TokenStr, out x) && int.TryParse(tokens[3].TokenStr, out y);
-                if (!parseResult)
+                if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
                 {
-                    return null;
-                }
+                    List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
 
-                GridPos pos = new GridPos(x, y);
-                ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
-                if (obj == null)
-                {
-                    return null;
-                }
-
-                return obj.GetElement();
-            }
-
-            // 関数系
-            if (funcNames.Contains(tokens[0].TokenStr.ToUpper()))
-            {
-                // 一旦引数をリスト化
-                List<ElementBase> argElements = new List<ElementBase>();
-                if (tokens.Count > 2)
-                {
-                    if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+                    foreach (List<FormulaToken> argToken in argTokens)
                     {
-                        List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
-
-                        foreach (List<FormulaToken> argToken in argTokens)
-                        {
-                            ElementBase argElement = Evaluate(argToken);
-                            argElements.Add(argElement);
-                        }
+                        ElementBase argElement = Evaluate(argToken);
+                        argElements.Add(argElement);
                     }
                 }
-
-                string funcName = tokens[0].TokenStr.ToUpper();
-                if (funcName == "SUM")
-                {
-                    return FuncSum.Sum(argElements);
-                }
-                return null;
             }
 
-
+            string funcName = tokens[0].TokenStr.ToUpper();
+            if (funcName == "SUM")
+            {
+                return FuncSum.Sum(argElements);
+            }
             return null;
         }
 
-        /// <summary>
-        /// (xxx, yyy, zzz) 形式を ","で分割する
-        /// </summary>
-        /// <param name="tokens"></param>
-        /// <returns></returns>
-        List<List<FormulaToken>> SplitArgsByComma(List<FormulaToken> tokens)
+
+        return null;
+    }
+
+    /// <summary>
+    /// (xxx, yyy, zzz) 形式を ","で分割する
+    /// </summary>
+    /// <param name="tokens"></param>
+    /// <returns></returns>
+    List<List<FormulaToken>> SplitArgsByComma(List<FormulaToken> tokens)
+    {
+        List<List<FormulaToken>> result = new List<List<FormulaToken>>();
+        List<FormulaToken> current = new List<FormulaToken>();
+
+        int depth = 0;
+        for (int i = 0; i < tokens.Count; i++)
         {
-            List<List<FormulaToken>> result = new List<List<FormulaToken>>();
-            List<FormulaToken> current = new List<FormulaToken>();
-
-            int depth = 0;
-            for (int i = 0; i < tokens.Count; i++)
+            if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
             {
-                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
-                {
-                    depth++;
-                }
-                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
-                {
-                    depth--;
-                }
-
-                if (depth == 0 && tokens[i].TokenStr == ",")
-                {
-                    if (current.Count > 0)
-                    {
-                        result.Add(current);
-                        current = new List<FormulaToken>();
-                    }
-                }
-                else
-                {
-                    current.Add(tokens[i]);
-                }
+                depth++;
+            }
+            if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+            {
+                depth--;
             }
 
-            if (current.Count > 0)
+            if (depth == 0 && tokens[i].TokenStr == ",")
             {
-                result.Add(current);
+                if (current.Count > 0)
+                {
+                    result.Add(current);
+                    current = new List<FormulaToken>();
+                }
             }
-            return result;
+            else
+            {
+                current.Add(tokens[i]);
+            }
         }
+
+        if (current.Count > 0)
+        {
+            result.Add(current);
+        }
+        return result;
     }
 }
