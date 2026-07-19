@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// </summary>
 /// <param name="args">引数リスト</param>
 /// <returns>合計値</returns>
-public static class FuncSum
+public class FuncSum : FormulaFuncBase
 {
     public static ElementBase Sum(List<ElementBase> args)
     {

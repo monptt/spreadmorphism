@@ -80,16 +80,20 @@ public class Formula
     /// <returns>値</returns>
     ElementBase Evaluate(List<FormulaToken> tokens)
     {
+        // 無効な数式
         if (tokens.Count == 0)
         {
             return null;
         }
 
+        // 数式の先頭が "=" の場合は、数式を評価する
+        //@todo: 左辺に変数をおいて代入したい
         if (tokens[0].TokenStr == "=")
         {
             return Evaluate(tokens.Skip(1).ToList());
         }
 
+        // 数値のみになったら値を評価
         if (tokens.Count == 1)
         {
             // 数値のみの想定
@@ -100,6 +104,59 @@ public class Formula
             }
             return new NumberElement(value);
         }
+
+        // () で囲まれてるだけのものは中身を評価
+        if (tokens[0].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+        {
+            return Evaluate(tokens.Skip(1).Take(tokens.Count - 2).ToList());
+        }
+
+        /*** ここから演算子の優先順に（外側になるものから）評価していく ***/
+        /* "+", "-" */
+        {
+            int depth = 0;
+            for (int i = tokens.Count - 1; i >= 0; i--)
+            {
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth--;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth++;
+                }
+
+                if (depth == 0 && (tokens[i].TokenStr == "+" || tokens[i].TokenStr == "-"))
+                {
+                    ElementBase left = Evaluate(tokens.Take(i).ToList());
+                    ElementBase right = Evaluate(tokens.Skip(i + 1).ToList());
+                    if (right == null)
+                    {
+                        return null;
+                    }
+
+                    if (tokens[i].TokenStr == "+")
+                    {
+                        if (left == null)
+                        {
+                            return right;
+                        }
+                        return FuncSum.Sum(new List<ElementBase> { left, right });
+                    }
+
+                    if (tokens[i].TokenStr == "-")
+                    {
+                        if (left == null)
+                        {
+                            return FuncNegate.Negate(right);
+                        }
+                        return FuncSum.Sum(new List<ElementBase> { left, FuncNegate.Negate(right) });
+                    }
+                }
+
+            }
+        }
+
 
         if (tokens[0].TokenStr == "[" && tokens.Count == 5 && tokens[2].TokenStr == "," && tokens[4].TokenStr == "]")
         {
