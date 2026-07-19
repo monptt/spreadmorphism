@@ -54,6 +54,15 @@ public class Formula
                     }
                     tokens.Add(new FormulaToken(c.ToString()));
                 }
+                else if (c == 'i')
+                {
+                    if (tempToken != "")
+                    {
+                        tokens.Add(new FormulaToken(tempToken));
+                        tempToken = "";
+                    }
+                    tokens.Add(new FormulaToken("i"));
+                }
                 else
                 {
                     tempToken += c;
@@ -88,7 +97,7 @@ public class Formula
 
         // 数式の先頭が "=" の場合は、数式を評価する
         //@todo: 左辺に変数をおいて代入したい
-        if (tokens[0].TokenStr == "=")
+        if (tokens.First().TokenStr == "=")
         {
             return Evaluate(tokens.Skip(1).ToList());
         }
@@ -96,8 +105,14 @@ public class Formula
         // 数値のみになったら値を評価
         if (tokens.Count == 1)
         {
+            // 虚数単位
+            if (tokens.First().TokenStr == "i")
+            {
+                return new ComplexElement(new IntegerElement(0), new IntegerElement(1));
+            }
+
             // 数値のみの想定
-            bool parseResult = int.TryParse(tokens[0].TokenStr, out int value);
+            bool parseResult = int.TryParse(tokens.First().TokenStr, out int value);
             if (!parseResult)
             {
                 return null;
@@ -105,14 +120,24 @@ public class Formula
             return new IntegerElement(value);
         }
 
+        // 純虚数
+        if (tokens.Count == 2 && tokens.Last().TokenStr == "i")
+        {
+            ElementBase im = Evaluate(tokens.Skip(0).Take(1).ToList());
+            if (im is IntegerElement imElement)
+            {
+                return new ComplexElement(new IntegerElement(0), imElement);
+            }
+        }
+
         // () で囲まれてるだけのものは中身を評価
-        if (tokens[0].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+        if (tokens.First().TokenStr == "(" && tokens.Last().TokenStr == ")")
         {
             return Evaluate(tokens.Skip(1).Take(tokens.Count - 2).ToList());
         }
 
         // [x, y] 形式は該当の座標にあるオブジェクトを取得
-        if (tokens[0].TokenStr == "[" && tokens[tokens.Count - 1].TokenStr == "]")
+        if (tokens.First().TokenStr == "[" && tokens.Last().TokenStr == "]")
         {
             int separatorIndex = -1;    // "," の位置
             for (int i = 1; i < tokens.Count - 1; i++)
@@ -235,13 +260,13 @@ public class Formula
         }
 
         // 関数系
-        if (funcNames.Contains(tokens[0].TokenStr.ToUpper()))
+        if (funcNames.Contains(tokens.First().TokenStr.ToUpper()))
         {
             // 一旦引数をリスト化
             List<ElementBase> argElements = new List<ElementBase>();
             if (tokens.Count > 2)
             {
-                if (tokens[1].TokenStr == "(" && tokens[tokens.Count - 1].TokenStr == ")")
+                if (tokens[1].TokenStr == "(" && tokens.Last().TokenStr == ")")
                 {
                     List<List<FormulaToken>> argTokens = SplitArgsByComma(tokens.Skip(2).Take(tokens.Count - 3).ToList());
 
@@ -253,7 +278,7 @@ public class Formula
                 }
             }
 
-            string funcName = tokens[0].TokenStr.ToUpper();
+            string funcName = tokens.First().TokenStr.ToUpper();
             if (funcName == "SUM")
             {
                 return FuncSum.Sum(argElements);
