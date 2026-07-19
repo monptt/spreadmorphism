@@ -85,19 +85,13 @@ public partial class Cell : Node2D
         this.status = status;
     }
 
-    public void SetValue(int value)
-    {
-        this.value = value;
-        valueLabel.Text = $"{value}";
-    }
-
-    public void SetValue(IntegerElement value)
+    public void SetElement(IntegerElement value)
     {
         this.value = value.Value;
         valueLabel.Text = $"{value.Value}";
     }
 
-    public void SetValue(StringElement value)
+    public void SetElement(StringElement value)
     {
         valueLabel.Text = $"{value.Value}";
     }

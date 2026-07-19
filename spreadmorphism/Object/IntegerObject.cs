@@ -72,6 +72,6 @@ public partial class IntegerObject : ObjectBase
     void SetElement(IntegerElement element)
     {
         this.element = element;
-        Cell.SetValue(element.Value);
+        Cell.SetElement(element);
     }
 }

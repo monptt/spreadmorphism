@@ -51,6 +51,6 @@ public partial class StringObject : ObjectBase
     void SetElement(StringElement element)
     {
         this.element = element;
-        ObjectView.GetCells()[0].SetValue(element);
+        ObjectView.GetCells()[0].SetElement(element);
     }
 }

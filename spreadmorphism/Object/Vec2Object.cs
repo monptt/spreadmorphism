@@ -46,8 +46,8 @@ public partial class Vec2Object : ObjectBase
     void SetElement(Vec2Element element)
     {
         this.element = element;
-        ObjectView.GetCells()[0].SetValue(element.X.Value);
-        ObjectView.GetCells()[1].SetValue(element.Y.Value);
+        ObjectView.GetCells()[0].SetElement(element.X);
+        ObjectView.GetCells()[1].SetElement(element.Y);
     }
 
     protected override bool EvaluateFormula(Formula formula)
