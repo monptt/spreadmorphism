@@ -85,6 +85,18 @@ public partial class Cell : Node2D
         this.status = status;
     }
 
+    public void SetElement(BoolElement value)
+    {
+        if (value.Value)
+        {
+            valueLabel.Text = "true";
+        }
+        else
+        {
+            valueLabel.Text = "false";
+        }
+    }
+
     public void SetElement(IntegerElement value)
     {
         this.value = value.Value;

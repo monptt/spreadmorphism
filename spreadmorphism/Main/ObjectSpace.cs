@@ -83,7 +83,13 @@ public partial class ObjectSpace : Node2D
                 matrixSize = new Vector2I(1, 1);
                 name = "Complex";
                 break;
+            case ObjectType.Bool:
+                obj = new BoolObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Bool";
+                break;
             default:
+                GD.PrintErr("Invalid object type: " + type);
                 break;
         }
 

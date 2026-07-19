@@ -9,6 +9,7 @@ public enum ObjectType
     Vec2,
     Vec3,
     String,
+    Bool,
 }
 
 public abstract partial class ObjectBase

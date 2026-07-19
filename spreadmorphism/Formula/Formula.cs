@@ -111,6 +111,16 @@ public class Formula
                 return new ComplexElement(new IntegerElement(0), new IntegerElement(1));
             }
 
+            // bool
+            if (tokens.First().TokenStr.ToLower() == "true")
+            {
+                return new BoolElement(true);
+            }
+            if (tokens.First().TokenStr.ToLower() == "false")
+            {
+                return new BoolElement(false);
+            }
+
             // 数値のみの想定
             bool parseResult = int.TryParse(tokens.First().TokenStr, out int value);
             if (!parseResult)

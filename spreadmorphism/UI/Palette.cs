@@ -19,6 +19,9 @@ public partial class Palette : Node2D
     [Export]
     Button complexButton;
 
+    [Export]
+    Button boolButton;
+
 
     // その他
     [Export]
@@ -52,6 +55,11 @@ public partial class Palette : Node2D
         complexButton.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Complex);
+        };
+
+        boolButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Bool);
         };
     }
 
