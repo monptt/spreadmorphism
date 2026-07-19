@@ -21,4 +21,15 @@ public class NumberElement : ElementBase
     {
         return new NumberElement(a.Value + b.Value);
     }
+
+    /// <summary>
+    /// 積
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static NumberElement Multiply(NumberElement a, NumberElement b)
+    {
+        return new NumberElement(a.Value * b.Value);
+    }
 }
