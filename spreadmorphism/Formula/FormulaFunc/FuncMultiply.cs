@@ -19,6 +19,34 @@ public class FuncMultiply : FormulaFuncBase
             return args[0];
         }
 
+        // 複素数が含まれてたら複素数として計算
+        bool isComplex = false;
+        foreach (ElementBase arg in args)
+        {
+            if (arg is ComplexElement)
+            {
+                isComplex = true;
+                break;
+            }
+        }
+        if (isComplex)
+        {
+            ComplexElement product = new ComplexElement(new IntegerElement(1), new IntegerElement(0));
+            foreach (ElementBase arg in args)
+            {
+                if (arg is ComplexElement complexElement)
+                {
+                    product = ComplexElement.Multiply(product, complexElement);
+                }
+                else if (arg is IntegerElement integerElement)
+                {
+                    product = ComplexElement.Multiply(product, integerElement);
+                }
+            }
+            return product;
+        }
+
+
         if (args[0] is IntegerElement)
         {
             IntegerElement product = new IntegerElement(1);

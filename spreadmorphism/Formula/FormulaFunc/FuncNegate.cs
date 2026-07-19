@@ -14,6 +14,11 @@ public class FuncNegate : FormulaFuncBase
             return new IntegerElement(-numberElement.Value);
         }
 
+        if (element is ComplexElement complexElement)
+        {
+            return ComplexElement.Multiply(complexElement, new IntegerElement(-1));
+        }
+
         return null;
     }
 }

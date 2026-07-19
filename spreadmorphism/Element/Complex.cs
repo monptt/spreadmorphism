@@ -25,6 +25,11 @@ public class ComplexElement : ElementBase
         return new ComplexElement(a.Re + b.Re, a.Im + b.Im);
     }
 
+    public static ComplexElement Sum(ComplexElement a, IntegerElement b)
+    {
+        return new ComplexElement(a.Re + b, a.Im);
+    }
+
     public static ComplexElement Subtract(ComplexElement a, ComplexElement b)
     {
         return new ComplexElement(a.Re - b.Re, a.Im - b.Im);
@@ -42,5 +47,10 @@ public class ComplexElement : ElementBase
             a.Re * b.Re - a.Im * b.Im,
             a.Re * b.Im + a.Im * b.Re
         );
+    }
+
+    public static ComplexElement Multiply(ComplexElement a, IntegerElement b)
+    {
+        return new ComplexElement(a.Re * b, a.Im * b);
     }
 }
