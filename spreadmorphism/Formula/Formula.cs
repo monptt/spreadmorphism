@@ -130,54 +130,6 @@ public class Formula
             }
         }
 
-        // () で囲まれてるだけのものは中身を評価
-        if (tokens.First().TokenStr == "(" && tokens.Last().TokenStr == ")")
-        {
-            return Evaluate(tokens.Skip(1).Take(tokens.Count - 2).ToList());
-        }
-
-        // [x, y] 形式は該当の座標にあるオブジェクトを取得
-        if (tokens.First().TokenStr == "[" && tokens.Last().TokenStr == "]")
-        {
-            int separatorIndex = -1;    // "," の位置
-            for (int i = 1; i < tokens.Count - 1; i++)
-            {
-                int depth = 0;
-                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
-                {
-                    depth++;
-                }
-                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
-                {
-                    depth--;
-                }
-                if (depth == 0 && tokens[i].TokenStr == ",")
-                {
-                    separatorIndex = i;
-                    break;
-                }
-            }
-            if (separatorIndex == -1)
-            {
-                return null;
-            }
-
-            // [x, y] 形式を想定
-            ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
-            ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
-
-            if (xElement is IntegerElement x && yElement is IntegerElement y)
-            {
-                GridPos pos = new GridPos(x.Value, y.Value);
-                ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
-                if (obj != null)
-                {
-                    return obj.GetElement();
-                }
-            }
-            return null;
-        }
-
         /*** ここから演算子の優先順に（外側になるものから）評価していく ***/
         // "+", "-"
         {
@@ -197,6 +149,7 @@ public class Formula
                 {
                     ElementBase left = Evaluate(tokens.Take(i).ToList());
                     ElementBase right = Evaluate(tokens.Skip(i + 1).ToList());
+
                     if (right == null)
                     {
                         return null;
@@ -282,6 +235,54 @@ public class Formula
             if (funcName == "SUM")
             {
                 return FuncSum.Sum(argElements);
+            }
+            return null;
+        }
+
+        // () で囲まれてるだけのものは中身を評価
+        if (tokens.First().TokenStr == "(" && tokens.Last().TokenStr == ")")
+        {
+            return Evaluate(tokens.Skip(1).Take(tokens.Count - 2).ToList());
+        }
+
+        // [x, y] 形式は該当の座標にあるオブジェクトを取得
+        if (tokens.First().TokenStr == "[" && tokens.Last().TokenStr == "]")
+        {
+            int separatorIndex = -1;    // "," の位置
+            for (int i = 1; i < tokens.Count - 1; i++)
+            {
+                int depth = 0;
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth++;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth--;
+                }
+                if (depth == 0 && tokens[i].TokenStr == ",")
+                {
+                    separatorIndex = i;
+                    break;
+                }
+            }
+            if (separatorIndex == -1)
+            {
+                return null;
+            }
+
+            // [x, y] 形式を想定
+            ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
+            ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
+
+            if (xElement is IntegerElement x && yElement is IntegerElement y)
+            {
+                GridPos pos = new GridPos(x.Value, y.Value);
+                ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
+                if (obj != null)
+                {
+                    return obj.GetElement();
+                }
             }
             return null;
         }
