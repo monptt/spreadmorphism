@@ -2,18 +2,19 @@
 
 [ext_resource type="Script" path="res://UI/Palette.cs" id="1_4bdx1"]
 
-[node name="Palette" type="Node2D" node_paths=PackedStringArray("numButton", "vec2Button", "vec3Button", "stringButton", "colorRect")]
+[node name="Palette" type="Node2D" node_paths=PackedStringArray("numButton", "vec2Button", "vec3Button", "stringButton", "complexButton", "colorRect")]
 script = ExtResource("1_4bdx1")
 numButton = NodePath("VBoxContainer/IntButton")
 vec2Button = NodePath("VBoxContainer/Vec2Button")
 vec3Button = NodePath("VBoxContainer/Vec3Button")
 stringButton = NodePath("VBoxContainer/StringButton")
+complexButton = NodePath("VBoxContainer/ComplexButton")
 colorRect = NodePath("ColorRect")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_top = -19.0
-offset_right = 86.0
-offset_bottom = 153.0
+offset_right = 90.0
+offset_bottom = 191.0
 color = Color(1, 0.827451, 1, 0.815686)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -37,3 +38,7 @@ text = "Vec3"
 [node name="StringButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "String"
+
+[node name="ComplexButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Complex"

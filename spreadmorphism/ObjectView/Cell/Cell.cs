@@ -91,6 +91,11 @@ public partial class Cell : Node2D
         valueLabel.Text = $"{value.Value}";
     }
 
+    public void SetElement(ComplexElement value)
+    {
+        valueLabel.Text = $"{value.Re.Value} + {value.Im.Value}i";
+    }
+
     public void SetElement(StringElement value)
     {
         valueLabel.Text = $"{value.Value}";

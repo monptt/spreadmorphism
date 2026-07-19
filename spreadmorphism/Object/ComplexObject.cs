@@ -2,11 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class IntegerObject : ObjectBase
+public partial class ComplexObject : ObjectBase
 {
-    public override ObjectType Type => ObjectType.Integer;
+    public override ObjectType Type => ObjectType.Complex;
 
-    IntegerElement element = new IntegerElement(0);
+    ComplexElement element = new ComplexElement(new IntegerElement(0), new IntegerElement(0));
 
     Cell Cell => ObjectView.GetCells()[0];
 
@@ -14,7 +14,7 @@ public partial class IntegerObject : ObjectBase
     protected override void InitView()
     {
         this.SetIsOneObject(true);
-        SetElement(new IntegerElement(0));
+        SetElement(new ComplexElement(new IntegerElement(0), new IntegerElement(0)));
         Cell.SetFormula("0");
         this.SetFormula("0");
     }
@@ -25,26 +25,26 @@ public partial class IntegerObject : ObjectBase
         {
             ElementBase element = this.Formula.Evaluate();
 
-            if (element is IntegerElement numberElement)
+            if (element is ComplexElement complexElement)
             {
-                SetElement(numberElement);
+                SetElement(complexElement);
             }
             else
             {
-                SetElement(new IntegerElement(0));
+                SetElement(new ComplexElement(new IntegerElement(0), new IntegerElement(0)));
             }
         }
         else
         {
             ElementBase element = Cell.Formula.Evaluate();
 
-            if (element is IntegerElement numberElement)
+            if (element is ComplexElement complexElement)
             {
-                SetElement(numberElement);
+                SetElement(complexElement);
             }
             else
             {
-                SetElement(new IntegerElement(0));
+                SetElement(new ComplexElement(new IntegerElement(0), new IntegerElement(0)));
             }
         }
     }
@@ -53,9 +53,9 @@ public partial class IntegerObject : ObjectBase
     {
         ElementBase result = formula.Evaluate();
 
-        if (result is IntegerElement numberElement)
+        if (result is ComplexElement complexElement)
         {
-            SetElement(numberElement);
+            SetElement(complexElement);
             return true;
         }
         else
@@ -69,7 +69,7 @@ public partial class IntegerObject : ObjectBase
         return element;
     }
 
-    void SetElement(IntegerElement element)
+    void SetElement(ComplexElement element)
     {
         this.element = element;
         Cell.SetElement(element);

@@ -23,6 +23,17 @@ public class IntegerElement : ElementBase
     }
 
     /// <summary>
+    /// 差
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static IntegerElement Subtract(IntegerElement a, IntegerElement b)
+    {
+        return new IntegerElement(a.Value - b.Value);
+    }
+
+    /// <summary>
     /// 積
     /// </summary>
     /// <param name="a"></param>
@@ -31,5 +42,20 @@ public class IntegerElement : ElementBase
     public static IntegerElement Multiply(IntegerElement a, IntegerElement b)
     {
         return new IntegerElement(a.Value * b.Value);
+    }
+
+    public static IntegerElement operator +(IntegerElement a, IntegerElement b)
+    {
+        return Sum(a, b);
+    }
+
+    public static IntegerElement operator -(IntegerElement a, IntegerElement b)
+    {
+        return Subtract(a, b);
+    }
+
+    public static IntegerElement operator *(IntegerElement a, IntegerElement b)
+    {
+        return Multiply(a, b);
     }
 }

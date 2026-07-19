@@ -58,7 +58,7 @@ public partial class ObjectSpace : Node2D
         string name = "";
         switch (type)
         {
-            case ObjectType.Number:
+            case ObjectType.Integer:
                 obj = new IntegerObject();
                 matrixSize = new Vector2I(1, 1);
                 name = "Int";
@@ -77,6 +77,11 @@ public partial class ObjectSpace : Node2D
                 obj = new StringObject();
                 matrixSize = new Vector2I(1, 1);
                 name = "String";
+                break;
+            case ObjectType.Complex:
+                obj = new ComplexObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Complex";
                 break;
             default:
                 break;

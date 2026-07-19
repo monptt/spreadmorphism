@@ -16,6 +16,9 @@ public partial class Palette : Node2D
     [Export]
     Button stringButton;
 
+    [Export]
+    Button complexButton;
+
 
     // その他
     [Export]
@@ -28,7 +31,7 @@ public partial class Palette : Node2D
     {
         numButton.Pressed += () =>
         {
-            EmitSignal(SignalName.AddObject, (int)ObjectType.Number);
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Integer);
         };
 
         vec2Button.Pressed += () =>
@@ -44,6 +47,11 @@ public partial class Palette : Node2D
         stringButton.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.String);
+        };
+
+        complexButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Complex);
         };
     }
 

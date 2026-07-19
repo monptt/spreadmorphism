@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public enum ObjectType
 {
-    Number,
+    Integer,
+    Complex,
     Vec2,
     Vec3,
     String,
