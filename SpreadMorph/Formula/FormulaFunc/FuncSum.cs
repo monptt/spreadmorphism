@@ -7,6 +7,41 @@ using System.Collections.Generic;
 /// <returns>合計値</returns>
 public class FuncSum : FormulaFuncBase
 {
+    /// <summary>
+    /// 2つの引数に対応する場合
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static ElementBase Sum(ElementBase a, ElementBase b)
+    {
+        {
+            if (a is IntegerElement integerElementA && b is IntegerElement integerElementB)
+            {
+                return IntegerElement.Sum(integerElementA, integerElementB);
+            }
+            if (a is ComplexElement complexElementA && b is ComplexElement complexElementB)
+            {
+                return ComplexElement.Sum(complexElementA, complexElementB);
+            }
+        }
+
+        // 多項式
+        {
+            if (a is PolynomialElement polynomialElementA && b is PolynomialElement polynomialElementB)
+            {
+                return PolynomialElement.Add(polynomialElementA, polynomialElementB);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 3以上の引数に対応する場合
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static ElementBase Sum(List<ElementBase> args)
     {
         if (args.Count == 0)

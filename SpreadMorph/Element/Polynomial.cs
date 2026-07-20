@@ -34,15 +34,14 @@ public class PolynomialElement : ElementBase
         }
 
         string str = "";
-        var sortedCoefficients = coefficients.OrderBy(pair => pair.Key).ToList();
-        for (int i = 0; i < sortedCoefficients.Count; i++)
+        for (int i = 0; i < coefficients.Count; i++)
         {
             if (i != 0)
             {
                 str += "+";
             }
 
-            var pair = sortedCoefficients[i];
+            var pair = coefficients.ElementAt(i);
             IntegerElement degree = pair.Key;
             IntegerElement coefficient = pair.Value;
 
@@ -74,6 +73,40 @@ public class PolynomialElement : ElementBase
             str += $"{coefficientStr}{xStr}";
         }
         return str;
+    }
+
+    public static PolynomialElement Add(PolynomialElement a, PolynomialElement b)
+    {
+        PolynomialElement result = new PolynomialElement();
+        for (int i = 0; i < a.coefficients.Count; i++)
+        {
+            var pair = a.coefficients.ElementAt(i);
+            IntegerElement degree = pair.Key;
+            IntegerElement coefficient = pair.Value;
+            if (result.coefficients.ContainsKey(degree))
+            {
+                result.coefficients[degree] = result.coefficients[degree] + coefficient;
+            }
+            else
+            {
+                result.coefficients.Add(degree, coefficient);
+            }
+        }
+        for (int i = 0; i < b.coefficients.Count; i++)
+        {
+            var pair = b.coefficients.ElementAt(i);
+            IntegerElement degree = pair.Key;
+            IntegerElement coefficient = pair.Value;
+            if (result.coefficients.ContainsKey(degree))
+            {
+                result.coefficients[degree] = result.coefficients[degree] + coefficient;
+            }
+            else
+            {
+                result.coefficients.Add(degree, coefficient);
+            }
+        }
+        return result;
     }
 
     public static PolynomialElement Multiply(PolynomialElement a, IntegerElement b)

@@ -177,7 +177,7 @@ public class Formula
                         {
                             return right;
                         }
-                        return FuncSum.Sum(new List<ElementBase> { left, right });
+                        return FuncSum.Sum(left, right);
                     }
 
                     if (tokens[i].TokenStr == "-")
