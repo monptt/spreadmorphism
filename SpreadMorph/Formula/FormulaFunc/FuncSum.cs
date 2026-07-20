@@ -33,6 +33,12 @@ public class FuncSum : FormulaFuncBase
                 return PolynomialElement.Add(polynomialElementA, polynomialElementB);
             }
         }
+        {
+            if (a is PolynomialElement polynomialElementA && b is IntegerElement integerElementB)
+            {
+                return PolynomialElement.Add(polynomialElementA, new PolynomialElement(integerElementB));
+            }
+        }
 
         return null;
     }

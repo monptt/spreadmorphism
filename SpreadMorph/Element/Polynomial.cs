@@ -25,6 +25,14 @@ public class PolynomialElement : ElementBase, INegate
         coefficients.Add(degree, coefficient);
     }
 
+    /// <summary>
+    /// 定数
+    /// </summary>
+    /// <param name="c"></param>
+    public PolynomialElement(IntegerElement c)
+    {
+        coefficients.Add(new IntegerElement(0), c);
+    }
 
     public override string ToString()
     {
@@ -61,7 +69,7 @@ public class PolynomialElement : ElementBase, INegate
             {
                 xStr = "";
             }
-            if (degree.Value == 1)
+            else if (degree.Value == 1)
             {
                 xStr = "x";
             }
