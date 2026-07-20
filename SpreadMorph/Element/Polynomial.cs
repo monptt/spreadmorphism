@@ -75,4 +75,21 @@ public class PolynomialElement : ElementBase
         }
         return str;
     }
+
+    public static PolynomialElement Pow(PolynomialElement polynomialElement, IntegerElement exponent)
+    {
+        if (exponent.Value == 0)
+        {
+            return new PolynomialElement(new IntegerElement(0), new IntegerElement(1));
+        }
+
+
+        // x のみの場合
+        if (polynomialElement.coefficients.Count == 1 && polynomialElement.coefficients.First().Key.Value == 1 && polynomialElement.coefficients.First().Value.Value == 1)
+        {
+            return new PolynomialElement(new IntegerElement(exponent.Value), new IntegerElement(1));
+        }
+
+        return null;    // 未実装
+    }
 }

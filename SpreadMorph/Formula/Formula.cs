@@ -228,6 +228,34 @@ public class Formula
             }
         }
 
+        // "^" (累乗)
+        {
+            int depth = 0;
+            for (int i = tokens.Count - 1; i >= 0; i--)
+            {
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth--;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth++;
+                }
+
+                if (depth == 0 && (tokens[i].TokenStr == "^"))
+                {
+                    ElementBase left = Evaluate(tokens.Take(i).ToList());
+                    ElementBase right = Evaluate(tokens.Skip(i + 1).ToList());
+                    if (left == null || right == null)
+                    {
+                        return null;
+                    }
+
+                    return FuncPow.Pow(left, right);
+                }
+            }
+        }
+
         // 論理演算子
         // or
         {
