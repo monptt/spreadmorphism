@@ -13,6 +13,17 @@ public class RationalElement : ElementBase, IInverse
     {
         this.numerator = numerator;
         this.denominator = denominator;
+
+        // 分子が0
+        if (numerator.Value == 0)
+        {
+            this.denominator = new IntegerElement(1);
+        }
+
+        // 約分
+        IntegerElement gcd = FuncGCD.GCD(numerator, denominator);
+        this.numerator = (numerator / gcd) as IntegerElement;
+        this.denominator = (denominator / gcd) as IntegerElement;
     }
 
     public ElementBase Inverse()
