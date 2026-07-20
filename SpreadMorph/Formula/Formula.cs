@@ -352,36 +352,9 @@ public class Formula
         // [x, y] 形式は該当の座標にあるオブジェクトを取得
         if (tokens.First().TokenStr == "[" && tokens.Last().TokenStr == "]")
         {
-            int separatorIndex = -1;    // "," の位置
-            for (int i = 1; i < tokens.Count - 1; i++)
+            GridPos pos = GetGridPos(tokens);
+            if (!(pos is null))
             {
-                int depth = 0;
-                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
-                {
-                    depth++;
-                }
-                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
-                {
-                    depth--;
-                }
-                if (depth == 0 && tokens[i].TokenStr == ",")
-                {
-                    separatorIndex = i;
-                    break;
-                }
-            }
-            if (separatorIndex == -1)
-            {
-                return null;
-            }
-
-            // [x, y] 形式を想定
-            ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
-            ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
-
-            if (xElement is IntegerElement x && yElement is IntegerElement y)
-            {
-                GridPos pos = new GridPos(x.Value, y.Value);
                 ObjectBase obj = ObjectSpace.Instance.GetObject(pos);
                 if (obj != null)
                 {
@@ -436,5 +409,52 @@ public class Formula
             result.Add(current);
         }
         return result;
+    }
+
+    /// <summary>
+    /// [x, y] 形式想定で、GridPosを取得する
+    /// </summary>
+    /// <param name="tokens">[x,y] 形式のトークンリスト</param>
+    /// <returns>GridPos</returns>
+    GridPos GetGridPos(List<FormulaToken> tokens)
+    {
+        if (!(tokens.First().TokenStr == "[" && tokens.Last().TokenStr == "]"))
+        {
+            // [x,y] 形式のみ受け付け
+            return null;
+        }
+
+        int separatorIndex = -1;    // "," の位置
+        for (int i = 1; i < tokens.Count - 1; i++)
+        {
+            int depth = 0;
+            if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+            {
+                depth++;
+            }
+            if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+            {
+                depth--;
+            }
+            if (depth == 0 && tokens[i].TokenStr == ",")
+            {
+                separatorIndex = i;
+                break;
+            }
+        }
+        if (separatorIndex == -1)
+        {
+            return null;
+        }
+
+        // [x, y] 形式を想定
+        ElementBase xElement = Evaluate(tokens.Skip(1).Take(separatorIndex - 1).ToList());
+        ElementBase yElement = Evaluate(tokens.Skip(separatorIndex + 1).Take(tokens.Count - separatorIndex - 2).ToList());
+
+        if (xElement is IntegerElement x && yElement is IntegerElement y)
+        {
+            return new GridPos(x.Value, y.Value);
+        }
+        return null;
     }
 }
