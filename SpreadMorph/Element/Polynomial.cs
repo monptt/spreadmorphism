@@ -4,7 +4,7 @@ using System.Linq;
 /// <summary>
 /// 多項式
 /// </summary>
-public class PolynomialElement : ElementBase
+public class PolynomialElement : ElementBase, INegate
 {
     /// <summary>
     /// 次数と係数のペア
@@ -137,5 +137,10 @@ public class PolynomialElement : ElementBase
         }
 
         return null;    // 未実装
+    }
+
+    public ElementBase Negate()
+    {
+        return Multiply(this, new IntegerElement(-1));
     }
 }

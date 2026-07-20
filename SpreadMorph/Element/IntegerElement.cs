@@ -1,7 +1,7 @@
 /// <summary>
 /// 数
 /// </summary>
-public class IntegerElement : ElementBase, IInverse
+public class IntegerElement : ElementBase, IInverse, INegate
 {
     int value;
     public int Value => value;
@@ -110,5 +110,10 @@ public class IntegerElement : ElementBase, IInverse
     public ElementBase Inverse()
     {
         return new RationalElement(new IntegerElement(1), this);
+    }
+
+    public ElementBase Negate()
+    {
+        return new IntegerElement(-value);
     }
 }

@@ -1,7 +1,7 @@
 /// <summary>
 /// 複素数
 /// </summary>
-public class ComplexElement : ElementBase
+public class ComplexElement : ElementBase, INegate
 {
     IntegerElement re;
     IntegerElement im;
@@ -52,5 +52,10 @@ public class ComplexElement : ElementBase
     public static ComplexElement Multiply(ComplexElement a, IntegerElement b)
     {
         return new ComplexElement(a.Re * b, a.Im * b);
+    }
+
+    public ElementBase Negate()
+    {
+        return new ComplexElement(new IntegerElement(-re.Value), new IntegerElement(-im.Value));
     }
 }

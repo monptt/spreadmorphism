@@ -186,10 +186,9 @@ public class Formula
                         {
                             return FuncNegate.Negate(right);
                         }
-                        return FuncSum.Sum(new List<ElementBase> { left, FuncNegate.Negate(right) });
+                        return FuncSum.Sum(left, FuncNegate.Negate(right));
                     }
                 }
-
             }
         }
 

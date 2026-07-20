@@ -9,16 +9,10 @@ public class FuncNegate : FormulaFuncBase
 {
     public static ElementBase Negate(ElementBase element)
     {
-        if (element is IntegerElement numberElement)
+        if (element is INegate negateElement)
         {
-            return new IntegerElement(-numberElement.Value);
+            return negateElement.Negate();
         }
-
-        if (element is ComplexElement complexElement)
-        {
-            return ComplexElement.Multiply(complexElement, new IntegerElement(-1));
-        }
-
         return null;
     }
 }

@@ -1,5 +1,5 @@
 /// <summary>
-/// 逆元
+/// 乗法逆元
 /// </summary>
 public interface IInverse
 {
