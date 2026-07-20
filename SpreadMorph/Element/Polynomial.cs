@@ -41,28 +41,33 @@ public class PolynomialElement : ElementBase, INegate
             return "0";
         }
 
-        string str = "";
-        for (int i = 0; i < coefficients.Count; i++)
-        {
-            if (i != 0)
-            {
-                str += "+";
-            }
+        // 降べきの順にソート
+        var sortedCoefficients = coefficients.OrderByDescending(pair => pair.Key.Value).ToList();
 
-            var pair = coefficients.ElementAt(i);
+        string str = "";
+        for (int i = 0; i < sortedCoefficients.Count; i++)
+        {
+            var pair = sortedCoefficients.ElementAt(i);
             IntegerElement degree = pair.Key;
             IntegerElement coefficient = pair.Value;
 
             string coefficientStr = ""; // 係数の部分
             string xStr = ""; // x^n の部分
 
-            if (coefficient.Value == 1)
+            if (coefficient.Value == 1 && degree.Value != 0)
             {
                 coefficientStr = "";
             }
             else
             {
-                coefficientStr = coefficient.ToString();
+                if (i != 0)
+                {
+                    if (coefficient.Value > 0)
+                    {
+                        coefficientStr += "+";
+                    }
+                }
+                coefficientStr += coefficient.ToString();
             }
 
             if (degree.Value == 0)
