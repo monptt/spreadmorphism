@@ -32,6 +32,19 @@ public partial class SelectedGridHighlight : Node2D
     /// <param name="gridPosList">参照されたグリッドのリスト</param>
     public void Update(List<GridPos> gridPosList)
     {
+        for (int i = 0; i < highlightObjList.Count; i++)
+        {
+            if (i < gridPosList.Count)
+            {
+                highlightObjList[i].Visible = true;
+                highlightObjList[i].Position = new Vector2(gridPosList[i].X * Grid.GRID_WIDTH, gridPosList[i].Y * Grid.GRID_HEIGHT);
+                highlightObjList[i].Scale = new Vector2(Grid.GRID_WIDTH, Grid.GRID_HEIGHT);
+            }
+            else
+            {
+                highlightObjList[i].Visible = false;
+            }
+        }
 
     }
 }

@@ -89,8 +89,18 @@ public partial class Main : Node2D
 
         // 参照されたグリッドを更新
         List<GridPos> gridPosList = new List<GridPos>();
-        gridPosList.Add(selectedGridPos);
-        selectedGridHighlight.Update(gridPosList);
+        if (selectedCell != null)
+        {
+            gridPosList = selectedCell.Formula.GetReferencedGridPosList();
+        }
+        else if (selectedObject != null)
+        {
+            gridPosList = selectedObject.Formula.GetReferencedGridPosList();
+        }
+        if (gridPosList != null)
+        {
+            selectedGridHighlight.Update(gridPosList);
+        }
     }
 
     public override void _Input(InputEvent @event)

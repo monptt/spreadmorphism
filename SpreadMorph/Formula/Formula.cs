@@ -369,6 +369,53 @@ public class Formula
     }
 
     /// <summary>
+    /// 参照されたグリッドのリストを取得
+    /// </summary>
+    /// <returns>参照されたグリッドのリスト</returns>
+    public List<GridPos> GetReferencedGridPosList()
+    {
+        List<GridPos> result = new List<GridPos>();
+
+        List<FormulaToken> tokens = Tokenize(formulaStr);
+        int depth = 0;
+        int leftIndex = -1;
+        int rightIndex = -1;
+        for (int i = 0; i < tokens.Count; i++)
+        {
+            if (tokens[i].TokenStr == "[")
+            {
+                if (depth == 0)
+                {
+                    leftIndex = i;
+                }
+                depth++;
+            }
+            else if (tokens[i].TokenStr == "]")
+            {
+                depth--;
+                if (depth == 0)
+                {
+                    rightIndex = i;
+                }
+            }
+
+            // [x, y] 形式を観測したら、xとyの値を取得
+            if (depth == 0 && leftIndex != -1 && rightIndex != -1)
+            {
+                GridPos pos = GetGridPos(tokens.Skip(leftIndex).Take(rightIndex - leftIndex + 1).ToList());
+                if (!(pos is null))
+                {
+                    result.Add(pos);
+                }
+                leftIndex = -1;
+                rightIndex = -1;
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
     /// (xxx, yyy, zzz) 形式を ","で分割する
     /// </summary>
     /// <param name="tokens"></param>
