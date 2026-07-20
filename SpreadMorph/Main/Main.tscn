@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ddsbrre0iiurs"]
+[gd_scene load_steps=10 format=3 uid="uid://ddsbrre0iiurs"]
 
 [ext_resource type="Script" path="res://Main/Main.cs" id="1_ae1fs"]
 [ext_resource type="PackedScene" uid="uid://codbfo30gfmlv" path="res://Grid/Grid.tscn" id="3_k32su"]
+[ext_resource type="PackedScene" uid="uid://dufd8xywx4cde" path="res://SelectedGridHighlight/SelectedGridHighlight.tscn" id="3_o0h7g"]
 [ext_resource type="PackedScene" uid="uid://dyey5vx5l4m74" path="res://UI/CoordView.tscn" id="4_ir353"]
 [ext_resource type="PackedScene" uid="uid://dbqi0sr5f45j3" path="res://UI/Palette.tscn" id="4_n4mus"]
 [ext_resource type="PackedScene" uid="uid://bscfmppovnsvf" path="res://Main/ObjectSpace.tscn" id="4_wu2i8"]
@@ -11,7 +12,7 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_p12e0"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "formulaEdit", "coordView", "palette", "inspector")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "formulaEdit", "coordView", "palette", "inspector", "selectedGridHighlight")]
 script = ExtResource("1_ae1fs")
 mainCamera = NodePath("SubViewport/MainCamera")
 objectSpace = NodePath("SubViewport/ObjectSpace")
@@ -21,6 +22,7 @@ formulaEdit = NodePath("UI/FormulaEdit")
 coordView = NodePath("UI/CoordView")
 palette = NodePath("UI/Palette")
 inspector = NodePath("UI/Inspector")
+selectedGridHighlight = NodePath("SubViewport/SelectedGridHighlight")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
@@ -35,6 +37,8 @@ position = Vector2(960, 540)
 offset_right = 99.0
 offset_bottom = 29.0
 color = Color(0.941176, 0.74902, 0, 0.443137)
+
+[node name="SelectedGridHighlight" parent="SubViewport" instance=ExtResource("3_o0h7g")]
 
 [node name="Grid" parent="." instance=ExtResource("3_k32su")]
 

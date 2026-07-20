@@ -29,6 +29,9 @@ public partial class Main : Node2D
     [Export]
     Inspector inspector;
 
+    [Export]
+    SelectedGridHighlight selectedGridHighlight;
+
     /// <summary>
     /// 選択されたオブジェクト（オブジェクトが選択された場合）
     /// </summary>
@@ -83,6 +86,11 @@ public partial class Main : Node2D
         if (selectedCell != null) { objTypeStr = "cell"; }
         if (selectedObject != null) { objTypeStr = "object"; }
         inspector.UpdateInspector(selectedGridPos, objTypeStr, "---");
+
+        // 参照されたグリッドを更新
+        List<GridPos> gridPosList = new List<GridPos>();
+        gridPosList.Add(selectedGridPos);
+        selectedGridHighlight.Update(gridPosList);
     }
 
     public override void _Input(InputEvent @event)

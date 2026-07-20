@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dufd8xywx4cde"]
+
+[ext_resource type="Script" path="res://SelectedGridHighlight/SelectedGridHighlight.cs" id="1_mcvwr"]
+[ext_resource type="PackedScene" uid="uid://cjveglaiqyf0u" path="res://SelectedGridHighlight/HighlightObject.tscn" id="2_vgmg8"]
+
+[node name="SelectedGridHighlight" type="Node2D"]
+script = ExtResource("1_mcvwr")
+highlightScene = ExtResource("2_vgmg8")
