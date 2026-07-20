@@ -10,4 +10,16 @@ public class BoolElement : ElementBase
     {
         this.value = value;
     }
+
+    public override string ToString()
+    {
+        if (value)
+        {
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
+    }
 }

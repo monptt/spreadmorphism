@@ -38,8 +38,8 @@ public partial class Vec2Object : ObjectBase
 
     public override ElementBase GetElement()
     {
-        IntegerElement x = new IntegerElement(ObjectView.GetCells()[0].Value);
-        IntegerElement y = new IntegerElement(ObjectView.GetCells()[1].Value);
+        IntegerElement x = ObjectView.GetCells()[0].Element as IntegerElement;
+        IntegerElement y = ObjectView.GetCells()[1].Element as IntegerElement;
         return new Vec2Element(x, y);
     }
 

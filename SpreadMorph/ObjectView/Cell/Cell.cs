@@ -19,9 +19,6 @@ public partial class Cell : Node2D
     [Export]
     ColorRect colorRect;
 
-    int value = 0;
-    public int Value => value;
-
     Formula formula = new Formula("");
     public Formula Formula => formula;
 
@@ -32,6 +29,9 @@ public partial class Cell : Node2D
 
     bool isError = false;
 
+    ElementBase element = null;
+    public ElementBase Element => element;
+
     /// <summary>
     /// 個別に編集可能か
     /// </summary>
@@ -39,7 +39,7 @@ public partial class Cell : Node2D
 
     public override void _Ready()
     {
-        valueLabel.Text = value.ToString();
+        valueLabel.Text = "";
     }
 
     public override void _Process(double delta)
@@ -87,20 +87,14 @@ public partial class Cell : Node2D
 
     public void SetElement(BoolElement value)
     {
-        if (value.Value)
-        {
-            valueLabel.Text = "true";
-        }
-        else
-        {
-            valueLabel.Text = "false";
-        }
+        valueLabel.Text = value.ToString();
+        this.element = value;
     }
 
     public void SetElement(IntegerElement value)
     {
-        this.value = value.Value;
         valueLabel.Text = $"{value.Value}";
+        this.element = value;
     }
 
     public void SetElement(RationalElement value)
@@ -117,6 +111,7 @@ public partial class Cell : Node2D
         {
             valueLabel.Text = $"{value.Numerator.Value}/{value.Denominator.Value}";
         }
+        this.element = value;
     }
 
     public void SetElement(ComplexElement value)
@@ -165,11 +160,13 @@ public partial class Cell : Node2D
                 }
             }
         }
+        this.element = value;
     }
 
     public void SetElement(StringElement value)
     {
         valueLabel.Text = $"{value.Value}";
+        this.element = value;
     }
 
     public void SetFormula(string formulaStr)

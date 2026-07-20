@@ -32,9 +32,9 @@ public partial class Vec3Object : ObjectBase
     }
     public override ElementBase GetElement()
     {
-        IntegerElement x = new IntegerElement(ObjectView.GetCells()[0].Value);
-        IntegerElement y = new IntegerElement(ObjectView.GetCells()[1].Value);
-        IntegerElement z = new IntegerElement(ObjectView.GetCells()[2].Value);
+        IntegerElement x = ObjectView.GetCells()[0].Element as IntegerElement;
+        IntegerElement y = ObjectView.GetCells()[1].Element as IntegerElement;
+        IntegerElement z = ObjectView.GetCells()[2].Element as IntegerElement;
         return new Vec3Element(x, y, z);
     }
 
