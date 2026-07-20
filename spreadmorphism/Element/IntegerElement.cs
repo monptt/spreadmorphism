@@ -64,6 +64,21 @@ public class IntegerElement : ElementBase, IInverse
         return a * (b.Inverse() as RationalElement);
     }
 
+    public static IntegerElement operator %(IntegerElement a, IntegerElement b)
+    {
+        return new IntegerElement(a.Value % b.Value);
+    }
+
+    public static ElementBase operator /(IntegerElement a, IntegerElement b)
+    {
+        if(a.value % b.value == 0)
+        {
+            return new IntegerElement(a.value / b.value);
+        }
+
+        return new RationalElement(a, b);
+    }
+
     public ElementBase Inverse()
     {
         return new RationalElement(new IntegerElement(1), this);

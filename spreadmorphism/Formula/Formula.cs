@@ -14,7 +14,7 @@ public class Formula
     /// <summary>
     /// 関数名として認識されるトークンリスト
     /// </summary>
-    List<string> funcNames = new List<string> { "SUM" };
+    List<string> funcNames = new List<string> { "SUM", "GCD", "LCM" };
 
 
     public Formula(string formulaStr)
@@ -245,6 +245,22 @@ public class Formula
             if (funcName == "SUM")
             {
                 return FuncSum.Sum(argElements);
+            }
+            if (funcName == "GCD")
+            {
+                if (argElements.Count == 2 && argElements[0] is IntegerElement a && argElements[1] is IntegerElement b)
+                {
+                    return FuncGCD.GCD(a, b);
+                }
+                return null;
+            }
+            if (funcName == "LCM")
+            {
+                if (argElements.Count == 2 && argElements[0] is IntegerElement a && argElements[1] is IntegerElement b)
+                {
+                    return FuncLCM.LCM(a, b);
+                }
+                return null;
             }
             return null;
         }
