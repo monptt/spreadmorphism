@@ -168,22 +168,27 @@ public partial class Main : Node2D
             // キー入力
             if (eventKey.Pressed)
             {
-                if (eventKey.Keycode == Key.Left)
+                if (eventKey.AltPressed)
                 {
-                    SelectGrid(selectedGridPos - new GridPos(1, 0));
+                    // 矢印キーでセル移動（Alt押してるときだけ）
+                    if (eventKey.Keycode == Key.Left)
+                    {
+                        SelectGrid(selectedGridPos - new GridPos(1, 0));
+                    }
+                    else if (eventKey.Keycode == Key.Right)
+                    {
+                        SelectGrid(selectedGridPos + new GridPos(1, 0));
+                    }
+                    else if (eventKey.Keycode == Key.Up)
+                    {
+                        SelectGrid(selectedGridPos - new GridPos(0, 1));
+                    }
+                    else if (eventKey.Keycode == Key.Down)
+                    {
+                        SelectGrid(selectedGridPos + new GridPos(0, 1));
+                    }
                 }
-                else if (eventKey.Keycode == Key.Right)
-                {
-                    SelectGrid(selectedGridPos + new GridPos(1, 0));
-                }
-                else if (eventKey.Keycode == Key.Up)
-                {
-                    SelectGrid(selectedGridPos - new GridPos(0, 1));
-                }
-                else if (eventKey.Keycode == Key.Down)
-                {
-                    SelectGrid(selectedGridPos + new GridPos(0, 1));
-                }
+
             }
         }
     }
