@@ -1,8 +1,13 @@
-[gd_scene format=3 uid="uid://cjveglaiqyf0u"]
+[gd_scene load_steps=3 format=3 uid="uid://cjveglaiqyf0u"]
+
+[ext_resource type="Shader" path="res://SelectedGridHighlight/HighlightObject.gdshader" id="1_m45od"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5av5t"]
+shader = ExtResource("1_m45od")
 
 [node name="HighlightObject" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_5av5t")
 offset_right = 1.0
 offset_bottom = 1.0
-color = Color(1, 1, 1, 0.392157)
