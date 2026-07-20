@@ -7,6 +7,47 @@ using System.Collections.Generic;
 /// <returns>合計値</returns>
 public class FuncMultiply : FormulaFuncBase
 {
+    /// <summary>
+    /// 2つの引数に対応する場合
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static ElementBase Multiply(ElementBase a, ElementBase b)
+    {
+        // 整数、複素数
+        {
+            if (a is IntegerElement integerElementA && b is IntegerElement integerElementB)
+            {
+                return IntegerElement.Multiply(integerElementA, integerElementB);
+            }
+            if (a is ComplexElement complexElementA && b is ComplexElement complexElementB)
+            {
+                return ComplexElement.Multiply(complexElementA, complexElementB);
+            }
+        }
+
+
+        // 多項式
+        {
+            if (a is PolynomialElement polynomialElementA && b is IntegerElement integerElementB)
+            {
+                return PolynomialElement.Multiply(polynomialElementA, integerElementB);
+            }
+            if (a is IntegerElement integerElementA && b is PolynomialElement polynomialElementB)
+            {
+                return PolynomialElement.Multiply(polynomialElementB, integerElementA);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 3以上の引数に対応する場合
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static ElementBase Multiply(List<ElementBase> args)
     {
         if (args.Count == 0)

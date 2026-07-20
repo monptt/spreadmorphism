@@ -218,7 +218,7 @@ public class Formula
 
                     if (tokens[i].TokenStr == "*")
                     {
-                        return FuncMultiply.Multiply(new List<ElementBase> { left, right });
+                        return FuncMultiply.Multiply(left, right);
                     }
                     if (tokens[i].TokenStr == "/")
                     {

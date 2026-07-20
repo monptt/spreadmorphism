@@ -76,6 +76,19 @@ public class PolynomialElement : ElementBase
         return str;
     }
 
+    public static PolynomialElement Multiply(PolynomialElement a, IntegerElement b)
+    {
+        // 各項を定数倍
+        PolynomialElement result = new PolynomialElement();
+        foreach (var pair in a.coefficients)
+        {
+            IntegerElement degree = pair.Key;
+            IntegerElement coefficient = pair.Value;
+            result.coefficients.Add(degree, coefficient * b);
+        }
+        return result;
+    }
+
     public static PolynomialElement Pow(PolynomialElement polynomialElement, IntegerElement exponent)
     {
         if (exponent.Value == 0)
