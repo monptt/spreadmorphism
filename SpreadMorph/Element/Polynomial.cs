@@ -13,7 +13,6 @@ public class PolynomialElement : ElementBase
 
     public PolynomialElement()
     {
-        coefficients.Add(new IntegerElement(0), new IntegerElement(0));
     }
 
     /// <summary>
@@ -44,7 +43,35 @@ public class PolynomialElement : ElementBase
             }
 
             var pair = sortedCoefficients[i];
-            str += $"{pair.Value}x^{pair.Key}";
+            IntegerElement degree = pair.Key;
+            IntegerElement coefficient = pair.Value;
+
+            string coefficientStr = ""; // 係数の部分
+            string xStr = ""; // x^n の部分
+
+            if (coefficient.Value == 1)
+            {
+                coefficientStr = "";
+            }
+            else
+            {
+                coefficientStr = coefficient.ToString();
+            }
+
+            if (degree.Value == 0)
+            {
+                xStr = "";
+            }
+            if (degree.Value == 1)
+            {
+                xStr = "x";
+            }
+            else
+            {
+                xStr = $"x^{degree.Value}";
+            }
+
+            str += $"{coefficientStr}{xStr}";
         }
         return str;
     }
