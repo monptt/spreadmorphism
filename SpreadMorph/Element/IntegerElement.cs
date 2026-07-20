@@ -11,6 +11,11 @@ public class IntegerElement : ElementBase, IInverse
         this.value = value;
     }
 
+    public override string ToString()
+    {
+        return value.ToString();
+    }
+
     /// <summary>
     /// 和
     /// </summary>
@@ -71,7 +76,7 @@ public class IntegerElement : ElementBase, IInverse
 
     public static ElementBase operator /(IntegerElement a, IntegerElement b)
     {
-        if(a.value % b.value == 0)
+        if (a.value % b.value == 0)
         {
             return new IntegerElement(a.value / b.value);
         }

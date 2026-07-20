@@ -45,7 +45,7 @@ public class Formula
             string tempToken = "";
             foreach (char c in str)
             {
-                if ("+-*/()[]{},<>=!".Contains(c))
+                if ("+-*/()[]{},<>=!^".Contains(c))
                 {
                     if (tempToken != "")
                     {
@@ -119,6 +119,12 @@ public class Formula
             if (tokens.First().TokenStr.ToLower() == "false")
             {
                 return new BoolElement(false);
+            }
+
+            // 変数
+            if (tokens.First().TokenStr == "x")
+            {
+                return new PolynomialElement(new IntegerElement(1), new IntegerElement(1));
             }
 
             // 数値のみの想定
