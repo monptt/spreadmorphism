@@ -84,6 +84,29 @@ public class IntegerElement : ElementBase, IInverse
         return new RationalElement(a, b);
     }
 
+    public static bool operator ==(IntegerElement a, IntegerElement b)
+    {
+        return a.value == b.value;
+    }
+    public static bool operator !=(IntegerElement a, IntegerElement b)
+    {
+        return a.value != b.value;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is IntegerElement other)
+        {
+            return this == other;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return value.GetHashCode();
+    }
+
     public ElementBase Inverse()
     {
         return new RationalElement(new IntegerElement(1), this);
