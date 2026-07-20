@@ -222,6 +222,84 @@ public class Formula
             }
         }
 
+        // 論理演算子
+        // or
+        {
+            int depth = 0;
+            for (int i = tokens.Count - 1; i >= 0; i--)
+            {
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth--;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth++;
+                }
+
+                if (depth == 0 && (tokens[i].TokenStr.ToLower() == "or" || tokens[i].TokenStr == "||"))
+                {
+                    ElementBase left = Evaluate(tokens.Take(i).ToList());
+                    ElementBase right = Evaluate(tokens.Skip(i + 1).ToList());
+                    if (left == null || right == null)
+                    {
+                        return null;
+                    }
+
+                    if (left is BoolElement leftBool && right is BoolElement rightBool)
+                    {
+                        return new BoolElement(leftBool.Value || rightBool.Value);
+                    }
+                    return null;
+                }
+            }
+        }
+
+        // and
+        {
+            int depth = 0;
+            for (int i = tokens.Count - 1; i >= 0; i--)
+            {
+                if (tokens[i].TokenStr == "(" || tokens[i].TokenStr == "[")
+                {
+                    depth--;
+                }
+                if (tokens[i].TokenStr == ")" || tokens[i].TokenStr == "]")
+                {
+                    depth++;
+                }
+
+                if (depth == 0 && (tokens[i].TokenStr.ToLower() == "and" || tokens[i].TokenStr == "&&"))
+                {
+                    ElementBase left = Evaluate(tokens.Take(i).ToList());
+                    ElementBase right = Evaluate(tokens.Skip(i + 1).ToList());
+                    if (left == null || right == null)
+                    {
+                        return null;
+                    }
+
+                    if (left is BoolElement leftBool && right is BoolElement rightBool)
+                    {
+                        return new BoolElement(leftBool.Value && rightBool.Value);
+                    }
+                    return null;
+                }
+            }
+        }
+
+        // not
+        {
+            if (tokens.First().TokenStr.ToLower() == "not" || tokens.First().TokenStr == "!")
+            {
+                ElementBase element = Evaluate(tokens.Skip(1).ToList());
+                if (element is BoolElement boolElement)
+                {
+                    return new BoolElement(!boolElement.Value);
+                }
+                return null;
+            }
+        }
+
         // 関数系
         if (funcNames.Contains(tokens.First().TokenStr.ToUpper()))
         {
