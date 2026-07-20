@@ -14,6 +14,7 @@ public class BoolObject : ObjectBase
     {
         SetIsOneObject(true);
         SetElement(new BoolElement(false));
+        this.SetFormula("false");
         Cell.SetFormula("false");
     }
 
