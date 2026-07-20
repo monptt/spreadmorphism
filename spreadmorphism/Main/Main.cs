@@ -26,6 +26,9 @@ public partial class Main : Node2D
     [Export]
     Palette palette;
 
+    [Export]
+    Inspector inspector;
+
     /// <summary>
     /// 選択されたオブジェクト（オブジェクトが選択された場合）
     /// </summary>
@@ -75,6 +78,11 @@ public partial class Main : Node2D
 
     public override void _Process(double delta)
     {
+        // Inspector更新
+        string objTypeStr = "null";
+        if (selectedCell != null) { objTypeStr = "cell"; }
+        if (selectedObject != null) { objTypeStr = "object"; }
+        inspector.UpdateInspector(selectedGridPos, objTypeStr, "---");
     }
 
     public override void _Input(InputEvent @event)
@@ -240,6 +248,10 @@ public partial class Main : Node2D
             selectedObject = null;
             return;
         }
+
+        // なんもなければ選択解除
+        selectedCell = null;
+        selectedObject = null;
     }
 
     void SetCameraPosition(Vector2 position)

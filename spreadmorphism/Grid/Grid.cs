@@ -15,6 +15,11 @@ public class GridPos
         Y = y;
     }
 
+    public override string ToString()
+    {
+        return $"[{X}, {Y}]";
+    }
+
     public static GridPos operator +(GridPos a, GridPos b)
     {
         return new GridPos(a.X + b.X, a.Y + b.Y);

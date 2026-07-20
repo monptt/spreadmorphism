@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddsbrre0iiurs"]
+[gd_scene load_steps=9 format=3 uid="uid://ddsbrre0iiurs"]
 
 [ext_resource type="Script" path="res://Main/Main.cs" id="1_ae1fs"]
 [ext_resource type="PackedScene" uid="uid://codbfo30gfmlv" path="res://Grid/Grid.tscn" id="3_k32su"]
@@ -6,11 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://dbqi0sr5f45j3" path="res://UI/Palette.tscn" id="4_n4mus"]
 [ext_resource type="PackedScene" uid="uid://bscfmppovnsvf" path="res://Main/ObjectSpace.tscn" id="4_wu2i8"]
 [ext_resource type="PackedScene" uid="uid://dypdj7p5eirwc" path="res://UI/FormulaEdit.tscn" id="6_hji28"]
+[ext_resource type="PackedScene" uid="uid://ba11i01gsyuha" path="res://UI/Inspector.tscn" id="7_5ypx0"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_p12e0"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "formulaEdit", "coordView", "palette")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainCamera", "objectSpace", "selectedRect", "grid", "formulaEdit", "coordView", "palette", "inspector")]
 script = ExtResource("1_ae1fs")
 mainCamera = NodePath("SubViewport/MainCamera")
 objectSpace = NodePath("SubViewport/ObjectSpace")
@@ -19,6 +20,7 @@ grid = NodePath("Grid")
 formulaEdit = NodePath("UI/FormulaEdit")
 coordView = NodePath("UI/CoordView")
 palette = NodePath("UI/Palette")
+inspector = NodePath("UI/Inspector")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
@@ -51,3 +53,6 @@ position = Vector2(1840, 1056)
 
 [node name="FormulaEdit" parent="UI" instance=ExtResource("6_hji28")]
 position = Vector2(1, 1010)
+
+[node name="Inspector" parent="UI" instance=ExtResource("7_5ypx0")]
+position = Vector2(0, 934)
