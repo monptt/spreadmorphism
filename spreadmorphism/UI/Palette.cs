@@ -5,7 +5,10 @@ public partial class Palette : Node2D
 {
     // Object生成ボタン
     [Export]
-    Button numButton;
+    Button integerButton;
+
+    [Export]
+    Button rationalButton;
 
     [Export]
     Button vec2Button;
@@ -32,9 +35,14 @@ public partial class Palette : Node2D
 
     public override void _Ready()
     {
-        numButton.Pressed += () =>
+        integerButton.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Integer);
+        };
+
+        rationalButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Rational);
         };
 
         vec2Button.Pressed += () =>

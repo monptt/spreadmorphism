@@ -63,6 +63,11 @@ public partial class ObjectSpace : Node2D
                 matrixSize = new Vector2I(1, 1);
                 name = "Int";
                 break;
+            case ObjectType.Rational:
+                obj = new RationalObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Rational";
+                break;
             case ObjectType.Vec2:
                 obj = new Vec2Object();
                 matrixSize = new Vector2I(1, 2);

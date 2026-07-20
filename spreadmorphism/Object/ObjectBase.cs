@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public enum ObjectType
 {
     Integer,
+    Rational,
     Complex,
     Vec2,
     Vec3,
