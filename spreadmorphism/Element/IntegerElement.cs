@@ -1,7 +1,7 @@
 /// <summary>
 /// 数
 /// </summary>
-public class IntegerElement : ElementBase
+public class IntegerElement : ElementBase, IInverse
 {
     int value;
     public int Value => value;
@@ -57,5 +57,15 @@ public class IntegerElement : ElementBase
     public static IntegerElement operator *(IntegerElement a, IntegerElement b)
     {
         return Multiply(a, b);
+    }
+
+    public static IntegerElement operator *(IntegerElement a, RationalElement b)
+    {
+        return a * (b.Inverse() as RationalElement);
+    }
+
+    public ElementBase Inverse()
+    {
+        return new RationalElement(new IntegerElement(1), this);
     }
 }

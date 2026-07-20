@@ -6,14 +6,14 @@ public class RationalObject : ObjectBase
 {
     public override ObjectType Type => ObjectType.Rational;
 
-    RationalElement element = new RationalElement(0, 1);
+    RationalElement element = new RationalElement(new IntegerElement(0), new IntegerElement(1));
 
     Cell Cell => ObjectView.GetCells()[0];
 
     protected override void InitView()
     {
         SetIsOneObject(true);
-        SetElement(new RationalElement(0, 1));
+        SetElement(new RationalElement(new IntegerElement(0), new IntegerElement(1)));
         this.SetFormula("0");
         Cell.SetFormula("0");
     }
@@ -34,7 +34,7 @@ public class RationalObject : ObjectBase
             }
             else
             {
-                SetElement(new RationalElement(0, 1));
+                SetElement(new RationalElement(new IntegerElement(0), new IntegerElement(1)));
             }
         }
     }
@@ -54,7 +54,7 @@ public class RationalObject : ObjectBase
         }
         else
         {
-            SetElement(new RationalElement(0, 1));
+            SetElement(new RationalElement(new IntegerElement(0), new IntegerElement(1)));
             return false;
         }
     }

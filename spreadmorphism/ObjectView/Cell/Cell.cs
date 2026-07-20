@@ -105,7 +105,18 @@ public partial class Cell : Node2D
 
     public void SetElement(RationalElement value)
     {
-        valueLabel.Text = $"{value.Numerator}/{value.Denominator}";
+        if (value.Denominator.Value == 1)
+        {
+            valueLabel.Text = $"{value.Numerator.Value}";
+        }
+        else if (value.Numerator.Value == 0)
+        {
+            valueLabel.Text = "0";
+        }
+        else
+        {
+            valueLabel.Text = $"{value.Numerator.Value}/{value.Denominator.Value}";
+        }
     }
 
     public void SetElement(ComplexElement value)
