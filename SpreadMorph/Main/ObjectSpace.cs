@@ -93,6 +93,16 @@ public partial class ObjectSpace : Node2D
                 matrixSize = new Vector2I(1, 1);
                 name = "Bool";
                 break;
+            case ObjectType.Polynomial:
+                obj = new PolynomialObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Polynomial";
+                break;
+            case ObjectType.Function:
+                obj = new FunctionObject();
+                matrixSize = new Vector2I(1, 1);
+                name = "Function";
+                break;
             default:
                 GD.PrintErr("Invalid object type: " + type);
                 break;

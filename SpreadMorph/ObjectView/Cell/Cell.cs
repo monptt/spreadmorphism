@@ -163,6 +163,18 @@ public partial class Cell : Node2D
         this.element = value;
     }
 
+    public void SetElement(PolynomialElement value)
+    {
+        valueLabel.Text = value.ToString();
+        this.element = value;
+    }
+
+    public void SetElement(FunctionElement value)
+    {
+        valueLabel.Text = value.ToString();
+        this.element = value;
+    }
+
     public void SetElement(StringElement value)
     {
         valueLabel.Text = $"{value.Value}";

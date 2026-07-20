@@ -11,6 +11,8 @@ public enum ObjectType
     Vec3,
     String,
     Bool,
+    Polynomial,
+    Function,
 }
 
 public abstract partial class ObjectBase

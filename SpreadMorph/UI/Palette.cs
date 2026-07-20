@@ -25,6 +25,11 @@ public partial class Palette : Node2D
     [Export]
     Button boolButton;
 
+    [Export]
+    Button polynomialButton;
+
+    [Export]
+    Button functionButton;
 
     // その他
     [Export]
@@ -68,6 +73,16 @@ public partial class Palette : Node2D
         boolButton.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Bool);
+        };
+
+        polynomialButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Polynomial);
+        };
+
+        functionButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Function);
         };
     }
 
