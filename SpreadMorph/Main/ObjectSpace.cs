@@ -118,13 +118,17 @@ public partial class ObjectSpace : Node2D
             objects.Add(obj);
 
             // オブジェクトビューを作成
-            CellMatrixObjectView objView = cellMatrixObjScene.Instantiate<CellMatrixObjectView>();
-            objView.Init(matrixSize.X, matrixSize.Y, pos, name);
+            CellMatrixObjectView objView = CreateCellMatrixObjectView(matrixSize, pos, name);
             AddChild(objView);
-
-            // オブジェクトに紐づけ
             obj.SetUpObjectView(objView);
         }
+    }
+
+    CellMatrixObjectView CreateCellMatrixObjectView(Vector2I matrixSize, GridPos pos, string name)
+    {
+        CellMatrixObjectView objView = cellMatrixObjScene.Instantiate<CellMatrixObjectView>();
+        objView.Init(matrixSize.X, matrixSize.Y, pos, name);
+        return objView;
     }
 
     /// <summary>
