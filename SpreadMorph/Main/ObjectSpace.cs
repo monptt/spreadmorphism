@@ -88,6 +88,16 @@ public partial class ObjectSpace : Node2D
                 matrixSize = new Vector2I(2, 2);
                 name = "Mat2";
                 break;
+            case ObjectType.Mat3:
+                obj = new Mat3Object();
+                matrixSize = new Vector2I(3, 3);
+                name = "Mat3";
+                break;
+            case ObjectType.Mat4:
+                obj = new Mat4Object();
+                matrixSize = new Vector2I(4, 4);
+                name = "Mat4";
+                break;
             case ObjectType.String:
                 obj = new StringObject();
                 matrixSize = new Vector2I(1, 1);
