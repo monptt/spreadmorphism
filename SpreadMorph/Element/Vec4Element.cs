@@ -1,21 +1,22 @@
-public class Vec4Element : ElementBase
+public class Vec4Element : VecElement
 {
-    IntegerElement x;
-    IntegerElement y;
-    IntegerElement z;
-    IntegerElement w;
+    public override int Dim => 4;
 
-    public IntegerElement X => x;
-    public IntegerElement Y => y;
-    public IntegerElement Z => z;
-    public IntegerElement W => w;
+    IntegerElement[] elements = new IntegerElement[4];
+    public override IntegerElement[] Elements => elements;
+
+
+    public IntegerElement X => elements[0];
+    public IntegerElement Y => elements[1];
+    public IntegerElement Z => elements[2];
+    public IntegerElement W => elements[3];
 
     public Vec4Element(IntegerElement x, IntegerElement y, IntegerElement z, IntegerElement w)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        elements[0] = x;
+        elements[1] = y;
+        elements[2] = z;
+        elements[3] = w;
     }
 
     /// <summary>

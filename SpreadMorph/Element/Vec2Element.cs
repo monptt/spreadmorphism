@@ -1,15 +1,17 @@
-public class Vec2Element : ElementBase
+public class Vec2Element : VecElement
 {
-    IntegerElement x;
-    IntegerElement y;
+    public override int Dim => 2;
 
-    public IntegerElement X => x;
-    public IntegerElement Y => y;
+    IntegerElement[] elements = new IntegerElement[2];
+    public override IntegerElement[] Elements => elements;
+
+    public IntegerElement X => elements[0];
+    public IntegerElement Y => elements[1];
 
     public Vec2Element(IntegerElement x, IntegerElement y)
     {
-        this.x = x;
-        this.y = y;
+        elements[0] = x;
+        elements[1] = y;
     }
 
     /// <summary>
