@@ -50,7 +50,7 @@ texture = SubResource("ViewportTexture_p12e0")
 [node name="UI" type="Node2D" parent="."]
 
 [node name="Palette" parent="UI" instance=ExtResource("4_n4mus")]
-position = Vector2(7, 438)
+position = Vector2(7, 257)
 
 [node name="CoordView" parent="UI" instance=ExtResource("4_ir353")]
 position = Vector2(1840, 1056)

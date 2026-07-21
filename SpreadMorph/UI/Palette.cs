@@ -17,6 +17,9 @@ public partial class Palette : Node2D
     Button vec3Button;
 
     [Export]
+    Button vec4Button;
+
+    [Export]
     Button stringButton;
 
     [Export]
@@ -58,6 +61,11 @@ public partial class Palette : Node2D
         vec3Button.Pressed += () =>
         {
             EmitSignal(SignalName.AddObject, (int)ObjectType.Vec3);
+        };
+
+        vec4Button.Pressed += () =>
+        {
+            EmitSignal(SignalName.AddObject, (int)ObjectType.Vec4);
         };
 
         stringButton.Pressed += () =>

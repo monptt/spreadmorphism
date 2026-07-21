@@ -9,6 +9,7 @@ public enum ObjectType
     Complex,
     Vec2,
     Vec3,
+    Vec4,
     String,
     Bool,
     Polynomial,
