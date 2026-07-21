@@ -2,13 +2,16 @@
 
 [ext_resource type="Script" path="res://UI/Palette.cs" id="1_4bdx1"]
 
-[node name="Palette" type="Node2D" node_paths=PackedStringArray("integerButton", "rationalButton", "vec2Button", "vec3Button", "vec4Button", "stringButton", "complexButton", "boolButton", "polynomialButton", "functionButton", "colorRect")]
+[node name="Palette" type="Node2D" node_paths=PackedStringArray("integerButton", "rationalButton", "vec2Button", "vec3Button", "vec4Button", "mat2Button", "mat3Button", "mat4Button", "stringButton", "complexButton", "boolButton", "polynomialButton", "functionButton", "colorRect")]
 script = ExtResource("1_4bdx1")
 integerButton = NodePath("VBoxContainer/IntButton")
 rationalButton = NodePath("VBoxContainer/RationalButton")
 vec2Button = NodePath("VBoxContainer/Vec2Button")
 vec3Button = NodePath("VBoxContainer/Vec3Button")
 vec4Button = NodePath("VBoxContainer/Vec4Button")
+mat2Button = NodePath("VBoxContainer/Mat2Button")
+mat3Button = NodePath("VBoxContainer/Mat3Button")
+mat4Button = NodePath("VBoxContainer/Mat4Button")
 stringButton = NodePath("VBoxContainer/StringButton")
 complexButton = NodePath("VBoxContainer/ComplexButton")
 boolButton = NodePath("VBoxContainer/BoolButton")
@@ -19,7 +22,7 @@ colorRect = NodePath("ColorRect")
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_top = -19.0
 offset_right = 126.0
-offset_bottom = 362.0
+offset_bottom = 467.0
 color = Color(1, 0.827451, 1, 0.815686)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -47,6 +50,18 @@ text = "Vec3"
 [node name="Vec4Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Vec4"
+
+[node name="Mat2Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mat2"
+
+[node name="Mat3Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mat3"
+
+[node name="Mat4Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mat4"
 
 [node name="StringButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
