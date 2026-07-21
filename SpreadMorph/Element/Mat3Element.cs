@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 
-public class Mat3Element : ElementBase
+public class Mat3Element : MatElement
 {
+    public override int Rows => 3;
+    public override int Columns => 3;
+
     IntegerElement[] elements = new IntegerElement[9];
-    public IntegerElement[] Elements => elements;
+    public override IntegerElement[] Elements => elements;
 
     public Mat3Element()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < Rows; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < Columns; j++)
             {
-                elements[i * 3 + j] = new IntegerElement(0);
+                elements[i * Columns + j] = new IntegerElement(0);
             }
         }
     }
